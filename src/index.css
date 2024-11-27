@@ -1,0 +1,171 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .base-input {
+    @apply focus-visible:outline-0 focus-visible:ring-0 focus-visible:ring-offset-0 focus:outline-0 !shadow-none;
+  }
+}
+
+body {
+  font-family: "Roboto", sans-serif;
+  font-weight: 500;
+  font-style: normal;
+  margin: 0;
+  padding: 0;
+}
+
+.roboto-thin {
+  font-family: "Roboto", sans-serif;
+  font-weight: 100;
+  font-style: normal;
+}
+
+.roboto-light {
+  font-family: "Roboto", sans-serif;
+  font-weight: 300;
+  font-style: normal;
+}
+
+.roboto-regular {
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.roboto-medium {
+  font-family: "Roboto", sans-serif;
+  font-weight: 500;
+  font-style: normal;
+}
+
+.roboto-bold {
+  font-family: "Roboto", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+}
+
+.roboto-black {
+  font-family: "Roboto", sans-serif;
+  font-weight: 900;
+  font-style: normal;
+}
+
+.roboto-thin-italic {
+  font-family: "Roboto", sans-serif;
+  font-weight: 100;
+  font-style: italic;
+}
+
+.roboto-light-italic {
+  font-family: "Roboto", sans-serif;
+  font-weight: 300;
+  font-style: italic;
+}
+
+.roboto-regular-italic {
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+  font-style: italic;
+}
+
+.roboto-medium-italic {
+  font-family: "Roboto", sans-serif;
+  font-weight: 500;
+  font-style: italic;
+}
+
+.roboto-bold-italic {
+  font-family: "Roboto", sans-serif;
+  font-weight: 700;
+  font-style: italic;
+}
+
+.roboto-black-italic {
+  font-family: "Roboto", sans-serif;
+  font-weight: 900;
+  font-style: italic;
+}
+
+.scroll-left::-webkit-scrollbar {
+  width: 8px;
+}
+
+.scroll-left::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.scroll-left::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+.scroll-left::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.scroll-left {
+  direction: rtl;
+}
+
+.scroll-left > * {
+  direction: ltr;
+}
+
+/*  */
+body::-webkit-scrollbar {
+  width: 8px;
+}
+
+body::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+body::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+body::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+body {
+  direction: ltr;
+}
+
+body > * {
+  direction: ltr;
+}
+
+/*  */
+.scroll-right::-webkit-scrollbar {
+  width: 8px;
+  height: 4px;
+}
+
+.scroll-right::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.scroll-right::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+.scroll-right::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.scroll-right {
+  direction: ltr;
+}
+
+.scroll-right > * {
+  direction: ltr;
+}
+.scroll-property::-webkit-scrollbar {
+  width: 4px !important;
+}
+
+.scroll-right::-webkit-scrollbar-thumb {
+  background: #cccdd2;
+}
