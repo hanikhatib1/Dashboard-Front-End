@@ -6,6 +6,7 @@ import townshipSlice from "./features/Township";
 import propertiesSlice from "./features/Properties";
 import appealSlice from "./features/AppealSlice";
 import invoicesSlice from "./features/Invoices";
+import contactUsSlice from "./features/ContactUs";
 
 import { apiSlice } from "./apiSlice";
 
@@ -19,6 +20,7 @@ export const store = configureStore({
         properties: propertiesSlice,
         appeals: appealSlice,
         invoices: invoicesSlice,
+        contactUs: contactUsSlice,
         [apiSlice.reducerPath]: apiSlice.reducer,
     },
     middleware: (getDefaultMiddleware) =>

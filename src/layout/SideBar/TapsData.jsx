@@ -1,22 +1,22 @@
 import {
   AppealsIcon,
-  BillingsIcon,
-  DashboardIcon,
   EmployeeIcon,
   PropertiesIcon,
-  ReportsIcon,
   ScheduleIcon,
   SettingsIcon,
 } from "@/assets/Icons";
-import { employees, homepage } from "../../routes/paths";
+import { employees } from "../../routes/paths";
 import Clients from "@/assets/Icons/Clients";
 import DatePie from "@/assets/Icons/DatePie";
 import {
   BetweenVerticalStart,
+  BookOpen,
+  Contact,
   KeySquare,
   Receipt,
   Star,
   Upload,
+  Users,
 } from "lucide-react";
 
 export const TapsData = [
@@ -62,7 +62,7 @@ export const TapsData = [
   },
   {
     name: "Invoices",
-    Icon: <Receipt className="text-inherit" />,
+    Icon: <Receipt color="currentColor" />,
     url: "/invoices",
   },
   {
@@ -86,6 +86,21 @@ export const TapsData = [
     Icon: <SettingsIcon />,
     url: "/settings",
     children: [
+      {
+        name: "Blogs",
+        Icon: <BookOpen color="currentColor" />,
+        url: "/settings/blogs",
+      },
+      {
+        name: "Workers",
+        Icon: <Users color="currentColor" />,
+        url: "/settings/workers",
+      },
+      {
+        name: "Contact Us",
+        Icon: <Contact />,
+        url: "/settings/contact-us",
+      },
       {
         name: "Permissions",
         Icon: <KeySquare className="text-inherit" />,

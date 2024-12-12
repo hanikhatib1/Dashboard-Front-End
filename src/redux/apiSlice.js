@@ -14,8 +14,8 @@ const baseQuery = fetchBaseQuery({
     },
 });
 
-export const baseQueryWithReauth = async (args, api, extraOptions) => {
-    let result = await baseQuery(args, api, extraOptions);
+export const baseQueryWithReauth = async (args) => {
+    let result = await baseQuery(args);
     return result;
 };
 
@@ -383,7 +383,85 @@ export const apiSlice = createApi({
             }),
         }),
 
+        /* Blogs */
+        getAllBlogs: builder.query({
+            query: (q) => ({
+                url: `/blog/get_all_blogs?sort=-id&${q}`,
+                method: 'GET',
+            }),
+        }),
+        getBlogsInfo: builder.query({
+            query: () => ({
+                url: '/blog/blogs_info',
+                method: 'GET',
+            }),
+        }),
+        addBlog: builder.mutation({
+            query: (body) => ({
+                url: '/blog/add_blog',
+                method: 'POST',
+                body
+            }),
+        }),
+        editBlog: builder.mutation({
+            query: ({ body, id }) => ({
+                url: `/blog/update_blog/${id}`,
+                method: 'PATCH',
+                body
+            }),
+        }),
+        deleteBlog: builder.mutation({
+            query: (id) => ({
+                url: `/blog/delete_blog/${id}`,
+                method: 'DELETE',
+            }),
+        }),
 
+        /* Workers */
+        getWorkers: builder.mutation({
+            query: (q) => `/worker/get_all_worker?sort=-id&${q}`,
+        }),
+        addWorker: builder.mutation({
+            query: (body) => ({
+                url: '/worker/add_worker',
+                method: 'POST',
+                body
+            }),
+        }),
+        updateWorker: builder.mutation({
+            query: ({ body, id }) => ({
+                url: `/worker/update_worker/${id}`,
+                method: 'PATCH',
+                body
+            }),
+        }),
+        deleteWorker: builder.mutation({
+            query: (id) => ({
+                url: `/worker/delete_worker/${id}`,
+                method: 'DELETE',
+            }),
+        }),
+
+        /* Contact Us */
+        getAllContactUs: builder.mutation({
+            query: (q) => `/contact_us/get_all_contact_us?sort=-id&${q}`,
+        }),
+        addReplay: builder.mutation({
+            query: (body) => ({
+                url: '/contact_us_reply/add_contact_us_reply',
+                method: 'POST',
+                body
+            }),
+        }),
+        getAllReplays: builder.query({
+            query: (id) => `/contact_us_reply/get_all_contact_us_replyies?sort=-id&${id}`,
+        }),
+        getContactUsInfo: builder.query({
+            query: () => ({
+                url: '/contact_us/get_contact_us_info',
+                method: 'GET',
+            }),
+        })
 
     }),
 });
@@ -409,5 +487,10 @@ export const {
     useEditPropertyImageMutation, useDeleteAppealMutation, useGetAddressGoogleMutation, useDeletePropertySaleMutation,
     useAddPropertySaleMutation, useEditPropertySaleMutation, useRemoveDuplicatePropertiesMutation,
     useGetAllInvoicesMutation, useDeleteInvoiceMutation, useAddInvoiceMutation, useEditInvoiceMutation,
-    useGetInvoiceFromAppealMutation,
+    useGetInvoiceFromAppealMutation, useGetAllBlogsQuery, useGetBlogsInfoQuery, useAddBlogMutation,
+    useEditBlogMutation, useDeleteBlogMutation,
+    useGetWorkersMutation, useAddWorkerMutation, useUpdateWorkerMutation, useDeleteWorkerMutation,
+    useGetAllContactUsMutation,
+    useAddReplayMutation, useGetAllReplaysQuery,
+    useGetContactUsInfoQuery
 } = apiSlice;

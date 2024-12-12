@@ -270,6 +270,22 @@ export const taxColumns = [
       return <p>{rowData.yoy_change} %</p>;
     },
   },
+  {
+    accessorKey: "estimated_value",
+    header: "Estimated Taxes",
+    cell: ({ row }) => {
+      const rowData = row.original;
+      return <p>$ {rowData.estimated_value.toLocaleString()}</p>;
+    },
+  },
+  {
+    accessorKey: "estimated_change",
+    header: "Estimated Change",
+    cell: ({ row }) => {
+      const rowData = row.original;
+      return <p>$ {rowData.estimated_change.toLocaleString()}</p>;
+    },
+  },
 ];
 
 export const documentsColumns = [
@@ -333,7 +349,7 @@ export const documentsColumns = [
     },
   },
   {
-    header: "SA",
+    header: "Representation Agreement",
     cell: ({ row }) => {
       const rowData = row.original;
       const hasLink = rowData.sa;
@@ -369,7 +385,7 @@ export const documentsColumns = [
     },
   },
   {
-    header: "Representation Agreement",
+    header: "Residential Appeal Narrative",
     cell: ({ row }) => {
       const rowData = row.original;
       const hasLink = rowData.ran;

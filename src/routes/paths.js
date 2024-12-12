@@ -34,6 +34,9 @@ export const settings = {
     permissions: '/settings/permissions',
     permission: '/settings/permissions/:id',
     appealStatus: '/settings/appeal-status',
+    blogs: '/settings/blogs',
+    workers: '/settings/workers',
+    contactUs: '/settings/contact-us',
 }
 
 export const dataScript = {

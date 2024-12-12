@@ -37,6 +37,9 @@ import HomeTest from "./HomeTest";
 import "react-datepicker/dist/react-datepicker.css";
 import DataScriptActions from "./pages/DataScript/DataScriptActions";
 import Invoices from "./pages/Invoices";
+import Blogs from "./pages/settings/Blogs";
+import Workers from "./pages/settings/Workers";
+import ContactUs from "./pages/settings/ContactUs";
 
 function App() {
   const { isSuccess, data, isError } = useGetUserQuery({});
@@ -71,6 +74,9 @@ function App() {
             <Route path={settings.permissions} element={<Permissions />} />
             <Route path={settings.permission} element={<Permission />} />
             <Route path={settings.appealStatus} element={<AppealStatus />} />
+            <Route path={settings.blogs} element={<Blogs />} />
+            <Route path={settings.workers} element={<Workers />} />
+            <Route path={settings.contactUs} element={<ContactUs />} />
 
             <Route path={invoices.index} element={<Invoices />} />
 

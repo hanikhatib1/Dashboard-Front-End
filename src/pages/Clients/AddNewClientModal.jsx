@@ -178,8 +178,6 @@ const AddNewClientModal = ({ buttonClassName }) => {
                       className="border rounded-full"
                     />
                   )}
-
-                  {/* <p className="text-[#80838E]">{getValues("image.name")}</p> */}
                 </div>
                 <div className="flex gap-4">
                   {image && (

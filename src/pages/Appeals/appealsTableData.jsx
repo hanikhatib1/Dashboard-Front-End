@@ -14,6 +14,7 @@ import {
 import { reverseDate } from "@/utiles/revserDate";
 import { MoreHorizontal } from "lucide-react";
 import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 
 export const appealsColumns = [
   {
@@ -21,9 +22,12 @@ export const appealsColumns = [
     header: "Name",
     cell: ({ row }) => {
       return (
-        <div className="flex items-center gap-2">
+        <Link
+          to={`/clients/${row.original.client_id}`}
+          className="flex items-center gap-2 hover:underline"
+        >
           <span>{`${row.original.client_first_name} ${row.original.client_last_name}`}</span>
-        </div>
+        </Link>
       );
     },
   },
@@ -32,9 +36,12 @@ export const appealsColumns = [
     header: "Address",
     cell: ({ row }) => {
       return (
-        <div className="flex items-center gap-2 max-w-[180px] text-[14px]">
+        <Link
+          to={`/properties/${row.original.pin1}`}
+          className="flex items-center gap-2 max-w-[180px] text-[14px] hover:underline"
+        >
           <span>{row.original.address}</span>
-        </div>
+        </Link>
       );
     },
   },
