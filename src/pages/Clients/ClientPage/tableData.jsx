@@ -5,8 +5,12 @@ import {
   DropdownMenuItem,
 } from "@/components/ui/dropdown-menu";
 import {
+  addAppealToInvoice,
+  setAppealInvoiceDetails,
   setDeleteAppealData,
+  setDocumentsStatusAppealModel,
   setEditAppealData,
+  setFormsAppeal,
 } from "@/redux/features/AppealSlice";
 import { formatePin } from "@/utiles/formatePin";
 import { DropdownMenuTrigger } from "@radix-ui/react-dropdown-menu";
@@ -37,6 +41,16 @@ export const clientAppealColumns = [
     accessorKey: "note",
   },
   {
+    header: "Signature Sent",
+    cell: ({ row }) => {
+      return (
+        <div className="flex items-center gap-2">
+          <span>{row.original.signature_sent ? "Yes" : "No"}</span>
+        </div>
+      );
+    },
+  },
+  {
     header: "Files",
     cell: ({ row }) => {
       const dispatch = useDispatch();
@@ -54,6 +68,33 @@ export const clientAppealColumns = [
               onClick={() => dispatch(setEditAppealData(row.original))}
             >
               Edit
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              className="hover:bg-slate-100 cursor-pointer"
+              onClick={() => dispatch(addAppealToInvoice(row.original))}
+            >
+              Invoice
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              className="hover:bg-slate-100 cursor-pointer"
+              onClick={() => dispatch(setAppealInvoiceDetails(row.original))}
+            >
+              View Invoices
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              className="hover:bg-slate-100 cursor-pointer"
+              onClick={() => dispatch(setFormsAppeal(row.original))}
+            >
+              Send Forms
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              className={` cursor-pointer ${!row.original.signature_sent ? "text-[#80838E] cursor-not-allowed" : " hover:bg-slate-100"}`}
+              onClick={() =>
+                row.original.signature_sent &&
+                dispatch(setDocumentsStatusAppealModel(row.original))
+              }
+            >
+              Signature Status
             </DropdownMenuItem>
             <DropdownMenuItem
               className="hover:bg-slate-100 cursor-pointer text-red-500"

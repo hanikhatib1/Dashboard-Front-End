@@ -8,13 +8,18 @@ import { reverseDate } from "@/utiles/revserDate";
 import Loader from "@/components/Loader";
 import Properties from "../Properties";
 import EditAppeal from "@/pages/Appeals/EditAppeal";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { formattedNumber } from "@/utiles/formattedNumber";
 import DeleteAppealModel from "@/pages/Appeals/DeleteAppealModel";
 import InvoicesTable from "@/pages/Invoices/InvoicesTable";
 import { invoicesTableData } from "@/pages/Invoices/invoicesTableData";
 import EditInvoice from "@/pages/Invoices/EditInvoice";
 import DeleteInvoiceModel from "@/pages/Invoices/DeleteInvoiceModel";
+import AddInvoice from "@/pages/Invoices/AddInvoice";
+import InvoicesModel from "@/pages/Appeals/InvoicesModel";
+import SendFormModel from "@/pages/Appeals/SendFormModel";
+import DocumentsStatusAppealModel from "@/pages/Appeals/DocumentsStatusAppealModel";
+import { addAppealToInvoice } from "@/redux/features/AppealSlice";
 
 const DataLabel = ({ title, value }) => {
   return (
@@ -32,13 +37,13 @@ const DataLabel = ({ title, value }) => {
 const ClientPage = () => {
   const { id } = useParams();
   const { data, isLoading, isError } = useGetOneClientQuery(id);
-  const { editAppealData, deleteAppealData } = useSelector(
+  const { editAppealData, deleteAppealData,documentsStatusAppealModel, appealToInvoice, appealInvoiceDetails,formsAppeal } = useSelector(
     (state) => state.appeals
   );
   const { editInvoiceData, deleteInvoiceData } = useSelector(
     (state) => state.invoices
   );
-
+  const dispatch = useDispatch()
   if (isLoading) return <Loader />;
 
   if (isError) return <p className="text-center">Error</p>;
@@ -203,6 +208,21 @@ const ClientPage = () => {
 
       {editInvoiceData && <EditInvoice />}
       {deleteInvoiceData && <DeleteInvoiceModel />}
+
+
+      {appealToInvoice && (
+        <AddInvoice
+          hideButton={true}
+          open={appealToInvoice}
+          setOpen={(e) => dispatch(addAppealToInvoice(e))}
+        />
+      )}
+      {appealInvoiceDetails && <InvoicesModel />}
+      {formsAppeal && <SendFormModel />}
+      {documentsStatusAppealModel && <DocumentsStatusAppealModel />}
+
+
+
     </div>
   );
 };

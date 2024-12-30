@@ -3,7 +3,6 @@ import { LogoIcon, LogoutIcon } from "../../assets/Icons";
 import Taps from "./Taps";
 import "./styles.css";
 import { useDispatch } from "react-redux";
-
 const SideBar = ({ expand }) => {
   const dispatch = useDispatch();
 
@@ -18,11 +17,8 @@ const SideBar = ({ expand }) => {
           expand ? "w-[250px]" : "w-[60px]"
         } h-[100vh] shadow-custom overflow-hidden duration-300 ease-in-out`}
       >
-        <div className="flex gap-1 p-4 items-center">
-          <LogoIcon />
-          {expand && (
-            <p className="whitespace-nowrap">Cook County Tax Appeal</p>
-          )}
+        <div className="flex gap-1 p-4 items-center cursor-pointer">
+          <img src="/assets/logo.png" alt="" className="w-[180px] h-[50px]"/>
         </div>
         <Taps expand={expand} />
 

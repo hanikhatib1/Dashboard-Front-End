@@ -49,7 +49,7 @@ const AddInvoice = ({ hideButton = false, open, setOpen, defaultAppeal }) => {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      payment_methode: "CASH",
+      payment_methode: "Online Payment",
       actual_saving: "",
       appeal_id: null,
     },
