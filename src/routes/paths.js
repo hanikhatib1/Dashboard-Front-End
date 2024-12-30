@@ -1,6 +1,6 @@
 export const auth = {
     login: '/login',
-    forgetPassword: '/forget-password',
+    forgetPassword: '/forget-password/:id',
     resetPassword: '/resetPassword',
 };
 

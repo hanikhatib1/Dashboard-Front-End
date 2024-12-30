@@ -14,8 +14,8 @@ const baseQuery = fetchBaseQuery({
     },
 });
 
-export const baseQueryWithReauth = async (args) => {
-    let result = await baseQuery(args);
+export const baseQueryWithReauth = async (args, api, extraOptions) => {
+    let result = await baseQuery(args, api, extraOptions);
     return result;
 };
 
@@ -461,7 +461,21 @@ export const apiSlice = createApi({
                 url: '/contact_us/get_contact_us_info',
                 method: 'GET',
             }),
-        })
+        }),
+
+        sendFormSignature: builder.mutation({
+            query: (body) => ({
+                url: '/signature/apply_signature',
+                method: 'POST',
+                body
+            }),
+        }),
+        getAppealDocumentsStatus: builder.mutation({
+            query: (id) => ({
+                url: `/appeal/get_appeal_details/${id}`,
+                method: 'GET',
+            }),
+        }),
 
     }),
 });
@@ -492,5 +506,7 @@ export const {
     useGetWorkersMutation, useAddWorkerMutation, useUpdateWorkerMutation, useDeleteWorkerMutation,
     useGetAllContactUsMutation,
     useAddReplayMutation, useGetAllReplaysQuery,
-    useGetContactUsInfoQuery
+    useGetContactUsInfoQuery,
+    useSendFormSignatureMutation,
+    useGetAppealDocumentsStatusMutation,
 } = apiSlice;

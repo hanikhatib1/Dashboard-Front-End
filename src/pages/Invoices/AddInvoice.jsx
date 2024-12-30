@@ -41,7 +41,6 @@ const AddInvoice = ({ hideButton = false, open, setOpen, defaultAppeal }) => {
   const { toast } = useToast();
   const [appeal, setAppeal] = React.useState(null);
   const { appealToInvoice } = useSelector((state) => state.appeals);
-  const dispatch = useDispatch();
 
   const {
     handleSubmit,
@@ -151,12 +150,12 @@ const AddInvoice = ({ hideButton = false, open, setOpen, defaultAppeal }) => {
                   </label>
                   <Select onValueChange={(e) => setValue("payment_methode", e)}>
                     <SelectTrigger className="w-full h-[48px] rounded-[8px]">
-                      <SelectValue placeholder="Cash" />
+                      <SelectValue placeholder="Online Payment" />
                     </SelectTrigger>
                     <SelectContent className="bg-white">
                       <SelectGroup>
-                        <SelectItem value="CASH">Cash</SelectItem>
-                        <SelectItem value="VISA">Visa</SelectItem>
+                        <SelectItem value="Online Payment">Online Payment</SelectItem>
+                        <SelectItem value="Paid Now">Paid Now</SelectItem>
                       </SelectGroup>
                     </SelectContent>
                   </Select>

@@ -33,6 +33,7 @@ import Fill_EDIT_API from "./PDFs/Fill_EDIT_API";
 import EditClientModal from "../Clients/EditClientModal";
 import { setEditClientData } from "@/redux/features/Clients";
 import { useDispatch } from "react-redux";
+import Fill_All_PDFs from "./PDFs/Fill_All_PDFs";
 
 const schema = yup
   .object({
@@ -258,6 +259,12 @@ const NewAppeals = ({
                     pin3={watch("pin3")}
                   />
                   <Fill_Sales_Questions
+                    property={property}
+                    client={client}
+                    pin2={watch("pin2")}
+                    pin3={watch("pin3")}
+                  />
+                  <Fill_All_PDFs
                     property={property}
                     client={client}
                     pin2={watch("pin2")}

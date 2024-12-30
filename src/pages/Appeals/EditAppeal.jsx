@@ -9,18 +9,14 @@ import { Button } from "../../components/ui/button";
 import { useDispatch, useSelector } from "react-redux";
 import { setEditAppealData } from "@/redux/features/AppealSlice";
 import { useEffect, useState } from "react";
-import { Download, Trash2, Upload, X } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { useUpdateAppealMutation } from "@/redux/apiSlice";
 import Loader from "@/components/Loader";
 import { useToast } from "@/components/ui/use-toast";
-import { Label } from "@/components/ui/label";
-import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import Fill_EDIT_API from "./PDFs/Fill_EDIT_API";
 import AppealStatusSelect from "./AppealStatusSelect";
 import UploadFile from "./UploadFile";
-import downloadPDF from "@/utiles/downloadPDF";
 import DownloadedFileItem from "./DownloadedFileItem";
 
 const EditAppeal = ({ fetchData }) => {

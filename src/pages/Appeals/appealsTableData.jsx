@@ -9,12 +9,15 @@ import {
   addAppealToInvoice,
   setAppealInvoiceDetails,
   setDeleteAppealData,
+  setDocumentsStatusAppealModel,
   setEditAppealData,
+  setFormsAppeal,
 } from "@/redux/features/AppealSlice";
 import { reverseDate } from "@/utiles/revserDate";
 import { MoreHorizontal } from "lucide-react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import Fill_Form_Client from "./PDFs/Fill_Form_Client";
 
 export const appealsColumns = [
   {
@@ -89,6 +92,16 @@ export const appealsColumns = [
     },
   },
   {
+    header: "Signature Sent",
+    cell: ({ row }) => {
+      return (
+        <div className="flex items-center gap-2">
+          <span>{row.original.signature_sent ? "Yes" : "No"}</span>
+        </div>
+      );
+    },
+  },
+  {
     id: "actions",
     enableHiding: false,
     cell: ({ row }) => {
@@ -120,6 +133,21 @@ export const appealsColumns = [
               onClick={() => dispatch(setAppealInvoiceDetails(row.original))}
             >
               View Invoices
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              className="hover:bg-slate-100 cursor-pointer"
+              onClick={() => dispatch(setFormsAppeal(row.original))}
+            >
+              Send Forms
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              className={` cursor-pointer ${!row.original.signature_sent ? "text-[#80838E] cursor-not-allowed" : " hover:bg-slate-100"}`}
+              onClick={() =>
+                row.original.signature_sent &&
+                dispatch(setDocumentsStatusAppealModel(row.original))
+              }
+            >
+              Signature Status
             </DropdownMenuItem>
             <DropdownMenuItem
               className="hover:bg-slate-100 cursor-pointer text-red-500"

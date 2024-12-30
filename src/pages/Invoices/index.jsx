@@ -29,14 +29,6 @@ const Invoices = () => {
   });
 
   const fetchData = useCallback(async () => {
-    /* const filterObject = {
-      appeal_status_id: status.id,
-      township_id: townshipId,
-    };
-    Object.keys(filterObject).forEach((key) => {
-      if (!filterObject[key]) delete filterObject[key];
-    }); */
-    // &sort=${sortBy.value}&limit=10&page=${page}&filters=${JSON.stringify(filterObject)}
     await getInvoices(`search=${searchText}&page=${page}&sort=-id`);
   }, [getInvoices, searchText, page]);
 

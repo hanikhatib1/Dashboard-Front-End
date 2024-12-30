@@ -6,6 +6,7 @@ import FillPOC_BOR_API from "./FillPOC_BOR_API";
 import Fill_SA_API from "./Fill_SA_API";
 import Fill_Appeal_Narrative_API from "./Fill_Appeal_Narrative_API";
 import Fill_Sales_Questions_API from "./Fill_Sales_Questions_API";
+import Fill_All_PDFs_API from "./Fill_All_PDFs_API";
 
 const Fill_EDIT_API = ({ client_email, pin1, pin2, pin3 }) => {
   const [exportAppealData, { data }] = useExportAppealDataMutation();
@@ -38,6 +39,7 @@ const Fill_EDIT_API = ({ client_email, pin1, pin2, pin3 }) => {
         hasData={hasData}
         data={data ? data.data : false}
       />
+      <Fill_All_PDFs_API hasData={hasData} data={data ? data.data : false} />
     </div>
   );
 };

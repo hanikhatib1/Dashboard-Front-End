@@ -9,8 +9,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { useToast } from "@/components/ui/use-toast";
 import { useDeleteAppealMutation } from "@/redux/apiSlice";
 import { setDeleteAppealData } from "@/redux/features/AppealSlice";

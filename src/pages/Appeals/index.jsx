@@ -19,6 +19,8 @@ import { addAppealToInvoice } from "@/redux/features/AppealSlice";
 import InvoicesModel from "./InvoicesModel";
 import EditInvoice from "../Invoices/EditInvoice";
 import DeleteInvoiceModel from "../Invoices/DeleteInvoiceModel";
+import SendFormModel from "./SendFormModel";
+import DocumentsStatusAppealModel from "./DocumentsStatusAppealModel";
 
 const Appeals = () => {
   const [searchText, setSearchText] = useState("");
@@ -29,6 +31,8 @@ const Appeals = () => {
     deleteAppealData,
     appealToInvoice,
     appealInvoiceDetails,
+    formsAppeal,
+    documentsStatusAppealModel,
   } = useSelector((state) => state.appeals);
   const { editInvoiceData, deleteInvoiceData } = useSelector(
     (state) => state.invoices
@@ -123,6 +127,8 @@ const Appeals = () => {
 
       {editInvoiceData && <EditInvoice />}
       {deleteInvoiceData && <DeleteInvoiceModel />}
+      {formsAppeal && <SendFormModel />}
+      {documentsStatusAppealModel && <DocumentsStatusAppealModel />}
     </div>
   );
 };

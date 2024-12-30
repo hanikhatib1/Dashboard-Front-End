@@ -87,7 +87,10 @@ const Login = () => {
               </Button>
             </div>
           </form>
-          <Link to={auth.forgetPassword} className="text-body text-[#80838E] px-1">
+          <Link
+            to="/forget-password/set-new-password"
+            className="text-body text-[#80838E] px-1"
+          >
             Forget Password?
           </Link>
         </div>

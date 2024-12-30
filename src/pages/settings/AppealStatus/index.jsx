@@ -7,13 +7,14 @@ import {
   useGetAllStatusQuery,
   useUpdateStatusMutation,
 } from "@/redux/apiSlice";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "react-day-picker";
 import DeleteStatusButton from "./DeleteStatusButton";
 
 const AppealStatus = () => {
   const { data, isLoading, isError, refetch } = useGetAllStatusQuery();
   const [statusText, setStatusText] = useState("");
+  const [statusSort, setStatusSort] = useState(null);
   const [editStatus, setEditStatus] = useState(null);
   const { toast } = useToast();
   const [addStatus, { isLoading: isLoadingAddStatus }] = useAddStatusMutation();
@@ -22,7 +23,7 @@ const AppealStatus = () => {
 
   const handleAddStatus = async () => {
     try {
-      const res = await addStatus({ status: statusText });
+      const res = await addStatus({ status: statusText, sort: statusSort });
       if ("error" in res)
         toast({
           title: "Error",
@@ -47,7 +48,7 @@ const AppealStatus = () => {
     try {
       const res = await updateStatus({
         id: editStatus.id,
-        body: { status: statusText },
+        body: { status: statusText, sort: statusSort },
       });
       if ("error" in res)
         toast({
@@ -70,6 +71,13 @@ const AppealStatus = () => {
     }
   };
 
+  useEffect(() => {
+    if (editStatus) {
+      setStatusSort(editStatus.sort);
+      setStatusText(editStatus.status);
+    }
+  }, [editStatus]);
+
   return (
     <div className="p-4 flex flex-col gap-6">
       <p className="text-heading_2 text-[#80838E]">Appeal Status</p>
@@ -77,8 +85,15 @@ const AppealStatus = () => {
         <Input
           className="w-[40%] rounded-[8px]"
           placeholder="Status"
-          value={statusText}
+          value={statusText ?? ""}
           onChange={(e) => setStatusText(e.target.value)}
+        />
+        <Input
+          className="rounded-[8px] w-[120px]"
+          placeholder="Sort"
+          type="number"
+          value={statusSort}
+          onChange={(e) => setStatusSort(e.target.value)}
         />
         {editStatus ? (
           <>
@@ -94,6 +109,7 @@ const AppealStatus = () => {
               onClick={() => {
                 setEditStatus(null);
                 setStatusText("");
+                setStatusSort("");
               }}
             >
               Cancel
@@ -120,13 +136,15 @@ const AppealStatus = () => {
                 key={status.id}
                 className="flex justify-between w-full border-b p-2"
               >
-                <p>{status.status}</p>
+                <div className="flex gap-6 w-full">
+                  <p className="w-[40%]">{status.status}</p>
+                  <p>{status.sort}</p>
+                </div>
                 <div className="flex gap-2">
                   <Button
                     className="flex gap-2 items-center text-white rounded-[8px] bg-primary  px-4 py-2 cursor-pointer"
                     onClick={() => {
                       setEditStatus(status);
-                      setStatusText(status.status);
                     }}
                   >
                     Edit
