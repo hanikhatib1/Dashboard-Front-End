@@ -13,6 +13,7 @@ import { formattedNumber } from "@/utiles/formattedNumber";
 import { format } from "date-fns";
 import { MoreHorizontal } from "lucide-react";
 import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 
 export const invoicesTableData = [
   {
@@ -45,6 +46,17 @@ export const invoicesTableData = [
         <div className="flex items-center gap-2 max-w-[180px] text-[14px]">
           <span>{row.original.payed ? "Yes" : "No"}</span>
         </div>
+      );
+    },
+  },
+  {
+    accessorKey: "document",
+    header: "Payed",
+    cell: ({ row }) => {
+      return (
+        <Link to={row.original.document} target="_blank" className="flex items-center underline gap-2 max-w-[180px] text-[14px]">
+          Document
+        </Link>
       );
     },
   },

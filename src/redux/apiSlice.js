@@ -482,6 +482,12 @@ export const apiSlice = createApi({
                 method: 'PATCH',
             }),
         }),
+        getInvoiveNumber: builder.mutation({
+            query: () => ({
+                url: '/invoice/get_invoice_number',
+                method: 'GET',
+            }),
+        }),
 
     }),
 });
@@ -515,5 +521,6 @@ export const {
     useGetContactUsInfoQuery,
     useSendFormSignatureMutation,
     useGetAppealDocumentsStatusMutation,
-    useOpenToSendDocumentMutation
+    useOpenToSendDocumentMutation,
+    useGetInvoiveNumberMutation,
 } = apiSlice;

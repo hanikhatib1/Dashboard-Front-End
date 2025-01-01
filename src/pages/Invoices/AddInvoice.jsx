@@ -16,7 +16,7 @@ import {
   SelectTrigger,
 } from "@/components/ui/select";
 import { useToast } from "@/components/ui/use-toast";
-import { useAddInvoiceMutation } from "@/redux/apiSlice";
+import { useAddInvoiceMutation, useGetInvoiveNumberMutation } from "@/redux/apiSlice";
 import { DialogTitle } from "@radix-ui/react-dialog";
 import { SelectValue } from "@radix-ui/react-select";
 import { Plus, Trash2 } from "lucide-react";
@@ -28,6 +28,10 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import PropTypes from "prop-types";
 import { useDispatch, useSelector } from "react-redux";
 import { addAppealToInvoice } from "@/redux/features/AppealSlice";
+import InvoicePDF from "@/assets/PDFs/Invoice.pdf";
+import { PDFDocument } from "pdf-lib";
+import { setFieldPDF } from "@/utiles/setFieldPDF";
+import { formattedNumber } from "@/utiles/formattedNumber";
 
 const schema = yup
   .object({
@@ -41,6 +45,39 @@ const AddInvoice = ({ hideButton = false, open, setOpen, defaultAppeal }) => {
   const { toast } = useToast();
   const [appeal, setAppeal] = React.useState(null);
   const { appealToInvoice } = useSelector((state) => state.appeals);
+  const [getInvoiveNumber] = useGetInvoiveNumberMutation();
+
+  const fillForm = async (taxSaving, invoiceNumber) => {
+    const formUrl = InvoicePDF;
+    const formPdfBytes = await fetch(formUrl).then((res) => res.arrayBuffer());
+    const pdfDoc = await PDFDocument.load(formPdfBytes);
+    const form = pdfDoc.getForm();
+    const fildes = form.getFields();
+    const currentYear = new Date().getFullYear();
+    const currentMonth = new Date().getMonth();
+    const currentDay = new Date().getDate();
+
+    //`${currentMonth + 1}/${currentDay}/${currentYear}`
+    setFieldPDF(
+      form,
+      "property_address1",
+      `${appeal.address}`
+    );
+    setFieldPDF(
+      form,
+      "mailing_address1",
+      `${appeal.client_address}`
+    );
+    setFieldPDF(form, "invoice_date", `${currentMonth + 1}/${currentDay}/${currentYear}`);
+    setFieldPDF(form, "due_date", `${currentYear}${currentMonth + 1}${currentDay}`);
+    setFieldPDF(form, "tax_savings", `$${formattedNumber(Number(taxSaving))}`);
+    setFieldPDF(form, "amount_due", `$${formattedNumber(Number(taxSaving) * 0.25)}`);
+    setFieldPDF(form, "invoice_number", `${invoiceNumber}`);
+
+    const pdfBytes = await pdfDoc.save();
+
+    return pdfBytes;
+  };
 
   const {
     handleSubmit,
@@ -52,11 +89,23 @@ const AddInvoice = ({ hideButton = false, open, setOpen, defaultAppeal }) => {
       payment_methode: "Online Payment",
       actual_saving: "",
       appeal_id: null,
+      real_id: null,
+      document: null,
     },
     resolver: yupResolver(schema),
   });
 
   const onSubmit = async (data) => {
+    const invoiveRes = await getInvoiveNumber();
+    if ('error' in invoiveRes) {
+      toast({
+        title: "Error",
+        description: "An error occurred while getting invoice number",
+        variant: "destructive",
+      });
+      return;
+    }
+    const invoiceNumber = invoiveRes.data.data;
     if (data.actual_saving) {
       data.actual_saving = data.actual_saving
         .toString()
@@ -64,8 +113,19 @@ const AddInvoice = ({ hideButton = false, open, setOpen, defaultAppeal }) => {
         .split(",")
         .join("");
     }
+    const invoivePDF = await fillForm(data.actual_saving, invoiceNumber);
     data.actual_saving = Number(data.actual_saving);
-    const res = await addInvoice(data).unwrap();
+    data.document = invoivePDF;
+    data.invoice_number = invoiceNumber;
+
+    const formData = new FormData();
+    formData.append("document", new Blob([invoivePDF], { type: "application/pdf" }));
+    formData.append("actual_saving", data.actual_saving);
+    formData.append("appeal_id", data.appeal_id);
+    formData.append("payment_methode", data.payment_methode);
+    formData.append("real_id", data.invoice_number);
+
+    const res = await addInvoice(formData).unwrap();
     if (res.error) {
       toast({
         title: "Error",
