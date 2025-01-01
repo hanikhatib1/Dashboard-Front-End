@@ -135,8 +135,8 @@ export const appealsColumns = [
               View Invoices
             </DropdownMenuItem>
             <DropdownMenuItem
-              className="hover:bg-slate-100 cursor-pointer"
-              onClick={() => dispatch(setFormsAppeal(row.original))}
+              className={` cursor-pointer ${row.original.signature_sent ? "text-[#80838E] cursor-not-allowed" : " hover:bg-slate-100"}`}
+              onClick={() => !row.original.signature_sent && dispatch(setFormsAppeal(row.original))}
             >
               Send Forms
             </DropdownMenuItem>

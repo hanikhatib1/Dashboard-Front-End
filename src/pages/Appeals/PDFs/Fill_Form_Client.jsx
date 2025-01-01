@@ -6,11 +6,13 @@ import { formatPhoneNumber } from "@/utiles/formatPhoneNumber";
 import PropTypes from "prop-types";
 import {
   useExportAppealDataMutation,
+  useOpenToSendDocumentMutation,
   useSendFormSignatureMutation,
 } from "@/redux/apiSlice";
 import { useToast } from "@/components/ui/use-toast";
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setDocumentsStatusAppealModel, setFormsAppeal } from "@/redux/features/AppealSlice";
 
 const Fill_Form_Client = ({
   client_email,
@@ -19,6 +21,7 @@ const Fill_Form_Client = ({
   pin3,
   text,
   className,
+  isOpenToSendDocument = false
 }) => {
   const currentYear = new Date().getFullYear();
   const currentMonth = new Date().getMonth();
@@ -27,7 +30,10 @@ const Fill_Form_Client = ({
   const [sendForm] = useSendFormSignatureMutation();
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
-  const { formsAppeal } = useSelector((state) => state.appeals);
+  const { formsAppeal, documentsStatusAppealModel } = useSelector((state) => state.appeals);
+  const [openToSendDocument, { isLoading: openToSendDocumentIsLoading }] = useOpenToSendDocumentMutation();
+  const dispatch = useDispatch();
+
 
   const fillPOC_CCA = async () => {
     setIsLoading(true);
@@ -224,6 +230,7 @@ const Fill_Form_Client = ({
           description: "Form sent successfully",
           variant: "success",
         });
+        dispatch(setFormsAppeal(null));
       }
       if ("error" in res2) {
         toast({
@@ -236,13 +243,33 @@ const Fill_Form_Client = ({
     }
   };
 
+  const handleOpenToSendDocument = async () => {
+    const res = await openToSendDocument(documentsStatusAppealModel.id);
+    if ("data" in res) {
+      toast({
+        title: "Success",
+        description: "Document is ready to be sent",
+        variant: "success",
+      });
+      dispatch(setDocumentsStatusAppealModel(null));
+
+    }
+    if ("error" in res) {
+      toast({
+        title: "Error",
+        description: "Error opening the document",
+        variant: "error",
+      });
+    }
+  };
+
   return (
     <div
-      onClick={() => fillPOC_CCA()}
-      disabled={isLoading}
+      onClick={() => isOpenToSendDocument ? handleOpenToSendDocument() : fillPOC_CCA()}
+      disabled={isLoading || openToSendDocumentIsLoading}
       className={`${className} bg-primary rounded-[8px]  text-white flex items-center justify-center cursor-pointer px-4`}
     >
-      <p>{isLoading ? "Loading..." : text ? text : "Send Form"}</p>
+      <p>{isLoading || openToSendDocumentIsLoading ? "Loading..." : text ? text : "Send Form"}</p>
     </div>
   );
 };

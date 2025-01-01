@@ -476,6 +476,12 @@ export const apiSlice = createApi({
                 method: 'GET',
             }),
         }),
+        openToSendDocument: builder.mutation({
+            query: (id) => ({
+                url: `/appeal/open_to_send_docs/${id}`,
+                method: 'PATCH',
+            }),
+        }),
 
     }),
 });
@@ -509,4 +515,5 @@ export const {
     useGetContactUsInfoQuery,
     useSendFormSignatureMutation,
     useGetAppealDocumentsStatusMutation,
+    useOpenToSendDocumentMutation
 } = apiSlice;

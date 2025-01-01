@@ -97,6 +97,7 @@ const DocumentsStatusAppealModel = () => {
                       pin2={documentsStatusAppealModel.pin2}
                       pin3={documentsStatusAppealModel.pin3}
                       client_email={documentsStatusAppealModel.client_email}
+                      isOpenToSendDocument={true}
                       text="Send Form again"
                       className="bg-white rounded-[8px]  !text-primary border border-primary hover:bg-primary hover:!text-white py-2"
                     />

@@ -26,6 +26,7 @@ import {
 import { useToast } from "@/components/ui/use-toast";
 import Loader from "@/components/Loader";
 import AddressSearch from "@/components/AddressSearch";
+import { formatPhoneNumber } from "@/utiles/formatPhoneNumber";
 
 const CustomInput = ({ register, name, label, type = "text", ...props }) => {
   return (
@@ -58,7 +59,7 @@ const AddNewEmployeeModal = () => {
   const { data: permissions, isSuccess: isPermissionsSuccess } =
     useGetPermissionsQuery();
   const [addEmployee, { isLoading }] = useAddEmployeeMutation();
-  const { handleSubmit, register, getValues, setValue } = useForm({
+  const { handleSubmit, register, getValues, setValue, watch } = useForm({
     defaultValues: {
       first_name: "",
       last_name: "",
@@ -74,6 +75,7 @@ const AddNewEmployeeModal = () => {
   });
 
   const onSubmit = async (data) => {
+    data['phone'] = data['phone'].split("-").join("");
     const form_data = new FormData();
     for (var key in data) {
       form_data.append(key, data[key]);
@@ -111,7 +113,7 @@ const AddNewEmployeeModal = () => {
   }, [addressData, setValue]);
 
   return (
-    <Dialog open={open} defaultOpen={open}>
+    <Dialog open={open} defaultOpen={open} onOpenChange={(e) => setOpen(e)}>
       <DialogTrigger asChild>
         <Button
           className="bg-primary rounded-[8px] text-white flex justify-center items-center gap-1"
@@ -202,11 +204,24 @@ const AddNewEmployeeModal = () => {
                   type="email"
                   register={register("email")}
                 />
-                <CustomInput
+                {/* <CustomInput
                   label="Phone"
                   name="Phone "
                   register={register("phone")}
-                />
+                /> */}
+                <div className="sm:w-[calc(50%-16px)] w-full flex flex-col gap-2 flex-2">
+                  <label htmlFor="Phone" className="text-body text-[#80838E]">
+                    Phone
+                  </label>
+                  <Input
+                    id="Phone"
+                    type="text"
+                    className="rounded-[8px] h-[48px]"
+                    name="phone"
+                    value={formatPhoneNumber(watch('phone'))}
+                    onChange={e => setValue('phone', e.target.value)}
+                  />
+                </div>
               </div>
             </div>
             <div>

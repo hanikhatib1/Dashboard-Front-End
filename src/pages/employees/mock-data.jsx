@@ -18,6 +18,7 @@ import {
   deleteEmployeeById,
   setEditEmployeeData,
 } from "@/redux/features/Employee";
+import { formatPhoneNumber } from "@/utiles/formatPhoneNumber";
 
 export const mockData = [
   {
@@ -154,8 +155,10 @@ export const columns = [
     header: "Email",
   },
   {
-    accessorKey: "phone",
     header: "Phone",
+    cell: ({ row }) => {
+      return (<p>{formatPhoneNumber(row.original.phone)}</p>)
+    },
   },
   {
     accessorKey: "status",
