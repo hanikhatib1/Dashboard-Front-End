@@ -26,8 +26,7 @@ import SearchAppeal from "./SearchAppeal";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import PropTypes from "prop-types";
-import { useDispatch, useSelector } from "react-redux";
-import { addAppealToInvoice } from "@/redux/features/AppealSlice";
+import { useSelector } from "react-redux";
 import InvoicePDF from "@/assets/PDFs/Invoice.pdf";
 import { PDFDocument } from "pdf-lib";
 import { setFieldPDF } from "@/utiles/setFieldPDF";
@@ -52,12 +51,10 @@ const AddInvoice = ({ hideButton = false, open, setOpen, defaultAppeal }) => {
     const formPdfBytes = await fetch(formUrl).then((res) => res.arrayBuffer());
     const pdfDoc = await PDFDocument.load(formPdfBytes);
     const form = pdfDoc.getForm();
-    const fildes = form.getFields();
     const currentYear = new Date().getFullYear();
     const currentMonth = new Date().getMonth();
     const currentDay = new Date().getDate();
 
-    //`${currentMonth + 1}/${currentDay}/${currentYear}`
     setFieldPDF(
       form,
       "property_address1",
@@ -69,7 +66,7 @@ const AddInvoice = ({ hideButton = false, open, setOpen, defaultAppeal }) => {
       `${appeal.client_address}`
     );
     setFieldPDF(form, "invoice_date", `${currentMonth + 1}/${currentDay}/${currentYear}`);
-    setFieldPDF(form, "due_date", `${currentYear}${currentMonth + 1}${currentDay}`);
+    setFieldPDF(form, "due_date", `${currentYear}/${currentMonth + 1}/${currentDay}`);
     setFieldPDF(form, "tax_savings", `$${formattedNumber(Number(taxSaving))}`);
     setFieldPDF(form, "amount_due", `$${formattedNumber(Number(taxSaving) * 0.25)}`);
     setFieldPDF(form, "invoice_number", `${invoiceNumber}`);

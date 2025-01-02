@@ -7,7 +7,7 @@ export const formatPhoneNumber = (phoneNumber) => {
     if (s1) s.push(s1);
     const s2 = phone.substring(3, 6).replace('-', "");
     if (s2) s.push(s2);
-    const s3 = phone.substring(6, 10).replace('-', "");
+    const s3 = phone.substring(6, 11).replace('-', "");
     if (s3) s.push(s3);
 
     return s.join('-');

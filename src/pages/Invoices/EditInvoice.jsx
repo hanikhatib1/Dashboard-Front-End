@@ -5,7 +5,6 @@ import {
   DialogContent,
   DialogFooter,
   DialogHeader,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import {
@@ -27,6 +26,10 @@ import { setEditInvoiceData } from "@/redux/features/Invoices";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import InvoicePDF from "@/assets/PDFs/Invoice.pdf";
+import { PDFDocument } from "pdf-lib";
+import { setFieldPDF } from "@/utiles/setFieldPDF";
+import { formattedNumber } from "@/utiles/formattedNumber";
 
 const schema = yup
   .object({
@@ -42,6 +45,46 @@ const EditInvoice = ({ fetchData }) => {
   const { editInvoiceData } = useSelector((state) => state.invoices);
   const dispatch = useDispatch();
 
+  const fillForm = async (taxSaving, invoiceNumber) => {
+      const formUrl = InvoicePDF;
+      const formPdfBytes = await fetch(formUrl).then((res) => res.arrayBuffer());
+      const pdfDoc = await PDFDocument.load(formPdfBytes);
+      const form = pdfDoc.getForm();
+      const currentYear = new Date().getFullYear();
+      const currentMonth = new Date().getMonth();
+      const currentDay = new Date().getDate();
+  
+      setFieldPDF(
+        form,
+        "property_address1",
+        `${appeal.address}`
+      );
+      setFieldPDF(
+        form,
+        "mailing_address1",
+        `${appeal.client_address}`
+      );
+      setFieldPDF(form, "invoice_date", `${currentMonth + 1}/${currentDay}/${currentYear}`);
+      setFieldPDF(form, "due_date", `${currentMonth + 1}/${currentDay}/${currentYear}`);
+      setFieldPDF(form, "tax_savings", `$${formattedNumber(Number(taxSaving))}`);
+      setFieldPDF(form, "amount_due", `$${formattedNumber(Number(taxSaving) * 0.25)}`);
+      setFieldPDF(form, "invoice_number", `${invoiceNumber}`);
+  
+      const pdfBytes = await pdfDoc.save();
+  
+      return pdfBytes;
+      /* const pdfBytes = await pdfDoc.save();
+
+    const blob = new Blob([pdfBytes], { type: "application/pdf" });
+
+    const url = URL.createObjectURL(blob);
+
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `Representation_Agreement_Client.pdf`;
+    link.click(); */
+  };
+
   const {
     handleSubmit,
     setValue,
@@ -52,6 +95,7 @@ const EditInvoice = ({ fetchData }) => {
       payment_methode: editInvoiceData.payment_methode,
       actual_saving: editInvoiceData.actual_saving,
       appeal_id: editInvoiceData.appeal.id,
+      document: null,
     },
     resolver: yupResolver(schema),
   });
@@ -65,8 +109,17 @@ const EditInvoice = ({ fetchData }) => {
         .join("");
     }
     data.actual_saving = Number(data.actual_saving);
+    const invoivePDF = await fillForm(data.actual_saving, editInvoiceData.invoice_number);
+
+    const formData = new FormData();
+    formData.append("document", new Blob([invoivePDF], { type: "application/pdf" }));
+    formData.append("actual_saving", data.actual_saving);
+    formData.append("appeal_id", data.appeal_id);
+    formData.append("payment_methode", data.payment_methode);
+    formData.append("real_id", editInvoiceData.invoice_number);
+
     const res = await editInvoice({
-      body: data,
+      body: formData,
       id: editInvoiceData.id,
     });
     if ("data" in res) {

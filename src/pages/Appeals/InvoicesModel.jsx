@@ -45,7 +45,7 @@ const InvoicesModel = () => {
       defaultOpen={appealInvoiceDetails}
       onOpenChange={(open) => dispatch(setAppealInvoiceDetails(open))}
     >
-      <DialogContent className="w-max min-w-[500px] bg-white !rounded-[8px]">
+      <DialogContent className="w-max min-w-[700px] bg-white !rounded-[8px]">
         <DialogHeader>
           <DialogTitle>Appeal Invoices</DialogTitle>
         </DialogHeader>

@@ -4,10 +4,9 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "../../components/ui/dialog";
 import { Button } from "../../components/ui/button";
-import { Plus, UserRound } from "lucide-react";
+import { UserRound } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Input } from "../../components/ui/input";
@@ -16,12 +15,10 @@ import {
   SelectContent,
   SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
 import {
-  useAddEmployeeMutation,
   useEditEmployeeMutation,
   useGetPermissionsQuery,
 } from "@/redux/apiSlice";
@@ -33,6 +30,7 @@ import {
 } from "@/redux/features/Employee";
 import Loader from "@/components/Loader";
 import AddressSearch from "@/components/AddressSearch";
+import { formatPhoneNumber } from "@/utiles/formatPhoneNumber";
 
 const CustomInput = ({ register, name, label, type = "text", ...props }) => {
   return (
@@ -64,7 +62,7 @@ const EditEmployeeModal = () => {
   });
   const dispatch = useDispatch();
   const [editEmployee, { isLoading }] = useEditEmployeeMutation();
-  const { handleSubmit, register, getValues, setValue } = useForm({
+  const { handleSubmit, register, setValue, watch } = useForm({
     defaultValues: {
       first_name: editEmployeeData.first_name,
       last_name: editEmployeeData.last_name,
@@ -232,11 +230,19 @@ const EditEmployeeModal = () => {
                   type="email"
                   register={register("email")}
                 />
-                <CustomInput
-                  label="Phone"
-                  name="Phone "
-                  register={register("phone")}
-                />
+                <div className="sm:w-[calc(50%-16px)] w-full flex flex-col gap-2 flex-2">
+                  <label htmlFor="Phone" className="text-body text-[#80838E]">
+                    Phone
+                  </label>
+                  <Input
+                    id="Phone"
+                    type="text"
+                    className="rounded-[8px] h-[48px]"
+                    name="phone"
+                    value={ (watch("phone"))}
+                    onChange={(e) => setValue("phone", e.target.value)}
+                  />
+                </div>
               </div>
             </div>
             <div>
