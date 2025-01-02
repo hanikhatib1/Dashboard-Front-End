@@ -108,6 +108,7 @@ const EditAppeal = ({ fetchData }) => {
   }, [errors]);
 
   useEffect(() => {
+    console.log(editAppealData);
     setStatus(editAppealData?.appeal_status);
   }, [editAppealData]);
 

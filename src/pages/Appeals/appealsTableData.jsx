@@ -18,6 +18,7 @@ import { MoreHorizontal } from "lucide-react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import Fill_Form_Client from "./PDFs/Fill_Form_Client";
+import { formatPhoneNumber } from "@/utiles/formatPhoneNumber";
 
 export const appealsColumns = [
   {
@@ -97,6 +98,16 @@ export const appealsColumns = [
       return (
         <div className="flex items-center gap-2">
           <span>{row.original.signature_sent ? "Yes" : "No"}</span>
+        </div>
+      );
+    },
+  },
+  {
+    header: "Phone Number",
+    cell: ({ row }) => {
+      return (
+        <div className="flex items-center gap-2">
+          <span>{formatPhoneNumber(row.original.client_phone)}</span>
         </div>
       );
     },

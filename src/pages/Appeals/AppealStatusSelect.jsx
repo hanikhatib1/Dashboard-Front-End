@@ -37,7 +37,7 @@ const AppealStatusSelect = ({
       >
         <SelectTrigger className="rounded-[8px] h-[48px]">
           <SelectValue
-            placeholder={`Status : ${staticStatus ? staticStatus.status : "New"}`}
+            placeholder={`Status : ${staticStatus ? staticStatus.status : status ? status.status :"New"}`}
           >
             Status : {status.status}
           </SelectValue>
