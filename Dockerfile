@@ -1,23 +1,35 @@
-# Use the official Node.js image as the base image
-FROM node:18
+# Stage 1: Build the application
+FROM node:18 AS builder
 
 # Set the working directory inside the container
 WORKDIR /app
 
-# Copy the package.json and yarn.lock files to the working directory
-COPY package.json yarn.lock ./
+# Copy the package.json to the working directory
+COPY package.json ./
 
 # Install dependencies using Yarn
 RUN yarn install
 
-# Copy the rest of the application into the container
+# Copy the rest of the application files
 COPY . .
 
 # Build the application for production using Vite
 RUN yarn build
 
-# Expose the port used by `vite preview`
+# Stage 2: Serve the application
+FROM node:18-slim
+
+# Install a lightweight HTTP server
+RUN yarn global add serve
+
+# Set the working directory
+WORKDIR /app
+
+# Copy the built application from the builder stage
+COPY --from=builder /app/dist ./dist
+
+# Expose the port to the outside world
 EXPOSE 3000
 
-# Command to start the production server
-CMD ["yarn", "preview", "--host"]
+# Command to serve the application
+CMD ["serve", "-s", "dist", "-l", "3000"]
