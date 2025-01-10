@@ -20,15 +20,16 @@ pipeline {
         stage('Deploy') {
             steps {
                 script {
-                    // Stop and remove any running container with the same name
+                    // Stop and remove any running container with the same name as the image
                     sh '''
-                        if [ "$(docker ps -q -f name=task-manager)" ]; then
-                            docker stop task-manager
-                            docker rm task-manager
+                        CONTAINER_NAME=$(docker ps -aq -f "ancestor=$IMAGE_NAME")
+                        if [ ! -z "$CONTAINER_NAME" ]; then
+                            docker stop $CONTAINER_NAME
+                            docker rm $CONTAINER_NAME
                         fi
                     '''
                     // Run the new container
-                    sh 'docker run -d -p 3000:3000 --name task-manager $IMAGE_NAME'
+                    sh 'docker run -d -p 3000:3000 --name $IMAGE_NAME $IMAGE_NAME'
                 }
             }
         }
