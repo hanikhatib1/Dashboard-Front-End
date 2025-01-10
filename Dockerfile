@@ -7,14 +7,17 @@ WORKDIR /app
 # Copy the package.json and yarn.lock files to the working directory
 COPY package.json yarn.lock ./
 
-# Install project dependencies using Yarn
+# Install dependencies using Yarn
 RUN yarn install
 
-# Copy the rest of the project files into the working directory
+# Copy the rest of the application into the container
 COPY . .
 
-# Expose the port your React app runs on (default is 3000)
+# Build the application for production using Vite
+RUN yarn build
+
+# Expose the port used by `vite preview`
 EXPOSE 3000
 
-# Start the React development server
-CMD ["yarn", "start"]
+# Command to start the production server
+CMD ["yarn", "preview", "--host"]

@@ -28,7 +28,7 @@ pipeline {
                         fi
                     '''
                     // Run the new container
-                    sh 'docker run -d -p 5000:5000 --name task-manager $IMAGE_NAME'
+                    sh 'docker run -d -p 3000:3000 --name task-manager $IMAGE_NAME'
                 }
             }
         }
