@@ -14,14 +14,6 @@ pipeline {
                 script {    
                     // Build the Docker image locally, replacing the old image
                     sh "docker build -t $IMAGE_NAME ."
-
-                    // Optional: Remove untagged (dangling) images
-                    sh '''
-                        dangling_images=$(docker images -f "dangling=true" -q)
-                        if [ -n "$dangling_images" ]; then
-                            docker rmi $dangling_images
-                        fi
-                    '''
                 }
             }
         }
