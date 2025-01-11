@@ -14,7 +14,7 @@ pipeline {
                     sh 'docker build -t $IMAGE_NAME .'
 
                     // Delete Dangling Images
-                    sh 'sudo docker rmi $(sudo docker images -f "dangling=true" -q)'
+                    sh 'docker rmi $(sudo docker images -f "dangling=true" -q)'
                 }
             }
         }
