@@ -10,18 +10,11 @@ pipeline {
         stage('Build') {
             steps {
                 script {
+                    // Delete old Image
+                    sh 'docker rmi $IMAGE_NAME'
+
                     // Build the Docker image locally
                     sh 'docker build -t $IMAGE_NAME .'
-
-                    // Delete Dangling Images
-                    sh '''
-                        IMAGE_IDS=$(docker images -f "dangling=true" -q)
-                        if [ ! -z "$IMAGE_IDS" ]; then
-                            docker rmi $IMAGE_IDS
-                        else
-                            echo "No dangling images to remove."
-                        fi
-                    '''
                 }
             }
         }
