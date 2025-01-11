@@ -27,6 +27,7 @@ pipeline {
                             docker stop $CONTAINER_NAME
                             docker rm $CONTAINER_NAME
                         fi
+                        docker ps -a -q -f "name=$IMAGE_NAME" | xargs -I {} docker rm -f {}
                     '''
                     // Run the new container
                     sh 'docker run -d -p 3000:3000 --name $IMAGE_NAME $IMAGE_NAME'
