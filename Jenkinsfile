@@ -3,18 +3,23 @@ pipeline {
 
     environment {
         // Define the Docker image name
-        IMAGE_NAME = 'cook-county-dashboard'
+        IMAGE_NAME = 'cook-county-dashboard:latest'
     }
 
     stages {
         stage('Build') {
             steps {
-                script {
-                    // Delete old Image
-                    sh 'docker rmi $IMAGE_NAME'
+                script {    
+                    // Build the Docker image locally, replacing the old image
+                    sh "docker build -t $IMAGE_NAME ."
 
-                    // Build the Docker image locally
-                    sh 'docker build -t $IMAGE_NAME .'
+                    // Optional: Remove untagged (dangling) images
+                    sh '''
+                        dangling_images=$(docker images -f "dangling=true" -q)
+                        if [ -n "$dangling_images" ]; then
+                            docker rmi $dangling_images
+                        fi
+                    '''
                 }
             }
         }
