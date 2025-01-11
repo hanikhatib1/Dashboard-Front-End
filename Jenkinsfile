@@ -12,6 +12,9 @@ pipeline {
                 script {
                     // Build the Docker image locally
                     sh 'docker build -t $IMAGE_NAME .'
+
+                    // Delete Dangling Images
+                    sh 'sudo docker rmi $(sudo docker images -f "dangling=true" -q)'
                 }
             }
         }
