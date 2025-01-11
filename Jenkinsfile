@@ -4,7 +4,7 @@ pipeline {
     environment {
         // Define the Docker image name
         IMAGE_NAME = 'cook-county-dashboard:latest'
-        CONTAINER_NAME= 'cook-county-dashboard'
+        CONTAINER_NAME = 'cook-county-dashboard'
     }
 
     stages {
@@ -31,9 +31,10 @@ pipeline {
                 script {
                     // Stop and remove any running container with the same name as the image
                     sh '''
-                        if [ ! -z "$CONTAINER_NAME" ]; then
-                            docker stop $CONTAINER_NAME
-                            docker rm $CONTAINER_NAME
+                        CONTAINER=$(docker ps -aq -f "ancestor=$CONTAINER_NAME")
+                        if [ ! -z "$CONTAINER" ]; then
+                            docker stop $CONTAINER
+                            docker rm $CONTAINER
                         fi
                         docker ps -a -q -f "name=$IMAGE_NAME" | xargs -I {} docker rm -f {}
                     '''
