@@ -39,7 +39,7 @@ pipeline {
                         docker ps -a -q -f "name=$IMAGE_NAME" | xargs -I {} docker rm -f {}
                     '''
                     // Run the new container
-                    sh 'docker run -d -p 3000:3000 --name $IMAGE_NAME $IMAGE_NAME'
+                    sh 'docker run -d -p 3000:3000 --name $IMAGE_NAME $CONTAINER_NAME'
                 }
             }
         }
