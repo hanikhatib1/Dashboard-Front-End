@@ -14,7 +14,14 @@ pipeline {
                     sh 'docker build -t $IMAGE_NAME .'
 
                     // Delete Dangling Images
-                    sh 'docker rmi $(sudo docker images -f "dangling=true" -q)'
+                    sh '''
+                        IMAGE_IDS=$(docker images -f "dangling=true" -q)
+                        if [ ! -z "$IMAGE_IDS" ]; then
+                            docker rmi $IMAGE_IDS
+                        else
+                            echo "No dangling images to remove."
+                        fi
+                    '''
                 }
             }
         }
