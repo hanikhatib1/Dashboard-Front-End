@@ -5,6 +5,7 @@ pipeline {
         // Define the Docker image name
         IMAGE_NAME = 'cook-county-dashboard:latest'
         CONTAINER_NAME = 'cook-county-dashboard'
+        PORT = 3000
     }
 
     stages {
@@ -39,7 +40,7 @@ pipeline {
                         docker ps -a -q -f "name=$IMAGE_NAME" | xargs -I {} docker rm -f {}
                     '''
                     // Run the new container
-                    sh 'docker run -d -p 3000:3000 --name $CONTAINER_NAME $IMAGE_NAME'
+                    sh 'docker run -d -p $PORT:$PORT --name $CONTAINER_NAME $IMAGE_NAME'
                 }
             }
         }
