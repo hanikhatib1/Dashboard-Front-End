@@ -13,6 +13,8 @@ RUN yarn install
 # Copy the rest of the application files
 COPY . .
 
+RUN echo "Back end URL: $VITE_BASE_URL_BACKEND"
+
 # Build the application for production using Vite
 RUN yarn build
 
