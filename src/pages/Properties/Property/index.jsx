@@ -4,10 +4,7 @@ import { useParams } from "react-router-dom";
 import { useGetOnePropertyMutation } from "@/redux/apiSlice";
 import Loader from "@/components/Loader";
 import Details from "../Details";
-import { buildStyles, CircularProgressbar } from "react-circular-progressbar";
 import PropertyAnalysis from "../PropertyAnalysis";
-import { useDispatch } from "react-redux";
-import { setMainProperty } from "@/redux/features/Properties";
 import { formattedNumber } from "@/utiles/formattedNumber";
 
 const Property = () => {

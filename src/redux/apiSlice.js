@@ -253,7 +253,7 @@ export const apiSlice = createApi({
         }),
         uploadSalesData: builder.mutation({
             query: (body) => ({
-                url: '/import_property_sale_data',
+                url: '/property/import_property_sale_data',
                 method: 'POST',
                 body
             }),

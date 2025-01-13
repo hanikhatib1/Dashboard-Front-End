@@ -1,13 +1,12 @@
-import React, { useState } from "react";
 import {
   buildStyles,
-  CircularProgressbar,
   CircularProgressbarWithChildren,
 } from "react-circular-progressbar";
 import PropTypes from "prop-types";
 import "react-circular-progressbar/dist/styles.css";
 import { formattedNumber } from "@/utiles/formattedNumber";
 import ReplacedImage from "@/components/ReplacedImage";
+import { reverseDate } from "@/utiles/revserDate";
 
 const PropertyAnalysis = ({ property }) => {
   /* const [fov, setFov] = useState(80);
@@ -32,6 +31,8 @@ const PropertyAnalysis = ({ property }) => {
     if (value < 0 && pitch === 0) return setPitch(0);
     setPitch((prev) => prev + value);
   }; */
+  const data = new Date(property.data.last_update);
+  const currentDate = data.toLocaleDateString("en-US"); 
 
   return (
     <div className="h-[426px] flex gap-8 justify-between">
@@ -46,7 +47,12 @@ const PropertyAnalysis = ({ property }) => {
         </div>
       </div>
       <div className="h-full w-[431px]  flex flex-col">
-        <p className="text-body text-[#9291A5]">Statistics</p>
+        <div className="flex justify-between">
+          <p className="text-body text-[#9291A5]">Statistics</p>
+          <p className="text-body text-[#9291A5]">
+            {currentDate}
+          </p>
+        </div>
         <p className="text-heading_2">Expected tax savings per year </p>
         <hr className="w-full mt-5 mb-6 bg-primary" />
         <div className="h-[256px] w-[250px] flex-1 flex flex-col gap-6 justify-center m-auto mt-4 text-center ">
