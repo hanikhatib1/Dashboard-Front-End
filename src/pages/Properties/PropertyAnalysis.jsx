@@ -32,7 +32,7 @@ const PropertyAnalysis = ({ property }) => {
     setPitch((prev) => prev + value);
   }; */
   const data = new Date(property.data.last_update);
-  const currentDate = data.toLocaleDateString("en-US"); 
+  const currentDate = data.toLocaleDateString("en-US");
 
   return (
     <div className="h-[426px] flex gap-8 justify-between">
@@ -47,11 +47,12 @@ const PropertyAnalysis = ({ property }) => {
         </div>
       </div>
       <div className="h-full w-[431px]  flex flex-col">
+        <div className="flex justify-between mb-4">
+          <p className="text-body text-[#9291A5]">Last Update</p>
+          <p className="text-body text-[#9291A5]">{currentDate}</p>
+        </div>
         <div className="flex justify-between">
           <p className="text-body text-[#9291A5]">Statistics</p>
-          <p className="text-body text-[#9291A5]">
-            {currentDate}
-          </p>
         </div>
         <p className="text-heading_2">Expected tax savings per year </p>
         <hr className="w-full mt-5 mb-6 bg-primary" />
