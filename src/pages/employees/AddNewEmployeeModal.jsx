@@ -45,7 +45,7 @@ const CustomInput = ({ register, name, label, type = "text", ...props }) => {
   );
 };
 
-const AddNewEmployeeModal = () => {
+const AddNewEmployeeModal = ({ refetch }) => {
   const [image, setImage] = useState();
   const [open, setOpen] = useState(false);
   const [groupPermissionName, setGroupPermissionName] = useState("");
@@ -75,7 +75,7 @@ const AddNewEmployeeModal = () => {
   });
 
   const onSubmit = async (data) => {
-    data['phone'] = data['phone'].split("-").join("");
+    data["phone"] = data["phone"].split("-").join("");
     const form_data = new FormData();
     for (var key in data) {
       form_data.append(key, data[key]);
@@ -83,6 +83,7 @@ const AddNewEmployeeModal = () => {
 
     const res = await addEmployee(form_data);
     if ("data" in res) {
+      if (refetch) refetch();
       setOpen(false);
       toast({
         title: "Success",
@@ -218,8 +219,8 @@ const AddNewEmployeeModal = () => {
                     type="text"
                     className="rounded-[8px] h-[48px]"
                     name="phone"
-                    value={formatPhoneNumber(watch('phone'))}
-                    onChange={e => setValue('phone', e.target.value)}
+                    value={formatPhoneNumber(watch("phone"))}
+                    onChange={(e) => setValue("phone", e.target.value)}
                   />
                 </div>
               </div>

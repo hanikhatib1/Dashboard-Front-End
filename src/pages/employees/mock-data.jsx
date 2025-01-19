@@ -16,6 +16,7 @@ import { useDispatch } from "react-redux";
 import { useToast } from "@/components/ui/use-toast";
 import {
   deleteEmployeeById,
+  setDeleteEmployeeData,
   setEditEmployeeData,
 } from "@/redux/features/Employee";
 import { formatPhoneNumber } from "@/utiles/formatPhoneNumber";
@@ -157,7 +158,7 @@ export const columns = [
   {
     header: "Phone",
     cell: ({ row }) => {
-      return (<p>{formatPhoneNumber(row.original.phone)}</p>)
+      return <p>{formatPhoneNumber(row.original.phone)}</p>;
     },
   },
   {
@@ -173,24 +174,7 @@ export const columns = [
     enableHiding: false,
     cell: ({ row }) => {
       const rowData = row.original;
-      const [deleteEmployee] = useDeleteEmployeeMutation();
       const dispatch = useDispatch();
-      const { toast } = useToast();
-      const deleteEmployeeHandler = async () => {
-        const res = await deleteEmployee(rowData.id);
-        if ("data" in res) {
-          deleteEmployeeById(rowData.id);
-          toast({
-            title: "Employee Deleted",
-            message: "Employee Deleted Successfully",
-            type: "success",
-          });
-        } else
-          toast({
-            title: "Error",
-            type: "error",
-          });
-      };
 
       return (
         <DropdownMenu>
@@ -208,7 +192,7 @@ export const columns = [
               Edit
             </DropdownMenuItem>
             <DropdownMenuItem
-              onClick={deleteEmployeeHandler}
+              onClick={() => dispatch(setDeleteEmployeeData(rowData))}
               className="hover:bg-slate-100 cursor-pointer"
             >
               Delete

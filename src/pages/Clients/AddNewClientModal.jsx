@@ -49,12 +49,10 @@ import { useToast } from "@/components/ui/use-toast";
 import Loader from "@/components/Loader";
 import PropTypes from "prop-types";
 import { formatPhoneNumber } from "@/utiles/formatPhoneNumber";
-import { formattedNumber } from "@/utiles/formattedNumber";
 import DatePicker from "react-datepicker";
-import { reverseDate } from "@/utiles/revserDate";
 import AddressSearch from "@/components/AddressSearch";
 
-const AddNewClientModal = ({ buttonClassName }) => {
+const AddNewClientModal = ({ buttonClassName, refetch }) => {
   const [addressData, setAddressData] = useState({
     city: "",
     state: "",
@@ -110,6 +108,7 @@ const AddNewClientModal = ({ buttonClassName }) => {
 
     const res = await addClient(object);
     if ("data" in res) {
+      if (refetch) refetch();
       toast({
         title: "Client Added",
         description: "Client Added Successfully",

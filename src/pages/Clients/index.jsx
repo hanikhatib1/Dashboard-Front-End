@@ -9,12 +9,15 @@ import Loader from "../../components/Loader";
 import { useDispatch, useSelector } from "react-redux";
 import { setClients } from "@/redux/features/Clients";
 import EditClientModal from "./EditClientModal";
+import DeleteClientModel from "./DeleteClientModel";
 
 const Client = () => {
   const [searchText, setSearchText] = useState("");
   const [getClients] = useGetClientsMutation();
   const dispatch = useDispatch();
-  const { clients, editClientData } = useSelector((state) => state.clients);
+  const { clients, editClientData, deleteClientData } = useSelector(
+    (state) => state.clients
+  );
   const [page, setPage] = useState(1);
 
   const fetchData = useCallback(async () => {
@@ -43,7 +46,7 @@ const Client = () => {
             />
           </div>
           <div className="flex gap-2">
-            <AddNewClientModal />
+            <AddNewClientModal refetch={fetchData} />
           </div>
         </div>
         <div className="rounded-[8px] ">
@@ -55,6 +58,7 @@ const Client = () => {
         </div>
       </div>
       {editClientData && <EditClientModal />}
+      {deleteClientData && <DeleteClientModel refetch={fetchData} />}
     </div>
   );
 };

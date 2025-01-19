@@ -13,10 +13,13 @@ import AddNewEmployeeModal from "./AddNewEmployeeModal";
 import { useDispatch, useSelector } from "react-redux";
 import { setEmployee } from "@/redux/features/Employee";
 import EditEmployeeModal from "./EditEmployeeModal";
+import DeleteEmployeeModel from "./DeleteEmployeeModel";
 
 const Employees = () => {
   const [searchText, setSearchText] = useState("");
-  const { editEmployeeData } = useSelector((state) => state.employee);
+  const { editEmployeeData, deleteEmployeeData } = useSelector(
+    (state) => state.employee
+  );
   const [page, setPage] = useState(1);
   const [getEmployees] = useGetEmployeesMutation();
   const { data: status, isLoading: statusLoading } = useGetEmployeeStatusQuery(
@@ -24,15 +27,14 @@ const Employees = () => {
   );
   const dispatch = useDispatch();
   const { employees } = useSelector((state) => state.employee);
-  useEffect(() => {
-    async function fetchData() {
-      const res = await getEmployees(
-        `search=${searchText}&page=${page}`
-      );
-      if ("data" in res) {
-        dispatch(setEmployee(res.data));
-      }
+
+  async function fetchData() {
+    const res = await getEmployees(`search=${searchText}&page=${page}`);
+    if ("data" in res) {
+      dispatch(setEmployee(res.data));
     }
+  }
+  useEffect(() => {
     fetchData();
   }, [searchText, page]);
 
@@ -66,7 +68,7 @@ const Employees = () => {
               className="border-none pl-[30px] bg-[#FCFCFC] outline-none focus:outline-offset-0 focus:outline-none absolute top-0 left-0 w-full h-full"
             />
           </div>
-          <AddNewEmployeeModal />
+          <AddNewEmployeeModal refetch={fetchData} />
         </div>
         <div className="rounded-[8px] flex justify-center">
           {employees ? (
@@ -80,7 +82,8 @@ const Employees = () => {
           )}
         </div>
       </div>
-      {editEmployeeData && <EditEmployeeModal />}
+      {editEmployeeData && <EditEmployeeModal refetch={fetchData} />}
+      {deleteEmployeeData && <DeleteEmployeeModel refetch={fetchData} />}
     </div>
   );
 };

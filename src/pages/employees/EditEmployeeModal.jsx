@@ -49,7 +49,7 @@ const CustomInput = ({ register, name, label, type = "text", ...props }) => {
   );
 };
 
-const EditEmployeeModal = () => {
+const EditEmployeeModal = ({ refetch }) => {
   const [image, setImage] = useState();
   const { toast } = useToast();
   const { editEmployeeData } = useSelector((state) => state.employee);
@@ -102,6 +102,7 @@ const EditEmployeeModal = () => {
         description: res.data.message,
         variant: "success",
       });
+      if(refetch) refetch();
       dispatch(setEditEmployeeData(null));
       dispatch(updateEmployeeById(newData));
     } else
@@ -239,7 +240,7 @@ const EditEmployeeModal = () => {
                     type="text"
                     className="rounded-[8px] h-[48px]"
                     name="phone"
-                    value={ (watch("phone"))}
+                    value={watch("phone")}
                     onChange={(e) => setValue("phone", e.target.value)}
                   />
                 </div>
