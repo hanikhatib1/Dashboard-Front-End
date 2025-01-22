@@ -3,22 +3,23 @@ import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 import { useDeletePermissionMutation } from "@/redux/apiSlice";
 
-const DeletePermissionButton = ({ id }) => {
+const DeletePermissionButton = ({ id, refetch }) => {
   const [deletePermission, { isLoading: deletePermissionLoading }] =
     useDeletePermissionMutation();
   const { toast } = useToast();
   const handleDeletePermission = async () => {
     const res = await deletePermission(id);
-    if ("data" in res)
+    if ("data" in res) {
+      if (refetch) refetch();
       toast({
         title: "Success",
         description: "Permission deleted successfully",
         type: "success",
       });
-    else
+    } else
       toast({
         title: "Error",
-        description: "Failed to delete permission",
+        description: res.error.data.detail,
         type: "success",
       });
   };

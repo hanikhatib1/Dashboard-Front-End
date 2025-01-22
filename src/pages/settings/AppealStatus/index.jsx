@@ -3,7 +3,6 @@ import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
 import {
   useAddStatusMutation,
-  useDeleteStatusMutation,
   useGetAllStatusQuery,
   useUpdateStatusMutation,
 } from "@/redux/apiSlice";
@@ -12,7 +11,7 @@ import { Button } from "react-day-picker";
 import DeleteStatusButton from "./DeleteStatusButton";
 
 const AppealStatus = () => {
-  const { data, isLoading, isError, refetch } = useGetAllStatusQuery();
+  const { data, isLoading, refetch } = useGetAllStatusQuery();
   const [statusText, setStatusText] = useState("");
   const [statusSort, setStatusSort] = useState(null);
   const [editStatus, setEditStatus] = useState(null);
@@ -27,7 +26,7 @@ const AppealStatus = () => {
       if ("error" in res)
         toast({
           title: "Error",
-          description: "Something went wrong",
+          description: res.error.data.detail,
           variant: "error",
         });
       if ("data" in res) {

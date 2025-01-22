@@ -67,7 +67,10 @@ const Permissions = () => {
                     >
                       Edit
                     </Link>
-                    <DeletePermissionButton id={item.id} />
+                    <DeletePermissionButton
+                      id={item.id}
+                      refetch={() => getPermissions(searchText)}
+                    />
                   </div>
                 </li>
               ))}

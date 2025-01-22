@@ -26,7 +26,7 @@ import {
 } from "@/components/ui/select";
 import { useToast } from "@/components/ui/use-toast";
 
-const AddPropertySale = ({ pin }) => {
+const AddPropertySale = ({ pin, refetch }) => {
   const [open, setOpen] = useState(false);
   const [addPropertySale, { isLoading }] = useAddPropertySaleMutation();
   const { toast } = useToast();
@@ -47,6 +47,7 @@ const AddPropertySale = ({ pin }) => {
     const res = await addPropertySale({ ...data, pin });
     if ("data" in res) {
       setOpen(false);
+      if(refetch) refetch();
       toast({
         title: "Property Sale Added",
         message: "Property Sale has been added successfully",

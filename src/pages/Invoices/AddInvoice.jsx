@@ -122,16 +122,16 @@ const AddInvoice = ({ hideButton = false, open, setOpen, defaultAppeal }) => {
     formData.append("payment_methode", data.payment_methode);
     formData.append("real_id", data.invoice_number);
 
-    const res = await addInvoice(formData).unwrap();
-    if (res.error) {
+    const res = await addInvoice(formData);
+    if ('error' in res) {
       toast({
         title: "Error",
-        description: "An error occurred while adding invoice",
+        description: res.error.data.detail,
         variant: "destructive",
       });
       return;
     }
-    if (res.data) {
+    if ('data' in res) {
       toast({
         title: "Success",
         description: "Invoice added successfully",

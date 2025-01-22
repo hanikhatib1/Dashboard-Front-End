@@ -56,7 +56,7 @@ const AddWorkerModel = ({ refetch }) => {
     if ("error" in res) {
       toast({
         title: "Error",
-        message: res.error.message,
+        description: res.error.data.detail,
         type: "error",
       });
     }

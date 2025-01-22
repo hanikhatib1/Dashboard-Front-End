@@ -55,7 +55,7 @@ const AddBlogModel = ({ refetch }) => {
     if ("error" in res) {
       toast({
         title: "Error",
-        message: res.error.message,
+        message: res.error.data.detail,
         type: "error",
       });
     }
