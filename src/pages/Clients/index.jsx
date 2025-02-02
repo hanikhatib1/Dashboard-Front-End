@@ -57,7 +57,7 @@ const Client = () => {
           )}
         </div>
       </div>
-      {editClientData && <EditClientModal />}
+      {editClientData && <EditClientModal refetch={fetchData} />}
       {deleteClientData && <DeleteClientModel refetch={fetchData} />}
     </div>
   );

@@ -52,7 +52,7 @@ import DatePicker from "react-datepicker";
 import { formatDate } from "date-fns";
 import AddressSearch from "@/components/AddressSearch";
 
-const EditClientModal = ({ onClose, setClient }) => {
+const EditClientModal = ({ onClose, setClient, refetch }) => {
   const [image, setImage] = useState();
   const { toast } = useToast();
   const dispatch = useDispatch();
@@ -66,7 +66,10 @@ const EditClientModal = ({ onClose, setClient }) => {
     address: editClientData.address,
   });
   const { handleSubmit, register, setValue, watch } = useForm({
-    defaultValues: { ...editClientData, image: "" },
+    defaultValues: {
+      ...editClientData,
+      image: editClientData?.image ? "" : "oooo",
+    },
   });
   const onSubmit = async (data) => {
     const newData = { ...editClientData, ...data };
@@ -87,7 +90,7 @@ const EditClientModal = ({ onClose, setClient }) => {
     }
 
     for (const key in data) {
-      if (data[key] === null) delete data[key];
+      if (data[key] === null || data[key] === "") delete data[key];
     }
 
     const object = new FormData();
@@ -100,7 +103,6 @@ const EditClientModal = ({ onClose, setClient }) => {
       body: object,
     });
 
-    console.log("res", res);
     if ("data" in res) {
       toast({
         title: "Success",
@@ -109,8 +111,8 @@ const EditClientModal = ({ onClose, setClient }) => {
       });
       if (setClient) setClient(res.data.data);
       if (onClose) onClose();
+      if(refetch) refetch();
       dispatch(setEditClientData(null));
-      dispatch(updateClientById(newData));
     } else {
       toast({
         title: "Error",
@@ -202,7 +204,7 @@ const EditClientModal = ({ onClose, setClient }) => {
                   {image && (
                     <Button
                       onClick={() => {
-                        setValue("image", "");
+                        setValue("image", "oooo");
                         setImage("");
                       }}
                       className="bg-white rounded-[8px] h-[48px] text-black border border-[#CCCDD2] hover:bg-white  hover:text-black"
@@ -388,7 +390,10 @@ const EditClientModal = ({ onClose, setClient }) => {
                       onChange={(date) => {
                         const previousDay = new Date(date);
                         previousDay.setDate(previousDay.getDate() + 1);
-                        setValue("birth_date", formatDate(previousDay, "yyyy-MM-dd"));
+                        setValue(
+                          "birth_date",
+                          formatDate(previousDay, "yyyy-MM-dd")
+                        );
                       }}
                       renderYearContent={(year) => {
                         const tooltipText = `Tooltip for year: ${year}`;

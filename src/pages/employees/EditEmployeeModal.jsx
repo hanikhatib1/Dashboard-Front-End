@@ -79,6 +79,7 @@ const EditEmployeeModal = ({ refetch }) => {
           : editEmployeeData.group_permission
             ? editEmployeeData.group_permission.id
             : "",
+      image: editEmployeeData.image ? "" : "oooo",
     },
   });
   const { data: permissions, isSuccess: isPermissionsSuccess } =
@@ -102,7 +103,7 @@ const EditEmployeeModal = ({ refetch }) => {
         description: res.data.message,
         variant: "success",
       });
-      if(refetch) refetch();
+      if (refetch) refetch();
       dispatch(setEditEmployeeData(null));
       dispatch(updateEmployeeById(newData));
     } else
@@ -183,7 +184,7 @@ const EditEmployeeModal = ({ refetch }) => {
                   {image && (
                     <Button
                       onClick={() => {
-                        setValue("image", "");
+                        setValue("image", "oooo");
                         setImage("");
                       }}
                       className="bg-white rounded-[8px] h-[48px] text-black border border-[#CCCDD2] hover:bg-white  hover:text-black"

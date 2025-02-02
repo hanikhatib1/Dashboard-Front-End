@@ -1,10 +1,10 @@
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
 import { useUpdateWorkerMutation } from "@/redux/apiSlice";
-import { Plus, UserRound } from "lucide-react";
+import { UserRound } from "lucide-react";
 import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -25,6 +25,7 @@ const EditWorkerModel = ({ editWorkerData, setEditWorker, refetch }) => {
       last_name: editWorkerData.last_name,
       description: editWorkerData.description,
       job_title: editWorkerData.job_title,
+      image: editWorkerData.job_title ? "" : "oooo",
     },
   });
 
@@ -101,7 +102,7 @@ const EditWorkerModel = ({ editWorkerData, setEditWorker, refetch }) => {
                   {image && (
                     <div
                       onClick={() => {
-                        setValue("image", "");
+                        setValue("image", "oooo");
                         setImage("");
                       }}
                       className="bg-white text-center px-4 flex justify-center items-center rounded-[8px] h-[48px] text-black border border-[#CCCDD2] hover:bg-white  hover:text-black"
