@@ -18,6 +18,7 @@ import {
 } from "@/redux/features/Clients";
 import { reverseDate } from "@/utiles/revserDate";
 import { formatPhoneNumber } from "@/utiles/formatPhoneNumber";
+import { useNavigate } from "react-router-dom";
 
 export const mockData = [
   {
@@ -174,6 +175,7 @@ export const columns = [
     cell: ({ row }) => {
       const rowData = row.original;
       const dispatch = useDispatch();
+      const navigate = useNavigate()
 
       return (
         <DropdownMenu>

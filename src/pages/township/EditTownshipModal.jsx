@@ -10,10 +10,7 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Calendar as CalendarIcon, Trash2 } from "lucide-react";
 import { format } from "date-fns";
-import {
-  useEditClientMutation,
-  useEditTownshipMutation,
-} from "../../redux/apiSlice";
+import { useEditTownshipMutation } from "../../redux/apiSlice";
 import { Calendar } from "../../components/ui/calendar";
 import {
   Popover,
@@ -38,7 +35,6 @@ import {
   setEditTownshipData,
   updateTownshipById,
 } from "@/redux/features/Township";
-import CustomSelect from "@/components/CustomSelect";
 
 const EditTownshipModal = () => {
   const [reassessmentNoticeDate, setReassessmentNoticeDate] = useState(null);
@@ -62,15 +58,14 @@ const EditTownshipModal = () => {
       bor_appeal_begin: editTownshipData.bor_appeal_begin,
       bor_appeal_end: editTownshipData.bor_appeal_end,
       reassessment: editTownshipData.reassessment,
+      town: editTownshipData.town
     },
   });
 
   const onSubmit = async (data) => {
-    console.log("data", data);
     const newData = { ...editTownshipData, ...data };
     delete data.date_a_roll_certified;
     delete data.date_a_roll_published;
-    delete data.name;
 
     const s = reassessment === "true" ? true : false;
     const res = await editTownship({
@@ -97,8 +92,6 @@ const EditTownshipModal = () => {
 
   useEffect(() => {
     if (editTownshipData) {
-      console.log("reassessment", reassessment);
-
       setReassessmentNoticeDate(editTownshipData.reassessment_notice_date);
       setLastFileDate(editTownshipData.last_file_date);
       setBorAppealEnd(editTownshipData.bor_appeal_end);
