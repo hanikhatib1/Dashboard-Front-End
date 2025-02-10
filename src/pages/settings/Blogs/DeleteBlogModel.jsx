@@ -22,14 +22,14 @@ const DeleteBlogModel = ({ deleteBlogData, setDeleteBlog, refetch }) => {
       refetch();
       toast({
         title: "Blog Deleted",
-        message: "Blog has been deleted successfully",
+        description: "Blog has been deleted successfully",
         type: "success",
       });
       setDeleteBlog(null);
     } else {
       toast({
         title: "Error",
-        message: res.error.message,
+        description: res.error.message,
         type: "error",
       });
     }

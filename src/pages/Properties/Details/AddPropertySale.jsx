@@ -50,7 +50,7 @@ const AddPropertySale = ({ pin, refetch }) => {
       if(refetch) refetch();
       toast({
         title: "Property Sale Added",
-        message: "Property Sale has been added successfully",
+        description: "Property Sale has been added successfully",
         type: "success",
       });
     }

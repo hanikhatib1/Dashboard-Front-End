@@ -26,7 +26,7 @@ const DeleteEmployeeModel = ({ refetch }) => {
       if (refetch) refetch();
       toast({
         title: "Employee Deleted",
-        message: "Employee Deleted Successfully",
+        description: "Employee Deleted Successfully",
         type: "success",
       });
       dispatch(setDeleteEmployeeData(null))

@@ -47,7 +47,7 @@ const EditWorkerModel = ({ editWorkerData, setEditWorker, refetch }) => {
       reset();
       toast({
         title: "Worker Edited",
-        message: "Worker has been edited successfully",
+        description: "Worker has been edited successfully",
         type: "success",
       });
       refetch();
@@ -56,7 +56,7 @@ const EditWorkerModel = ({ editWorkerData, setEditWorker, refetch }) => {
     if ("error" in res) {
       toast({
         title: "Error",
-        message: res.error.message,
+        description: res.error.data.detail,
         type: "error",
       });
     }

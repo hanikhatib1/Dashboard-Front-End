@@ -33,13 +33,13 @@ const AddReplayModal = ({ refetch }) => {
       refetch();
       toast({
         title: "Replay Added",
-        message: "Replay has been added successfully",
+        description: "Replay has been added successfully",
       });
       dispatch(setReplayContactData(false));
     } else {
       toast({
         title: "Error",
-        message: res.error.message,
+        description: res.error.message,
         type: "error",
       });
     }

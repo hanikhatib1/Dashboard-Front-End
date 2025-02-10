@@ -47,7 +47,7 @@ const AddWorkerModel = ({ refetch }) => {
       reset();
       toast({
         title: "Worker Added",
-        message: "Worker has been added successfully",
+        description: "Worker has been added successfully",
         type: "success",
       });
       refetch();

@@ -25,14 +25,14 @@ const DeleteWorkerModel = ({ deletedWorker, setDeletedWorker, refetch }) => {
       refetch();
       toast({
         title: "Worker Deleted",
-        message: "Worker has been deleted successfully",
+        description: "Worker has been deleted successfully",
         type: "success",
       });
       setDeletedWorker(null);
     } else {
       toast({
         title: "Error",
-        message: res.error.message,
+        description: res.error.message,
         type: "error",
       });
     }

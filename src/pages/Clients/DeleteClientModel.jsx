@@ -22,18 +22,19 @@ const DeleteClientModel = ({ refetch }) => {
 
   const deleteClientHandler = async () => {
     const res = await deleteClient(deleteClientData.id);
+    console.log(res);
     if ("data" in res) {
       if (refetch) refetch();
-      dispatch(setDeleteClientData(null))
+      dispatch(setDeleteClientData(null));
       toast({
         title: "Client Deleted",
-        message: "Client Deleted Successfully",
+        description: "Client Deleted Successfully",
         type: "success",
       });
     } else
       toast({
         title: "Error",
-        type: "error",
+        description: res.error.data.detail,
       });
   };
 

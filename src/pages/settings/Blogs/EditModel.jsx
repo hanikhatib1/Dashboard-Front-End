@@ -44,7 +44,7 @@ const EditModel = ({ editBlogData, setEditBlog, refetch }) => {
       reset();
       toast({
         title: "Blog Edited",
-        message: "Blog has been edited successfully",
+        description: "Blog has been edited successfully",
         type: "success",
       });
       refetch();
@@ -53,7 +53,7 @@ const EditModel = ({ editBlogData, setEditBlog, refetch }) => {
     if ("error" in res) {
       toast({
         title: "Error",
-        message: res.error.message,
+        message: res.error.data.detail,
         type: "error",
       });
     }

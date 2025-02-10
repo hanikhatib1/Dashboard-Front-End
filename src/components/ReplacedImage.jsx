@@ -44,13 +44,13 @@ const ReplacedImage = ({ pickedImage, defaultImage, pin }) => {
       else setSavedImage(defaultImage);
       toast({
         title: "Image Updated",
-        message: "The image has been updated successfully",
+        description: "The image has been updated successfully",
         type: "success",
       });
     } else {
       toast({
         title: "Error",
-        message: "There was an error updating the image",
+        description: "There was an error updating the image",
         type: "error",
       });
     }

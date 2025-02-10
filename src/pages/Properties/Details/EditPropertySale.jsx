@@ -59,14 +59,14 @@ const EditPropertySale = () => {
       dispatch(setEditPurchaseProperty(null));
       toast({
         title: "Property Sale Edited",
-        message: "Property Sale has been edited successfully",
+        description: "Property Sale has been edited successfully",
         type: "success",
       });
     }
     if ("error" in res) {
       toast({
         title: "Error",
-        message: "An error occurred while editing property sale",
+        description: "An error occurred while editing property sale",
         type: "error",
       });
     }
