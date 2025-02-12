@@ -50,6 +50,13 @@ export const appealsColumns = [
     },
   },
   {
+    accessorKey: "appeal_type",
+    header: "Appeal Type",
+    cell: ({ row }) => {
+      return <span className="text-[#4693D6]">{row.original.appeal_type}</span>;
+    },
+  },
+  {
     header: "Status",
     cell: ({ row }) => {
       return (
@@ -147,7 +154,10 @@ export const appealsColumns = [
             </DropdownMenuItem>
             <DropdownMenuItem
               className={` cursor-pointer ${row.original.signature_sent ? "text-[#80838E] cursor-not-allowed" : " hover:bg-slate-100"}`}
-              onClick={() => !row.original.signature_sent && dispatch(setFormsAppeal(row.original))}
+              onClick={() =>
+                !row.original.signature_sent &&
+                dispatch(setFormsAppeal(row.original))
+              }
             >
               Send Forms
             </DropdownMenuItem>
