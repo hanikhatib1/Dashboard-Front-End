@@ -6,31 +6,9 @@ import PropTypes from "prop-types";
 import "react-circular-progressbar/dist/styles.css";
 import { formattedNumber } from "@/utiles/formattedNumber";
 import ReplacedImage from "@/components/ReplacedImage";
-import { reverseDate } from "@/utiles/revserDate";
+import StreetView from "./StreetView";
 
 const PropertyAnalysis = ({ property }) => {
-  /* const [fov, setFov] = useState(80);
-  const [heading, setHeading] = useState(0);
-  const [pitch, setPitch] = useState(0);
-
-  const handleFov = (value) => {
-    if (value > 0 && fov === 120) return setFov(120);
-    if (value < 0 && fov === 0) return setFov(0);
-
-    setFov((prev) => prev + value);
-  };
-
-  const handleHeading = (value) => {
-    if (value > 0 && heading === 360) return setHeading(360);
-    if (value < 0 && heading === 0) return setHeading(0);
-    setHeading((prev) => prev + value);
-  };
-
-  const handlePitch = (value) => {
-    if (value > 0 && pitch === 360) return setPitch(360);
-    if (value < 0 && pitch === 0) return setPitch(0);
-    setPitch((prev) => prev + value);
-  }; */
   const data = new Date(property.data.last_update);
   const currentDate = data.toLocaleDateString("en-US");
 
@@ -44,6 +22,7 @@ const PropertyAnalysis = ({ property }) => {
             pickedImage={property.data.picked_image}
             pin={property.data.pin}
           />
+          <StreetView address={property.data.address} />
         </div>
       </div>
       <div className="h-full w-[431px]  flex flex-col">
