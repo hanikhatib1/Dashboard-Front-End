@@ -20,7 +20,7 @@ export const columns = [
   },
   {
     accessorKey: "city",
-    header: "City",
+    header: "Address",
   },
   {
     id: "Reply",
