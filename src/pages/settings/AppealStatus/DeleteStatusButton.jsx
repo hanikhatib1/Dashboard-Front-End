@@ -14,7 +14,7 @@ const DeleteStatusButton = ({ refetch, status }) => {
       if ("error" in res)
         toast({
           title: "Error",
-          description: "Something went wrong",
+          description: res.error.data.detail,
           variant: "error",
         });
       if ("data" in res) {
