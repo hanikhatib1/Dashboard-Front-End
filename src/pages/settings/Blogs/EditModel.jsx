@@ -69,13 +69,13 @@ const EditModel = ({ editBlogData, setEditBlog, refetch }) => {
       open={editBlogData}
       onOpenChange={(open) => setEditBlog(open)}
     >
-      <DialogContent className="sm:max-w-[500px] !p-0 !border-none max-h-[calc(100vh-20%)] bg-white !rounded-[8px] overflow-y-auto scroll-right">
+      <DialogContent className="sm:max-w-[900px] !p-0 !border-none max-h-[calc(100vh-20%)] bg-white !rounded-[8px] overflow-y-auto scroll-right">
         <form
           className="flex flex-col gap-6 mb-8"
           onSubmit={handleSubmit(onSubmit)}
         >
           <div
-            className={`w-full h-[270px] bg-primary flex justify-center items-center relative ${image ? "[&>label]:hover:z-50 [&>label]:hover:text-black [&>img]:hover:!bg-black [&>img]:hover:opacity-[0.2]" : ""}`}
+            className={`w-full h-[370px] bg-primary flex justify-center items-center relative ${image ? "[&>label]:hover:z-50 [&>label]:hover:text-black [&>img]:hover:!bg-black [&>img]:hover:opacity-[0.2]" : ""}`}
           >
             {image && (
               <img
@@ -127,7 +127,7 @@ const EditModel = ({ editBlogData, setEditBlog, refetch }) => {
               <Textarea
                 id="Description"
                 type=""
-                className="rounded-[8px] h-[48px]"
+                className="rounded-[8px] h-[380px]"
                 {...register("description", { required: true })}
               />
             </div>

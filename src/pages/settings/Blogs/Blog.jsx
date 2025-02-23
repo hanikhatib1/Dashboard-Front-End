@@ -20,7 +20,7 @@ const Blog = ({ blogData, setEditBlog, setDeleteBlog }) => {
         />
       </div>
       <div className="flex flex-col gap-1 relative">
-        <p className="text-[#333333] text-[24px] leading-[150%] font-bold truncate">
+        <p className="text-[#333333] text-[24px] leading-[150%] font-bold truncate w-[calc(100%-40px)]">
           {blogData.title}
         </p>
         <p className="text-[#465668] text-[18px] leading-[150%] font-[400] truncate">
