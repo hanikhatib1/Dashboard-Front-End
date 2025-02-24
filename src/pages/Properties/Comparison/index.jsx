@@ -37,24 +37,29 @@ const FilterStatusData = [
     key: "range_in_mile",
     defaultValue: "0.25",
     options: [0.25, 0.5, 1],
+    type: "select",
   },
+
   {
     name: "Land",
     key: "land_sq_ft",
     defaultValue: "20000",
     options: [5000, 10000, 15000, 20000],
+    type: "select",
   },
   {
     name: "Building",
     key: "building_sq_ft",
     defaultValue: "2000",
     options: [500, 1000, 1500, 2000],
+    type: "select",
   },
   {
     name: "Age",
     key: "age",
     defaultValue: "40",
     options: [10, 20, 30, 40],
+    type: "select",
   },
 ];
 
@@ -90,8 +95,6 @@ const Comparison = () => {
   const { propertiesList, propertyDetailsData } = useSelector(
     (state) => state.properties
   );
-  const propertyDetailsDataFilter = new Set(propertyDetailsData);
-  const propertyDetailsDataArray = Array.from(propertyDetailsDataFilter);
 
   const propertiesListFilter = new Set(propertiesList);
   const propertiesListArray = Array.from(propertiesListFilter);
@@ -102,6 +105,7 @@ const Comparison = () => {
     building_sq_ft: "2000",
     age: "40",
     sort_by: "small_building_ratio_first",
+    by_distance_only: true,
   });
   const [openMaps, setOpenMaps] = useState(false);
   const [
@@ -219,34 +223,94 @@ const Comparison = () => {
                 ))}
               </div>
               <div className="border bg-primary h-[48px] rounded-[40px] flex gap-4 px-2 py-1">
-                {FilterStatusData.map((item) => (
-                  <Select
-                    key={item.key}
-                    onValueChange={(e) =>
-                      setFilterSate({ ...filterSate, [item.key]: e })
-                    }
-                  >
-                    <SelectTrigger
-                      className={`flex items-center gap-1 rounded-[20px] border-primary p-1 text-body bg-primary text-white`}
-                      onClick={() => {
-                        alert(item.key);
-                        setFilterStatusKey(item.key);
-                      }}
-                    >
-                      <SelectValue placeholder={item.defaultValue} />
-                      <span>{item.name}</span>
-                    </SelectTrigger>
-                    <SelectContent className="bg-white">
-                      <SelectGroup>
-                        {item.options.map((option) => (
-                          <SelectItem key={option} value={option}>
-                            {option}
-                          </SelectItem>
-                        ))}
-                      </SelectGroup>
-                    </SelectContent>
-                  </Select>
-                ))}
+                <input
+                  type="radio"
+                  name="radio"
+                  value="true"
+                  checked={filterSate.by_distance_only === true}
+                  onChange={(e) =>
+                    setFilterSate((prev) => ({
+                      ...prev,
+                      by_distance_only: true,
+                    }))
+                  }
+                />
+                {FilterStatusData.map((item, index) => {
+                  if (index === 1) {
+                    return (
+                      <>
+                        <input
+                          key={index}
+                          type="radio"
+                          name="radio"
+                          value="false"
+                          checked={filterSate.by_distance_only === false}
+                          onChange={(e) => {
+                            setFilterSate((prev) => ({
+                              ...prev,
+                              by_distance_only: false,
+                            }));
+                          }}
+                        />
+                        <Select
+                          key={item.key}
+                          onValueChange={(e) =>
+                            setFilterSate({ ...filterSate, [item.key]: e })
+                          }
+                        >
+                          <SelectTrigger
+                            className={`flex items-center gap-1 rounded-[20px] border-primary p-1 text-body bg-primary text-white`}
+                            onClick={() => {
+                              alert(item.key);
+                              setFilterStatusKey(item.key);
+                            }}
+                          >
+                            <SelectValue placeholder={item.defaultValue} />
+                            <span>{item.name}</span>
+                          </SelectTrigger>
+                          <SelectContent className="bg-white">
+                            <SelectGroup>
+                              {item.options.map((option) => (
+                                <SelectItem key={option} value={option}>
+                                  {option}
+                                </SelectItem>
+                              ))}
+                            </SelectGroup>
+                          </SelectContent>
+                        </Select>
+                      </>
+                    );
+                  } else {
+                    return (
+                      <Select
+                        key={item.key}
+                        onValueChange={(e) =>
+                          setFilterSate({ ...filterSate, [item.key]: e })
+                        }
+                      >
+                        <SelectTrigger
+                          className={`flex items-center gap-1 rounded-[20px] border-primary p-1 text-body bg-primary text-white`}
+                          onClick={() => {
+                            alert(item.key);
+                            setFilterStatusKey(item.key);
+                          }}
+                        >
+                          <SelectValue placeholder={item.defaultValue} />
+                          <span>{item.name}</span>
+                        </SelectTrigger>
+                        <SelectContent className="bg-white">
+                          <SelectGroup>
+                            {item.options.map((option) => (
+                              <SelectItem key={option} value={option}>
+                                {option}
+                              </SelectItem>
+                            ))}
+                          </SelectGroup>
+                        </SelectContent>
+                      </Select>
+                    );
+                  }
+                })}
               </div>
             </div>
             <SearchProperties goToComparison />
