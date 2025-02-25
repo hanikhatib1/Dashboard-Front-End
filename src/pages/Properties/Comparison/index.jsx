@@ -40,14 +40,13 @@ const mails = {
 };
 
 const FilterStatusData = [
-  /* {
+  {
     name: "Miles",
     key: "range_in_mile",
     defaultValue: "0.25",
     options: [0.25, 0.5, 1],
     type: "select",
-  }, */
-
+  },
   {
     name: "Land",
     key: "land_sq_ft",
@@ -231,7 +230,7 @@ const Comparison = () => {
                 ))}
               </div>
               <div
-                className={`border bg-primary h-[32px] rounded-[40px] flex gap-4 px-2 py-1  ${!filterSate.by_distance_only ? "bg-opacity-75" : ""}`}
+                className={`border bg-primary h-[32px] rounded-[40px]  flex items-center gap-4 px-2 py-1  ${!filterSate.by_distance_only ? "bg-opacity-75" : ""}`}
               >
                 <input
                   type="radio"
@@ -271,7 +270,7 @@ const Comparison = () => {
                 </Select>
               </div>
               <div
-                className={`border bg-primary h-[32px] rounded-[40px] flex gap-4 px-2 py-1 ${filterSate.by_distance_only ? "bg-opacity-75" : ""}`}
+                className={`border bg-primary h-[32px] rounded-[40px] flex items-center gap-4 px-2 py-1 ${filterSate.by_distance_only ? "bg-opacity-75" : ""}`}
               >
                 <input
                   type="radio"
