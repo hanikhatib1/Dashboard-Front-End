@@ -31,14 +31,22 @@ import queryString from "query-string";
 import NewAppeals from "@/pages/Appeals/NewAppeals";
 import FileReportPDF2 from "@/components/FileReportPDF2";
 
+const mails = {
+  name: "Miles",
+  key: "range_in_mile",
+  defaultValue: "0.25",
+  options: [0.25, 0.5, 1],
+  type: "select",
+};
+
 const FilterStatusData = [
-  {
+  /* {
     name: "Miles",
     key: "range_in_mile",
     defaultValue: "0.25",
     options: [0.25, 0.5, 1],
     type: "select",
-  },
+  }, */
 
   {
     name: "Land",
@@ -222,7 +230,9 @@ const Comparison = () => {
                   </button>
                 ))}
               </div>
-              <div className="border bg-primary h-[48px] rounded-[40px] flex gap-4 px-2 py-1">
+              <div
+                className={`border bg-primary h-[32px] rounded-[40px] flex gap-4 px-2 py-1  ${!filterSate.by_distance_only ? "bg-opacity-75" : ""}`}
+              >
                 <input
                   type="radio"
                   name="radio"
@@ -235,82 +245,73 @@ const Comparison = () => {
                     }))
                   }
                 />
-                {FilterStatusData.map((item, index) => {
-                  if (index === 1) {
-                    return (
-                      <>
-                        <input
-                          key={index}
-                          type="radio"
-                          name="radio"
-                          value="false"
-                          checked={filterSate.by_distance_only === false}
-                          onChange={(e) => {
-                            setFilterSate((prev) => ({
-                              ...prev,
-                              by_distance_only: false,
-                            }));
-                          }}
-                        />
-                        <Select
-                          key={item.key}
-                          onValueChange={(e) =>
-                            setFilterSate({ ...filterSate, [item.key]: e })
-                          }
-                        >
-                          <SelectTrigger
-                            className={`flex items-center gap-1 rounded-[20px] border-primary p-1 text-body bg-primary text-white`}
-                            onClick={() => {
-                              alert(item.key);
-                              setFilterStatusKey(item.key);
-                            }}
-                          >
-                            <SelectValue placeholder={item.defaultValue} />
-                            <span>{item.name}</span>
-                          </SelectTrigger>
-                          <SelectContent className="bg-white">
-                            <SelectGroup>
-                              {item.options.map((option) => (
-                                <SelectItem key={option} value={option}>
-                                  {option}
-                                </SelectItem>
-                              ))}
-                            </SelectGroup>
-                          </SelectContent>
-                        </Select>
-                      </>
-                    );
-                  } else {
-                    return (
-                      <Select
-                        key={item.key}
-                        onValueChange={(e) =>
-                          setFilterSate({ ...filterSate, [item.key]: e })
-                        }
-                      >
-                        <SelectTrigger
-                          className={`flex items-center gap-1 rounded-[20px] border-primary p-1 text-body bg-primary text-white`}
-                          onClick={() => {
-                            alert(item.key);
-                            setFilterStatusKey(item.key);
-                          }}
-                        >
-                          <SelectValue placeholder={item.defaultValue} />
-                          <span>{item.name}</span>
-                        </SelectTrigger>
-                        <SelectContent className="bg-white">
-                          <SelectGroup>
-                            {item.options.map((option) => (
-                              <SelectItem key={option} value={option}>
-                                {option}
-                              </SelectItem>
-                            ))}
-                          </SelectGroup>
-                        </SelectContent>
-                      </Select>
-                    );
+                <Select
+                  onValueChange={(e) =>
+                    setFilterSate({ ...filterSate, [mails.key]: e })
                   }
-                })}
+                >
+                  <SelectTrigger
+                    className={`flex items-center gap-1 rounded-[20px]  p-1 text-body  ${!filterSate.by_distance_only ? "bg-opacity-75 border-none" : "bg-primary border-primary"} text-white h-[24px]`}
+                    onClick={() => {
+                      setFilterStatusKey(mails.key);
+                    }}
+                  >
+                    <SelectValue placeholder={mails.defaultValue} />
+                    <span>{mails.name}</span>
+                  </SelectTrigger>
+                  <SelectContent className="bg-white">
+                    <SelectGroup>
+                      {mails.options.map((option) => (
+                        <SelectItem key={option} value={option}>
+                          {option}
+                        </SelectItem>
+                      ))}
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div
+                className={`border bg-primary h-[32px] rounded-[40px] flex gap-4 px-2 py-1 ${filterSate.by_distance_only ? "bg-opacity-75" : ""}`}
+              >
+                <input
+                  type="radio"
+                  name="radio"
+                  value="false"
+                  checked={filterSate.by_distance_only === false}
+                  onChange={(e) => {
+                    setFilterSate((prev) => ({
+                      ...prev,
+                      by_distance_only: false,
+                    }));
+                  }}
+                />
+                {FilterStatusData.map((item, index) => (
+                  <Select
+                    key={item.key}
+                    onValueChange={(e) =>
+                      setFilterSate({ ...filterSate, [item.key]: e })
+                    }
+                  >
+                    <SelectTrigger
+                      className={`flex items-center gap-1 rounded-[20px] p-1 text-body  ${filterSate.by_distance_only ? "bg-opacity-75 border-none" : "bg-primary border-primary"} text-white h-[24px]`}
+                      onClick={() => {
+                        setFilterStatusKey(item.key);
+                      }}
+                    >
+                      <SelectValue placeholder={item.defaultValue} />
+                      <span>{item.name}</span>
+                    </SelectTrigger>
+                    <SelectContent className="bg-white">
+                      <SelectGroup>
+                        {item.options.map((option) => (
+                          <SelectItem key={option} value={option}>
+                            {option}
+                          </SelectItem>
+                        ))}
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+                ))}
               </div>
             </div>
             <SearchProperties goToComparison />
