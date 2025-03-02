@@ -413,7 +413,7 @@ export const apiSlice = createApi({
 
     /* Workers */
     getWorkers: builder.mutation({
-      query: (q) => `/worker/get_all_worker?sort=-id&${q}`,
+      query: (q) => `/worker/get_all_worker?sort=-id&sort=sort&${q}`,
     }),
     addWorker: builder.mutation({
       query: (body) => ({

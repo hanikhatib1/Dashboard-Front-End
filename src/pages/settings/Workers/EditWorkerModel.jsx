@@ -26,6 +26,7 @@ const EditWorkerModel = ({ editWorkerData, setEditWorker, refetch }) => {
       description: editWorkerData.description,
       job_title: editWorkerData.job_title,
       image: editWorkerData.job_title ? "" : "oooo",
+      sort: editWorkerData.sort,
     },
   });
 
@@ -177,6 +178,17 @@ const EditWorkerModel = ({ editWorkerData, setEditWorker, refetch }) => {
                   type=""
                   className="rounded-[8px] h-[48px]"
                   {...register("description", { required: true })}
+                />
+              </div>
+              <div className="w-full flex flex-col gap-2 flex-2">
+                <label htmlFor="last_name" className="text-body text-[#80838E]">
+                  Sort
+                </label>
+                <Input
+                  id="sort"
+                  type="number"
+                  className="rounded-[8px] h-[48px]"
+                  {...register("sort", { required: true })}
                 />
               </div>
               <div className="flex gap-4">
