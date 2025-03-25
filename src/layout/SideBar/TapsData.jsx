@@ -11,6 +11,7 @@ import DatePie from "@/assets/Icons/DatePie";
 import {
   BetweenVerticalStart,
   BookOpen,
+  ClipboardPlus,
   Contact,
   KeySquare,
   Receipt,
@@ -100,6 +101,11 @@ export const TapsData = [
         name: "Contact Us",
         Icon: <Contact />,
         url: "/settings/contact-us",
+      },
+      {
+        name: "Reports",
+        Icon: <ClipboardPlus />,
+        url: "/settings/reports",
       },
       {
         name: "Permissions",

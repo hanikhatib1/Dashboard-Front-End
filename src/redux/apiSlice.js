@@ -483,6 +483,25 @@ export const apiSlice = createApi({
         method: "GET",
       }),
     }),
+    getReports: builder.query({
+      query: () => ({
+        url: "/report/get_all_report",
+        method: "GET",
+      }),
+    }),
+    deleteReport: builder.mutation({
+      query: (id) => ({
+        url: `/report/delete_report/${id}`,
+        method: "DELETE",
+      }),
+    }),
+    updateReport: builder.mutation({
+      query: ({ body, id }) => ({
+        url: `/report/update_report_status/${id}`,
+        method: "PATCH",
+        body,
+      }),
+    }),
   }),
 });
 
@@ -557,4 +576,7 @@ export const {
   useGetAppealDocumentsStatusMutation,
   useOpenToSendDocumentMutation,
   useGetInvoiveNumberMutation,
+  useGetReportsQuery,
+  useDeleteReportMutation,
+  useUpdateReportMutation,
 } = apiSlice;
