@@ -48,7 +48,7 @@ const Township = () => {
   const { townships, editTownshipData, migrateTownshipData } = useSelector(
     (state) => state.townships
   );
-  const [taps, setTaps] = useState(1);
+  const [taps, setTaps] = useState(0);
 
   useEffect(() => {
     async function fetchData() {
