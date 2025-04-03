@@ -9,8 +9,11 @@ import { Button } from "../../components/ui/button";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Calendar as CalendarIcon, Trash2 } from "lucide-react";
-import { format } from "date-fns";
-import { useEditTownshipMutation } from "../../redux/apiSlice";
+import { format, set } from "date-fns";
+import {
+  useEditCurrentTownshipMutation,
+  useEditTownshipMutation,
+} from "../../redux/apiSlice";
 import { Calendar } from "../../components/ui/calendar";
 import {
   Popover,
@@ -36,29 +39,47 @@ import {
   updateTownshipById,
 } from "@/redux/features/Township";
 
-const EditTownshipModal = () => {
+const EditTownshipModal = ({ isCurrentTownship }) => {
   const [reassessmentNoticeDate, setReassessmentNoticeDate] = useState(null);
   const [lastFileDate, setLastFileDate] = useState(null);
   const [borAppealEnd, setBorAppealEnd] = useState(null);
   const [borAppealBegin, setBorAppealBegin] = useState(null);
   const [afterBorAppealEnd, setAfterBorAppealEnd] = useState(null);
   const [reassessment, setReassessment] = useState(null);
+  const [currentReassessmentNoticeDate, setCurrentReassessmentNoticeDate] =
+    useState(null);
+  const [currentLastFileDate, setCurrentLastFileDate] = useState(null);
+  const [currentBorAppealEnd, setCurrentBorAppealEnd] = useState(null);
+  const [currentBorAppealBegin, setCurrentBorAppealBegin] = useState(null);
+  const [currentAfterBorAppealEnd, setCurrentAfterBorAppealEnd] =
+    useState(null);
+  const [currentReassessment, setCurrentReassessment] = useState(null);
 
   const { toast } = useToast();
   const dispatch = useDispatch();
   const { editTownshipData } = useSelector((state) => state.townships);
   const [editTownship, { isLoading }] = useEditTownshipMutation();
+  const [editCurrentTownship, { isLoading: isLoadingEditingCurrentTownship }] =
+    useEditCurrentTownshipMutation();
   const { handleSubmit, setValue } = useForm({
     defaultValues: {
       name: editTownshipData.name,
       reassessment_notice_date: editTownshipData.reassessment_notice_date,
+      current_reassessment_notice_date:
+        editTownshipData.reassessment_notice_date,
       last_file_date: editTownshipData.last_file_date,
+      current_last_file_date: editTownshipData.last_file_date,
       date_a_roll_certified: editTownshipData.date_a_roll_certified,
+      current_date_a_roll_certified: editTownshipData.date_a_roll_certified,
       date_a_roll_published: editTownshipData.date_a_roll_published,
+      current_date_a_roll_published: editTownshipData.date_a_roll_published,
       bor_appeal_begin: editTownshipData.bor_appeal_begin,
+      current_bor_appeal_begin: editTownshipData.bor_appeal_begin,
       bor_appeal_end: editTownshipData.bor_appeal_end,
+      current_bor_appeal_end: editTownshipData.bor_appeal_end,
       reassessment: editTownshipData.reassessment,
-      town: editTownshipData.town
+      current_reassessment: editTownshipData.reassessment,
+      town: editTownshipData.town,
     },
   });
 
@@ -68,10 +89,33 @@ const EditTownshipModal = () => {
     delete data.date_a_roll_published;
 
     const s = reassessment === "true" ? true : false;
-    const res = await editTownship({
-      body: { ...data, reassessment: s },
-      id: editTownshipData.id,
-    });
+    let res = null;
+    if (isCurrentTownship) {
+      delete data.reassessment;
+      delete data.reassessment_notice_date;
+      delete data.last_file_date;
+      delete data.bor_appeal_begin;
+      delete data.bor_appeal_end;
+      delete data.after_bor_appeal_end;
+      delete data.name;
+      delete data.town;
+      res = await editCurrentTownship({
+        body: { ...data, current_reassessment: s },
+        id: editTownshipData.id,
+      });
+    } else {
+      delete data.current_reassessment;
+      delete data.current_reassessment_notice_date;
+      delete data.current_last_file_date;
+      delete data.current_bor_appeal_begin;
+      delete data.current_bor_appeal_end;
+      delete data.current_date_a_roll_certified;
+      delete data.current_date_a_roll_published;
+      res = await editTownship({
+        body: { ...data, reassessment: s },
+        id: editTownshipData.id,
+      });
+    }
     if ("data" in res) {
       toast({
         title: "Success",
@@ -120,6 +164,7 @@ const EditTownshipModal = () => {
               <Select
                 onValueChange={(e) => {
                   setValue("reassessment", e);
+                  setValue("current_reassessment", e);
                   setReassessment(e);
                 }}
               >
@@ -161,10 +206,18 @@ const EditTownshipModal = () => {
                       <PopoverContent className="w-auto p-0 bg-white">
                         <Calendar
                           mode="single"
-                          selected={reassessmentNoticeDate}
+                          selected={
+                            isCurrentTownship
+                              ? currentReassessmentNoticeDate
+                              : reassessmentNoticeDate
+                          }
                           onSelect={(e) => {
                             setValue(
                               "reassessment_notice_date",
+                              format(e, "yyyy-MM-dd")
+                            );
+                            setValue(
+                              "current_reassessment_notice_date",
                               format(e, "yyyy-MM-dd")
                             );
                             setReassessmentNoticeDate(e);
@@ -177,7 +230,9 @@ const EditTownshipModal = () => {
                       className="cursor-pointer text-gray-400"
                       onClick={() => {
                         setValue("reassessment_notice_date", null);
+                        setValue("current_reassessment_notice_date", null);
                         setReassessmentNoticeDate(null);
+                        setCurrentReassessmentNoticeDate(null);
                       }}
                     />
                   </div>
@@ -206,6 +261,10 @@ const EditTownshipModal = () => {
                           selected={lastFileDate}
                           onSelect={(e) => {
                             setValue("last_file_date", format(e, "yyyy-MM-dd"));
+                            setValue(
+                              "current_last_file_date",
+                              format(e, "yyyy-MM-dd")
+                            );
                             setLastFileDate(e);
                           }}
                         />
@@ -215,6 +274,7 @@ const EditTownshipModal = () => {
                       className="cursor-pointer text-gray-400"
                       onClick={() => {
                         setValue("last_file_date", null);
+                        setValue("current_last_file_date", null);
                         setLastFileDate(null);
                       }}
                     />
@@ -255,6 +315,10 @@ const EditTownshipModal = () => {
                               "bor_appeal_begin",
                               format(e, "yyyy-MM-dd")
                             );
+                            setValue(
+                              "current_bor_appeal_begin",
+                              format(e, "yyyy-MM-dd")
+                            );
                             setBorAppealBegin(e);
                           }}
                           initialFocus
@@ -265,6 +329,7 @@ const EditTownshipModal = () => {
                       className="cursor-pointer text-gray-400"
                       onClick={() => {
                         setValue("bor_appeal_begin", null);
+                        setValue("current_bor_appeal_begin", null);
                         setBorAppealBegin(null);
                       }}
                     />
@@ -294,6 +359,10 @@ const EditTownshipModal = () => {
                           selected={borAppealEnd}
                           onSelect={(e) => {
                             setValue("bor_appeal_end", format(e, "yyyy-MM-dd"));
+                            setValue(
+                              "current_bor_appeal_end",
+                              format(e, "yyyy-MM-dd")
+                            );
                             setBorAppealEnd(e);
                           }}
                           initialFocus
@@ -304,6 +373,7 @@ const EditTownshipModal = () => {
                       className="cursor-pointer text-gray-400"
                       onClick={() => {
                         setValue("bor_appeal_end", null);
+                        setValue("current_bor_appeal_end", null);
                         setBorAppealEnd(null);
                       }}
                     />
@@ -341,6 +411,10 @@ const EditTownshipModal = () => {
                           "after_bor_appeal_end",
                           format(e, "yyyy-MM-dd")
                         );
+                        setValue(
+                          "current_after_bor_appeal_end",
+                          format(e, "yyyy-MM-dd")
+                        );
                         setAfterBorAppealEnd(e);
                       }}
                     />
@@ -350,6 +424,7 @@ const EditTownshipModal = () => {
                   className="cursor-pointer text-gray-400"
                   onClick={() => {
                     setValue("after_bor_appeal_end", null);
+                    setValue("current_after_bor_appeal_end", null);
                     setAfterBorAppealEnd(null);
                   }}
                 />

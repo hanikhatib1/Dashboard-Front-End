@@ -4,9 +4,16 @@ import {
   InactiveEmployee,
 } from "@/assets/Icons";
 import { useDispatch } from "react-redux";
-import { setEditTownshipData } from "@/redux/features/Township";
+import { setEditTownshipData, setMigrateTownshipData } from "@/redux/features/Township";
 import { reverseDate } from "@/utiles/revserDate";
-import { Pencil } from "lucide-react";
+import { MoreHorizontal, Pencil } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Button } from "@/components/ui/button";
 
 export const mockData = [
   {
@@ -206,10 +213,28 @@ export const columns = [
       const dispatch = useDispatch();
 
       return (
-        <Pencil
-          className="cursor-pointer"
-          onClick={() => dispatch(setEditTownshipData(rowData))}
-        />
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" className="h-8 w-8 p-0">
+              <span className="sr-only">Open menu</span>
+              <MoreHorizontal className="h-4 w-4" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end" className="!bg-white min-w-[180px]">
+            <DropdownMenuItem
+              className="hover:bg-slate-100 cursor-pointer"
+              onClick={() => dispatch(setEditTownshipData(rowData))}
+            >
+              Edit
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={() => dispatch(setMigrateTownshipData(rowData))}
+              className="hover:bg-slate-100 cursor-pointer"
+            >
+              Migrate
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       );
     },
   },

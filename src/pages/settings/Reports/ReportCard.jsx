@@ -9,7 +9,12 @@ import { formatDate } from "date-fns";
 import { MoreVertical } from "lucide-react";
 import PropTypes from "prop-types";
 
-const ReportCard = ({ report, setEditReport, setDeletedReport }) => {
+const ReportCard = ({
+  report,
+  setEditReport,
+  setDeletedReport,
+  setImageReportData,
+}) => {
   return (
     <div className="p-3 relative border rounded-[12px] flex flex-col gap-3 w-[340px]">
       <p className="text-[#2C3E50] font-[700] text-[20px]">
@@ -19,9 +24,16 @@ const ReportCard = ({ report, setEditReport, setDeletedReport }) => {
         {report.description}
       </p>
       <div
-        className={`${report.image ? "" : "!bg-[#CCCDD2]"}  bg-gray-100 w-full h-[100px] rounded-[8px] overflow-hidden`}
+        className={`${report.image ? "" : "!bg-[#CCCDD2]"}  bg-gray-100 cursor-pointer w-full h-[200px] relative border rounded-[8px] overflow-hidden`}
+        onClick={() => setImageReportData(report)}
       >
-        {report.image && <img src={report.image} alt="" />}
+        {report.image && (
+          <img
+            src={report.image}
+            alt=""
+            className="object-contain absolute top-0 left-0 w-full h-full"
+          />
+        )}
       </div>
       <div className="absolute top-0 cursor-pointer right-0 w-max h-[40px] flex justify-center items-center">
         <p className="text-[10px] bg-[#1A73E833] p-1 rounded-[12px]">
@@ -62,6 +74,7 @@ ReportCard.propTypes = {
   report: PropTypes.object.isRequired,
   setEditReport: PropTypes.func.isRequired,
   setDeletedReport: PropTypes.func.isRequired,
+  setImageReportData: PropTypes.func.isRequired,
 };
 
 export default ReportCard;

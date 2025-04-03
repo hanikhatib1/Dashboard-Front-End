@@ -15,6 +15,8 @@ import {
 } from "@/redux/features/Properties";
 import { useDispatch } from "react-redux";
 
+const currentYear = new Date().getFullYear();
+
 export const appealDatesColumns = [
   {
     header: "Assessors Appeal Close Date ",
@@ -247,8 +249,16 @@ export const taxColumns = [
     },
   },
   {
+    accessorKey: "estimated_value",
+    header: `Estimated Taxes ${currentYear + 1}`,
+    cell: ({ row }) => {
+      const rowData = row.original;
+      return <p>$ {rowData.estimated_value.toLocaleString()}</p>;
+    },
+  },
+  {
     accessorKey: "current_value",
-    header: "Current Year",
+    header: `Estimated Taxes ${currentYear}`,
     cell: ({ row }) => {
       const rowData = row.original;
       return <p>$ {rowData.current_value.toLocaleString()}</p>;
@@ -256,7 +266,7 @@ export const taxColumns = [
   },
   {
     accessorKey: "prior_value",
-    header: "Prior Year",
+    header: `${currentYear - 2} Payable in ${currentYear - 1}`,
     cell: ({ row }) => {
       const rowData = row.original;
       return <p>$ {rowData.prior_value.toLocaleString()}</p>;
@@ -268,14 +278,6 @@ export const taxColumns = [
     cell: ({ row }) => {
       const rowData = row.original;
       return <p>{rowData.yoy_change} %</p>;
-    },
-  },
-  {
-    accessorKey: "estimated_value",
-    header: "Estimated Taxes",
-    cell: ({ row }) => {
-      const rowData = row.original;
-      return <p>$ {rowData.estimated_value.toLocaleString()}</p>;
     },
   },
   {

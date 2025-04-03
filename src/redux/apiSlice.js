@@ -132,8 +132,21 @@ export const apiSlice = createApi({
         body,
       }),
     }),
+    editCurrentTownship: builder.mutation({
+      query: ({ body, id }) => ({
+        url: `/township/update_current_township/${id}`,
+        method: "PATCH",
+        body,
+      }),
+    }),
     getTownshipName: builder.mutation({
       query: (pin) => `/property/get_property_township/${pin}`,
+    }),
+    migrateTownship: builder.mutation({
+      query: (id) => ({
+        url: `/township/migrate_township/${id}`,
+        method: "PATCH",
+      }),
     }),
 
     /* Properties */
@@ -579,4 +592,6 @@ export const {
   useGetReportsQuery,
   useDeleteReportMutation,
   useUpdateReportMutation,
+  useEditCurrentTownshipMutation,
+  useMigrateTownshipMutation,
 } = apiSlice;

@@ -4,11 +4,13 @@ import { useGetReportsQuery } from "@/redux/apiSlice";
 import Loader from "@/components/Loader";
 import DeleteReportModel from "./DeleteReportModel";
 import EditReport from "./EditReport";
+import ImageCard from "./ImageCard";
 
 const Reports = () => {
   const { data, isLoading, refetch } = useGetReportsQuery();
   const [deletedReport, setDeletedReport] = React.useState(null);
   const [editReport, setEditReport] = React.useState(null);
+  const [imageReportData, setImageReportData] = React.useState(null);
 
   if (isLoading) return <Loader />;
   console.log("data", data);
@@ -21,6 +23,7 @@ const Reports = () => {
             report={reportData}
             setDeletedReport={setDeletedReport}
             setEditReport={setEditReport}
+            setImageReportData={setImageReportData}
           />
         ))}
 
@@ -36,6 +39,12 @@ const Reports = () => {
           refetch={refetch}
           editReportData={editReport}
           setEditReport={setEditReport}
+        />
+      )}
+      {imageReportData && (
+        <ImageCard
+          imageReportData={imageReportData}
+          setImageReportData={setImageReportData}
         />
       )}
     </div>
