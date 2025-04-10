@@ -1,10 +1,16 @@
 import { useLocation } from "react-router-dom";
 import { Avatar, AvatarImage } from "../../components/ui/avatar";
-import { Backpack, ChevronLeft, ChevronRight, UserRound } from "lucide-react";
+import {
+  Backpack,
+  ChevronLeft,
+  ChevronRight,
+  Menu,
+  UserRound,
+} from "lucide-react";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
 
-const Header = ({ expand, setExpand }) => {
+const Header = ({ expand, setExpand, setShowSideBarMenu, showSideBarMenu }) => {
   const location = useLocation();
   const currentPage = location.pathname.split("/")[1]
     ? location.pathname.split("/")[1].split("-").join(" ")
@@ -17,14 +23,20 @@ const Header = ({ expand, setExpand }) => {
 
   return (
     <div
-      className={`fixed z-50 flex justify-between items-center p-4 top-0 ${
+      className={`fixed z-50 flex justify-between items-center p-4 top-0 left-0 w-full  ${
         expand
-          ? "left-[250px] w-[calc(100vw-250px)]"
-          : "left-[60px] w-[calc(100vw-60px)]"
+          ? "md:left-[250px] md:w-[calc(100vw-250px)]"
+          : "md:left-[60px] md:w-[calc(100vw-60px)]"
       }  h-[60px] bg-[#FCFCFC]`}
     >
       <div className="flex gap-4 items-center">
-        <>
+        <div
+          className=" gap-1 p-4 items-center cursor-pointer flex md:hidden"
+          onClick={() => setShowSideBarMenu(true)}
+        >
+          <img src="/assets/logo.png" alt="" className="w-[120px] h-[40px]" />
+        </div>
+        <div className="hidden md:flex gap-1 p-4 items-center cursor-pointer">
           {expand ? (
             <ChevronRight
               onClick={() => setExpand(!expand)}
@@ -36,8 +48,8 @@ const Header = ({ expand, setExpand }) => {
               className="hover:bg-primary border rounded-[8px] p-2 w-[32px] h-[32px] hover:text-white cursor-pointer bg-[#f0f0f3]"
             />
           )}
-        </>
-        <p className="capitalize text-heading_1 text-[#00061D]">
+        </div>
+        <p className="capitalize text-heading_1 text-[#00061D]  md:block hidden">
           {currentPage}
         </p>
       </div>
@@ -50,7 +62,22 @@ const Header = ({ expand, setExpand }) => {
           )}
         </Avatar>
         <p className="text-body">{user.first_name + " " + user.last_name}</p>
+        <Menu
+          onClick={() => {
+            setShowSideBarMenu(true);
+            setExpand(true);
+          }}
+          size={28}
+          color="#1A73E8"
+          className="cursor-pointer md:hidden block"
+        />
       </div>
+      {showSideBarMenu && (
+        <div
+          className="fixed top-0 left-0 w-full h-screen bg-black bg-opacity-60 cursor-pointer block md:hidden"
+          onClick={() => setShowSideBarMenu(false)}
+        ></div>
+      )}
     </div>
   );
 };

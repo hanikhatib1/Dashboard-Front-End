@@ -48,6 +48,7 @@ export const dataScript = {
 
 export const appeals = {
   index: "/appeals",
+  appeal: "/appeals/:id",
 };
 
 export const invoices = {

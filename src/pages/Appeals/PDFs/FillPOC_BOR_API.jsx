@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import { formatePin } from "@/utiles/formatePin";
 import { setFieldPDF } from "@/utiles/setFieldPDF";
 
-const FillPOC_BOR_API = ({ hasData, data }) => {
+const FillPOC_BOR_API = ({ hasData, data, iconOnly }) => {
   const currentYear = new Date().getFullYear();
   const currentMonth = new Date().getMonth();
   const currentDay = new Date().getDate();
@@ -74,11 +74,13 @@ const FillPOC_BOR_API = ({ hasData, data }) => {
       className={`flex gap-2 !p-1 !bg-white !text-black items-center ${hasData ? "cursor-pointer hover:border-gray-400 rounded-[8px] overflow-hidden" : ""} border border-white `}
     >
       <Download color="#80838E" />
-      <p
-        className={`text-[16px] font-medium ${hasData ? "" : "text-[#80838E]"}`}
-      >
-        Export POA BOR
-      </p>
+      {!iconOnly && (
+        <p
+          className={`text-[16px] font-medium ${hasData ? "" : "text-[#80838E]"}`}
+        >
+          Export POA BOR
+        </p>
+      )}
     </div>
   );
 };

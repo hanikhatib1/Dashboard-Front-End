@@ -33,7 +33,7 @@ const Client = () => {
     <div className="flex flex-col gap-8">
       <div className="flex flex-col gap-6 bg-white rounded-[8px] m-4 p-4 shadow-custom">
         <div className="flex justify-between items-center">
-          <div className="rounded-[8px] overflow-hidden relative h-[40px] min-w-[400px] text-[#A1A1AA]">
+          <div className="rounded-[8px] overflow-hidden relative h-[40px] w-[50%] md:min-w-[400px] text-[#A1A1AA]">
             <Search
               className="absolute top-0 left-1 w-[20px] h-full z-10"
               color="#A1A1AA"

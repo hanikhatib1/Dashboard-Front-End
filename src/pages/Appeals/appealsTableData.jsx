@@ -16,7 +16,7 @@ import {
 import { reverseDate } from "@/utiles/revserDate";
 import { MoreHorizontal } from "lucide-react";
 import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Fill_Form_Client from "./PDFs/Fill_Form_Client";
 import { formatPhoneNumber } from "@/utiles/formatPhoneNumber";
 
@@ -124,6 +124,7 @@ export const appealsColumns = [
     enableHiding: false,
     cell: ({ row }) => {
       const dispatch = useDispatch();
+      const navigate = useNavigate();
 
       return (
         <DropdownMenu>
@@ -136,23 +137,18 @@ export const appealsColumns = [
           <DropdownMenuContent align="end" className="!bg-white min-w-[180px]">
             <DropdownMenuItem
               className="hover:bg-slate-100 cursor-pointer"
+              onClick={() => navigate(`/appeals/${row.original.id}`)}
+            >
+              All Details
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              className="hover:bg-slate-100 cursor-pointer"
               onClick={() => dispatch(setEditAppealData(row.original))}
             >
               Edit
             </DropdownMenuItem>
-            <DropdownMenuItem
-              className="hover:bg-slate-100 cursor-pointer"
-              onClick={() => dispatch(addAppealToInvoice(row.original))}
-            >
-              Invoice
-            </DropdownMenuItem>
-            <DropdownMenuItem
-              className="hover:bg-slate-100 cursor-pointer"
-              onClick={() => dispatch(setAppealInvoiceDetails(row.original))}
-            >
-              View Invoices
-            </DropdownMenuItem>
-            <DropdownMenuItem
+
+            {/* <DropdownMenuItem
               className={` cursor-pointer ${row.original.signature_sent ? "text-[#80838E] cursor-not-allowed" : " hover:bg-slate-100"}`}
               onClick={() =>
                 !row.original.signature_sent &&
@@ -169,7 +165,7 @@ export const appealsColumns = [
               }
             >
               Signature Status
-            </DropdownMenuItem>
+            </DropdownMenuItem> */}
             <DropdownMenuItem
               className="hover:bg-slate-100 cursor-pointer text-red-500"
               onClick={() => dispatch(setDeleteAppealData(row.original))}

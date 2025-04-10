@@ -41,6 +41,7 @@ import Blogs from "./pages/settings/Blogs";
 import Workers from "./pages/settings/Workers";
 import ContactUs from "./pages/settings/ContactUs";
 import Reports from "./pages/settings/Reports";
+import Appeal from "./pages/Appeals/Appeal";
 
 function App() {
   const { isSuccess, data, isError } = useGetUserQuery({});
@@ -89,6 +90,8 @@ function App() {
             <Route path={dataScript.actions} element={<DataScriptActions />} />
 
             <Route path={appeals.index} element={<Appeals />} />
+            <Route path={appeals.appeal} element={<Appeal />} />
+
 
             <Route path="*" element={<NotFound />} />
           </Routes>

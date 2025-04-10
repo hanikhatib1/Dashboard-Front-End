@@ -515,6 +515,9 @@ export const apiSlice = createApi({
         body,
       }),
     }),
+    getAppeal: builder.query({
+      query: (id) => `/appeal/get_one_appeal/${id}`,
+    }),
   }),
 });
 
@@ -594,4 +597,5 @@ export const {
   useUpdateReportMutation,
   useEditCurrentTownshipMutation,
   useMigrateTownshipMutation,
+  useGetAppealQuery,
 } = apiSlice;

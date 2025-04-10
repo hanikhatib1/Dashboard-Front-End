@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import TapChildren from "./TapChildren";
 
-const Taps = ({ expand }) => {
+const Taps = ({ expand, setShowSideBarMenu }) => {
   const [activeTap, setACtiveTap] = useState(null);
 
   return (
@@ -20,6 +20,7 @@ const Taps = ({ expand }) => {
               expand={expand}
               activeTap={activeTap}
               setACtiveTap={setACtiveTap}
+              setShowSideBarMenu={setShowSideBarMenu}
             />
           );
         }
@@ -27,6 +28,7 @@ const Taps = ({ expand }) => {
           <div key={index} className={`${expand ? "px-4" : "px-2"} relative`}>
             <NavLink
               to={tap.url}
+              onClick={() => setShowSideBarMenu(false)}
               className={({ isActive }) => {
                 if (isActive) setACtiveTap(index);
                 return isActive

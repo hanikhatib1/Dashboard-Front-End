@@ -3,24 +3,24 @@ import { LogoIcon, LogoutIcon } from "../../assets/Icons";
 import Taps from "./Taps";
 import "./styles.css";
 import { useDispatch } from "react-redux";
-const SideBar = ({ expand }) => {
+const SideBar = ({ expand, showSideBarMenu, setShowSideBarMenu }) => {
   const dispatch = useDispatch();
 
   return (
     <div
-      className={`${
+      className={`absolute left-0 top-0 z-50 md:block ${showSideBarMenu ? "" : "hidden"} ${
         expand ? "w-[250px]" : "w-[60px]"
       } border overflow-hidden duration-300 ease-in-out`}
     >
       <div
-        className={`fixed border top-0 left-0 ${
+        className={`fixed border top-0 left-0 bg-white ${
           expand ? "w-[250px]" : "w-[60px]"
         } h-[100vh] shadow-custom overflow-hidden duration-300 ease-in-out`}
       >
         <div className="flex gap-1 p-4 items-center cursor-pointer">
-          <img src="/assets/logo.png" alt="" className="w-[180px] h-[50px]"/>
+          <img src="/assets/logo.png" alt="" className="w-[180px] h-[50px]" />
         </div>
-        <Taps expand={expand} />
+        <Taps expand={expand} setShowSideBarMenu={setShowSideBarMenu} />
 
         <button
           className={`flex justify-between items-center  py-2 fixed bottom-4 left-4 ${

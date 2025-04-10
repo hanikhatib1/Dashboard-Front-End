@@ -23,8 +23,8 @@ const ClientsTable = ({ columns, data, setPage }) => {
   });
 
   return (
-    <div className="!-z-10">
-      <Table className="!-z-10">
+    <div className="!-z-10 w-full overflow-x-scroll">
+      <Table className="!-z-10 w-max min-w-full">
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
             <TableRow key={headerGroup.id} className="border-[#E6EFF5]">

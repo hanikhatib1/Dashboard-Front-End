@@ -6,7 +6,7 @@ import { setFieldPDF } from "@/utiles/setFieldPDF";
 import { formatPhoneNumber } from "@/utiles/formatPhoneNumber";
 import PropTypes from "prop-types";
 
-const FillPOC_CCA_API = ({ data, hasData }) => {
+const FillPOC_CCA_API = ({ data, hasData, iconOnly }) => {
   const fillForm = async () => {
     // Step 1: Load the PDF form.
     const formUrl = POA_CCA;
@@ -97,11 +97,13 @@ const FillPOC_CCA_API = ({ data, hasData }) => {
       className={`flex gap-2 !p-1 !bg-white !text-black items-center ${hasData ? "cursor-pointer hover:border-gray-400 rounded-[8px] overflow-hidden" : ""} border border-white `}
     >
       <Download color="#80838E" />
-      <p
-        className={`text-[16px] font-medium ${hasData ? "" : "text-[#80838E]"}`}
-      >
-        Export POA CCA
-      </p>
+      {!iconOnly && (
+        <p
+          className={`text-[16px] font-medium ${hasData ? "" : "text-[#80838E]"}`}
+        >
+          Export POA CCA
+        </p>
+      )}
     </div>
   );
 };

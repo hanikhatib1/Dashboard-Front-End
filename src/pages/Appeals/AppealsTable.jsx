@@ -15,6 +15,7 @@ import {
 } from "@tanstack/react-table";
 import PropTypes from "prop-types";
 import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
 
 const AppealsTable = ({ columns, appeals }) => {
   const table = useReactTable({
@@ -29,6 +30,7 @@ const AppealsTable = ({ columns, appeals }) => {
       table.setPageIndex(state.pageIndex);
     },
   });
+  const navigate = useNavigate();
   return (
     <div className="w-full">
       <Table className="">

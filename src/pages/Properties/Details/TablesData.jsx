@@ -253,7 +253,15 @@ export const taxColumns = [
     header: `Estimated Taxes ${currentYear + 1}`,
     cell: ({ row }) => {
       const rowData = row.original;
-      return <p>$ {rowData.estimated_value.toLocaleString()}</p>;
+      return (
+        <p>
+          {rowData.category === "local_tax_rate"
+            ? `${rowData.estimated_value.toLocaleString()} %`
+            : rowData.category === "state_equalizer"
+              ? rowData.estimated_value
+              : `$ ${rowData.estimated_value.toLocaleString()}`}
+        </p>
+      );
     },
   },
   {
@@ -261,7 +269,16 @@ export const taxColumns = [
     header: `Estimated Taxes ${currentYear}`,
     cell: ({ row }) => {
       const rowData = row.original;
-      return <p>$ {rowData.current_value.toLocaleString()}</p>;
+      return (
+        <p>
+          {" "}
+          {rowData.category === "local_tax_rate"
+            ? `${rowData.current_value.toLocaleString()} %`
+            : rowData.category === "state_equalizer"
+              ? rowData.current_value
+              : `$ ${rowData.current_value.toLocaleString()}`}
+        </p>
+      );
     },
   },
   {
@@ -269,7 +286,16 @@ export const taxColumns = [
     header: `${currentYear - 2} Payable in ${currentYear - 1}`,
     cell: ({ row }) => {
       const rowData = row.original;
-      return <p>$ {rowData.prior_value.toLocaleString()}</p>;
+      return (
+        <p>
+          {" "}
+          {rowData.category === "local_tax_rate"
+            ? `${rowData.prior_value.toLocaleString()} %`
+            : rowData.category === "state_equalizer"
+              ? rowData.prior_value
+              : `$ ${rowData.prior_value.toLocaleString()}`}
+        </p>
+      );
     },
   },
   {
@@ -277,7 +303,13 @@ export const taxColumns = [
     header: "Y/Y change",
     cell: ({ row }) => {
       const rowData = row.original;
-      return <p>{rowData.yoy_change} %</p>;
+      return (
+        <p>
+          {rowData.category === "state_equalizer"
+            ? rowData.yoy_change
+            : `${rowData.yoy_change} %`}
+        </p>
+      );
     },
   },
   {
@@ -285,7 +317,16 @@ export const taxColumns = [
     header: "Estimated Change",
     cell: ({ row }) => {
       const rowData = row.original;
-      return <p>$ {rowData.estimated_change.toLocaleString()}</p>;
+      return (
+        <p>
+          {" "}
+          {rowData.category === "local_tax_rate"
+            ? `${rowData.prior_value.toLocaleString()} %`
+            : rowData.category === "state_equalizer"
+              ? rowData.prior_value
+              : `$ ${rowData.prior_value.toLocaleString()}`}
+        </p>
+      );
     },
   },
 ];
