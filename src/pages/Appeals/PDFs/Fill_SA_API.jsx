@@ -6,7 +6,7 @@ import { setFieldPDF } from "@/utiles/setFieldPDF";
 import { formatePin } from "@/utiles/formatePin";
 import { formatPhoneNumber } from "@/utiles/formatPhoneNumber";
 
-const Fill_SA_API = ({ data, hasData }) => {
+const Fill_SA_API = ({ data, hasData, iconOnly }) => {
   const fillForm = async () => {
     // Step 1: Load the PDF form.
     const formUrl = Representation_Agreement;
@@ -61,11 +61,13 @@ const Fill_SA_API = ({ data, hasData }) => {
       className={`flex gap-2 !p-1 !bg-white !text-black items-center ${hasData ? "cursor-pointer hover:border-gray-400 rounded-[8px] overflow-hidden" : ""} border border-white `}
     >
       <Download color="#80838E" />
-      <p
-        className={`text-[16px] font-medium ${hasData ? "" : "text-[#80838E]"}`}
-      >
-        Export Representation Agreement
-      </p>
+      {!iconOnly && (
+        <p
+          className={`text-[16px] font-medium ${hasData ? "" : "text-[#80838E]"}`}
+        >
+          Export Representation Agreement
+        </p>
+      )}
     </div>
   );
 };

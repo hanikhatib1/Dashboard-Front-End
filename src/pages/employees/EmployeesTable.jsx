@@ -12,22 +12,9 @@ import {
   TableHeader,
   TableRow,
 } from "../../components/ui/table";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "../../components/ui/select";
-import { Button } from "../../components/ui/button";
 
 import PropTypes from "prop-types";
-import {
-  ChevronLeftIcon,
-  ChevronRightIcon,
-  ChevronsLeft,
-  ChevronsRight,
-} from "lucide-react";
+
 import Pagination from "@/components/Pagination";
 
 const EmployeesTable = ({ columns, data, setPage }) => {
@@ -42,8 +29,8 @@ const EmployeesTable = ({ columns, data, setPage }) => {
   };
 
   return (
-    <div className="w-full">
-      <Table className="">
+    <div className="w-full overflow-x-scroll">
+      <Table className="w-max min-w-full">
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
             <TableRow key={headerGroup.id} className="border-[#E6EFF5]">
@@ -65,13 +52,13 @@ const EmployeesTable = ({ columns, data, setPage }) => {
             </TableRow>
           ))}
         </TableHeader>
-        <TableBody>
+        <TableBody className="">
           {table.getRowModel().rows?.length ? (
             table.getRowModel().rows.map((row) => (
               <TableRow
                 key={row.id}
                 data-state={row.getIsSelected() && "selected"}
-                className="border-[#E6EFF5] text-dark font-[500] text-[16px] leading-[24px]"
+                className="border-[#E6EFF5] text-dark font-[500] text-[16px] leading-[24px] "
               >
                 {row.getVisibleCells().map((cell) => (
                   <TableCell key={cell.id} className="h-5 text-start ">

@@ -4,7 +4,14 @@ import PropTypes from "prop-types";
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
 
-const TapChildren = ({ expand, tap, index, activeTap, setACtiveTap }) => {
+const TapChildren = ({
+  expand,
+  tap,
+  index,
+  activeTap,
+  setACtiveTap,
+  setShowSideBarMenu,
+}) => {
   const [open, setOpen] = useState(false);
 
   return (
@@ -37,6 +44,7 @@ const TapChildren = ({ expand, tap, index, activeTap, setACtiveTap }) => {
           <li key={index}>
             <NavLink
               to={child.url}
+              onClick={() => setShowSideBarMenu(false)}
               className={({ isActive }) => {
                 if (isActive) setACtiveTap(index);
                 return isActive
