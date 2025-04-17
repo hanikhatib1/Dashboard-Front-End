@@ -33,8 +33,8 @@ const ContactUs = () => {
       ) : (
         contactUsInfo && (
           <>
-            <div className="flex gap-4 justify-between">
-              <div className="flex gap-2 bg-white p-8 rounded-[16px] shadow-lg items-center w-[380px]">
+            <div className="flex gap-4 justify-between flex-col md:flex-row">
+              <div className="flex gap-2 bg-white p-8 rounded-[16px] shadow-lg items-center w-full md:w-[380px]">
                 <i className=" rounded-full flex justify-center items-center">
                   {" "}
                   <MessageCircle size={50} color="#80838E" />
@@ -48,7 +48,7 @@ const ContactUs = () => {
                   </p>
                 </div>
               </div>
-              <div className="flex gap-2 bg-white p-8 rounded-[16px] shadow-lg items-center w-[380px]">
+              <div className="flex gap-2 bg-white p-8 rounded-[16px] shadow-lg items-center w-full md:w-[380px]">
                 <i className=" rounded-full flex justify-center items-center">
                   {" "}
                   <CircleEllipsis size={50} color="#80838E" />
@@ -62,7 +62,7 @@ const ContactUs = () => {
                   </p>
                 </div>
               </div>
-              <div className="flex gap-2 bg-white p-8 rounded-[16px] shadow-lg items-center w-[380px]">
+              <div className="flex gap-2 bg-white p-8 rounded-[16px] shadow-lg items-center w-full md:w-[380px]">
                 <i className=" rounded-full flex justify-center items-center">
                   {" "}
                   <RotateCcw size={50} color="#80838E" />
@@ -82,9 +82,9 @@ const ContactUs = () => {
       )}
 
       <div className="border rounded-[8px]">
-        <div className="flex justify-between items-center p-3">
+        <div className="flex justify-between items-center p-3 gap-2">
           <p>Contacts</p>
-          <div className="rounded-[8px] overflow-hidden relative h-[40px] min-w-[400px] text-[#A1A1AA]">
+          <div className="rounded-[8px] border overflow-hidden relative h-[40px] w-full  md:w-[400px] text-[#A1A1AA]">
             <Search
               className="absolute top-0 left-1 w-[20px] h-full z-10"
               color="#A1A1AA"

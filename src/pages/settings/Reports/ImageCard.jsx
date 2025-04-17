@@ -9,7 +9,7 @@ const ImageCard = ({ imageReportData, setImageReportData }) => {
       open={imageReportData}
       onOpenChange={(open) => setImageReportData(open)}
     >
-      <DialogContent className="sm:max-w-[800px] !p-0 !border-none h-[calc(100vh-20%)] bg-white !rounded-[8px] overflow-y-auto scroll-right">
+      <DialogContent className="sm:max-w-[800px] max-w-[calc(100%-32px)] !p-0 !border-none h-[calc(100vh-20%)] bg-white !rounded-[8px] overflow-y-auto scroll-right">
         <div>
           <form className="flex flex-col gap-6 mb-8">
             <div className="p-4 flex flex-col gap-6">

@@ -21,8 +21,8 @@ const InvoicesTable = ({ columns, invoices }) => {
     getCoreRowModel: getCoreRowModel(),
   });
   return (
-    <div className="w-full">
-      <Table className="">
+    <div className="w-full overflow-x-scroll">
+      <Table className="w-max md:w-full">
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
             <TableRow

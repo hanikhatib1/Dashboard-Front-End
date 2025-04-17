@@ -55,9 +55,9 @@ const ClientPage = () => {
 
   return (
     <div className="p-4 flex flex-col gap-5">
-      <div className="flex justify-between gap-2">
-        <div className="w-[720px] border  rounded-[16px] bg-white border-white flex ">
-          <div className="w-[250px] border-r p-6 border-[#E5E5EF] flex flex-col gap-10 justify-center text-center">
+      <div className="flex flex-col md:flex-row justify-between gap-2">
+        <div className="md:w-[720px] border rounded-[16px] bg-white border-white flex flex-col md:flex-row ">
+          <div className="md:w-[250px] md:border-r p-6 border-[#E5E5EF] items-center flex flex-col gap-3 md:gap-10 justify-center text-center">
             <div className="flex gap-4 flex-col justify-center items-center">
               <div className="w-[100px] h-[100px] rounded-full overflow-hidden">
                 {clientData.image ? (
@@ -82,7 +82,7 @@ const ClientPage = () => {
                 </p>
               </div>
             </div>
-            <div className="flex gap-1 justify-between ">
+            <div className="flex gap-1 md:justify-between">
               <div className="border-r border-r-[2px] px-4 pr-10 flex flex-col">
                 <span className="font-bold text-[14px] text-dark">
                   {appealData.length}
@@ -96,7 +96,7 @@ const ClientPage = () => {
                 <span className="text-[#80838E] text-[13px]">Properties</span>
               </div>
             </div>
-            <div className="flex  flex-col gap-1 ">
+            <div className="flex flex-col gap-2">
               <p className="justify-start">
                 Total Invoices : {clientData.total_invoice}
               </p>
@@ -205,11 +205,8 @@ const ClientPage = () => {
 
       {editAppealData && <EditAppeal />}
       {deleteAppealData && <DeleteAppealModel />}
-
       {editInvoiceData && <EditInvoice />}
       {deleteInvoiceData && <DeleteInvoiceModel />}
-
-
       {appealToInvoice && (
         <AddInvoice
           hideButton={true}
@@ -220,9 +217,6 @@ const ClientPage = () => {
       {appealInvoiceDetails && <InvoicesModel />}
       {formsAppeal && <SendFormModel />}
       {documentsStatusAppealModel && <DocumentsStatusAppealModel />}
-
-
-
     </div>
   );
 };

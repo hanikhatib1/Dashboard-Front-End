@@ -46,8 +46,8 @@ const PropertiesTable = ({
   });
 
   return (
-    <div className="w-full">
-      <Table className={`${showHeadTable ? "" : "border"}`}>
+    <div className="w-full overflow-x-scroll">
+      <Table className={`${showHeadTable ? "" : "border"} w-max min-w-full`}>
         {showHeadTable && (
           <TableHeader className="">
             {table.getHeaderGroups().map((headerGroup) => (

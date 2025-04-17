@@ -15,18 +15,19 @@ const Reports = () => {
   if (isLoading) return <Loader />;
   console.log("data", data);
   return (
-    <div className="p-8 flex gap-4 flex-wrap relative">
-      {data &&
-        data.data.map((reportData, index) => (
-          <ReportCard
-            key={index}
-            report={reportData}
-            setDeletedReport={setDeletedReport}
-            setEditReport={setEditReport}
-            setImageReportData={setImageReportData}
-          />
-        ))}
-
+    <>
+      <div className="p-8 flex gap-4 flex-wrap relative flex-col md:flex-row justify-center md:justify-start w-[calc(100%-20px)]">
+        {data &&
+          data.data.map((reportData, index) => (
+            <ReportCard
+              key={index}
+              report={reportData}
+              setDeletedReport={setDeletedReport}
+              setEditReport={setEditReport}
+              setImageReportData={setImageReportData}
+            />
+          ))}
+      </div>
       {deletedReport && (
         <DeleteReportModel
           deletedReport={deletedReport}
@@ -47,7 +48,7 @@ const Reports = () => {
           setImageReportData={setImageReportData}
         />
       )}
-    </div>
+    </>
   );
 };
 

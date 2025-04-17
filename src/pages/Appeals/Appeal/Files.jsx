@@ -122,7 +122,7 @@ const Files = ({ appealData }) => {
           appealData[file.key] && (
             <div
               key={file.key}
-              className="w-[calc(50%-16px)] flex justify-between items-center"
+              className="w-full md:w-[calc(50%-16px)] flex justify-between items-center"
             >
               <p className="text-[16px] text-black text-opacity-50 font-[400]">
                 {file.title}

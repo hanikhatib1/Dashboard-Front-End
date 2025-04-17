@@ -124,7 +124,7 @@ const AddNewEmployeeModal = ({ refetch }) => {
           <p>Add New Employee</p>
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[800px] max-h-[calc(100vh-20%)]  bg-white !rounded-[8px] overflow-y-auto scroll-right">
+      <DialogContent className="sm:max-w-[800px] max-w-[calc(100%-32px)] max-h-[calc(100vh-20%)]  bg-white !rounded-[8px] overflow-y-auto scroll-right">
         <form onSubmit={handleSubmit(onSubmit)}>
           <DialogHeader>
             <DialogTitle className="text-heading_1">

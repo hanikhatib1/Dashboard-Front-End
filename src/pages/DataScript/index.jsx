@@ -81,7 +81,7 @@ const DataScript = () => {
 
   return (
     <div className="p-4 flex flex-col gap-12 items-center">
-      <div className="flex justify-center gap-20">
+      <div className="flex flex-col md:flex-row justify-center gap-5 md:gap-20 ">
         {feature.map((item, index) => (
           <Button
             key={index}
@@ -89,7 +89,7 @@ const DataScript = () => {
               setFiles(null);
               setActiveUpload(item.id);
             }}
-            className={`flex items-center gap-2 p-4 rounded-lg !bg-inherit !text-primary ${activeUpload === item.id ? "[&_li]:!bg-[#53ABF9] !text-[#53ABF9]" : ""} hover:!text-[#53ABF9] [&_li]:hover:!bg-[#53ABF9]`}
+            className={`flex justify-start items-center gap-2 p-4 rounded-lg !bg-inherit !text-primary ${activeUpload === item.id ? "[&_li]:!bg-[#53ABF9] !text-[#53ABF9]" : ""} hover:!text-[#53ABF9] [&_li]:hover:!bg-[#53ABF9]`}
           >
             <li className="bg-primary w-[50px] h-[50px] rounded-full flex justify-center items-center">
               {item.icon}
@@ -98,7 +98,7 @@ const DataScript = () => {
           </Button>
         ))}
       </div>
-      <div className="flex text-center justify-center items-center flex-col gap-6 p-20 border border-dashed max-w-[750px] w-[750px] rounded-[16px]">
+      <div className="flex text-center justify-center items-center flex-col gap-6 p-20 border border-dashed max-w-[750px] w-full md:w-[750px] rounded-[16px]">
         <CloudUpload size={80} color="#999999" />
         <div>
           <p className="text-[#00061D] text-[18px] font-semibold">

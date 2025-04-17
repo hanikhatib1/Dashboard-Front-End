@@ -67,17 +67,17 @@ const AddWorkerModel = ({ refetch }) => {
     <Dialog defaultOpen={open} open={open} onOpenChange={setOpen}>
       <DialogTrigger
         asChild
-        className="w-[150px]"
+        className="w-max md:w-[150px]"
         onClick={() => {
           console.log("Add New Blog");
         }}
       >
         <Button className="bg-primary rounded-[8px] text-white flex justify-center items-center gap-1">
           <Plus color="#ffffff" />
-          <p>Add New Worker</p>
+          <p className="hidden md:block">Add New Worker</p>
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[500px] !p-0 !border-none max-h-[calc(100vh-20%)] bg-white !rounded-[8px] overflow-y-auto scroll-right">
+      <DialogContent className="sm:max-w-[500px] max-w-[calc(100%-32px)] !p-0 !border-none max-h-[calc(100vh-20%)] bg-white !rounded-[8px] overflow-y-auto scroll-right">
         <div>
           <form
             className="flex flex-col gap-6 mb-8"

@@ -107,9 +107,9 @@ const Appeal = () => {
     return (
       <div className="p-5 flex flex-col gap-6">
         <div className="flex gap-3 flex-col">
-          <div className="flex justify-between items-center">
+          <div className="flex flex-col md:flex-row justify-between gap-4">
             <p className="text-[#2C3E50] text-[28px]">All Details</p>
-            <div>
+            <div className="flex gap- flex-wrap">
               <button
                 className="bg-[#F60000] text-white px-4 py-2 rounded-[8px]"
                 onClick={() => dispatch(setDeleteAppealData(appealData))}
@@ -144,8 +144,8 @@ const Appeal = () => {
               </button>
             </div>
           </div>
-          <div className="border rounded-[10px] border-[#1A73E833] p-4 flex flex-col  gap-8">
-            <div className="flex justify-between">
+          <div className="border rounded-[10px] border-[#1A73E833] p-4 flex flex-col  gap-10 h-max">
+            <div className="flex flex-col md:flex-row justify-between">
               <div className="flex flex-col gap-4">
                 <div className="flex gap-4">
                   <p>Name :</p>
@@ -175,7 +175,7 @@ const Appeal = () => {
                   </p>
                 </div>
               </div>
-              <div className="border w-[40%] relative rounded-[16px] overflow-hidden">
+              <div className="border mt-5 w-full md:w-[40%] h-[200px] md:h-auto relative rounded-[16px] overflow-hidden">
                 <img
                   src={appealData.property_image}
                   alt=""
@@ -217,7 +217,6 @@ const Appeal = () => {
         {editInvoiceData && <EditInvoice />}
         {deleteInvoiceData && <DeleteInvoiceModel />}
         {documentsStatusAppealModel && <DocumentsStatusAppealModel />}
-
       </div>
     );
 };

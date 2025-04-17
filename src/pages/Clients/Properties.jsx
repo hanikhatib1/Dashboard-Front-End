@@ -10,18 +10,18 @@ import { Pin } from "lucide-react";
 import { Link } from "react-router-dom";
 const Properties = ({ data }) => {
   return (
-    <Carousel className="max-w-[380px] h-[350px] !bg-white" hideArrows>
+    <Carousel className="max-w-full md:max-w-[380px] h-[350px] !bg-white" hideArrows>
       <CarouselContent className="!bg-white !shadow-none">
         {data.map((item, index) => (
           <CarouselItem
             key={index}
-            className="!w-[300px] h-[350px] !bg-white !shadow-none "
+            className="md:!w-[300px] h-[350px] !bg-white !shadow-none "
           >
             <div className="p-1">
               <div
-                className={`relative p-4 rounded-[16px] h-full min-w-[262px] max-w-[380px] flex flex-col gap-4 shadow-custom `}
+                className={`relative p-4 rounded-[16px] h-full md:min-w-[262px] md:max-w-[380px] flex flex-col gap-4 shadow-custom `}
               >
-                <div className={`relative w-[350px] h-[210px]`}>
+                <div className={`relative md:w-[350px] h-[210px]`}>
                   <img
                     src={item.default_image}
                     alt=""

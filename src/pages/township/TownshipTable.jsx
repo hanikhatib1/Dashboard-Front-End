@@ -12,22 +12,8 @@ import {
   TableHeader,
   TableRow,
 } from "../../components/ui/table";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "../../components/ui/select";
-import { Button } from "../../components/ui/button";
 
 import PropTypes from "prop-types";
-import {
-  ChevronLeftIcon,
-  ChevronRightIcon,
-  ChevronsLeft,
-  ChevronsRight,
-} from "lucide-react";
 
 const TownshipTable = ({ columns, data }) => {
   const table = useReactTable({
@@ -37,8 +23,8 @@ const TownshipTable = ({ columns, data }) => {
   });
 
   return (
-    <div className="w-full overflow-hidden rounded-[8px] border">
-      <Table className="rounded-[8px]">
+    <div className="w-full overflow-hidden rounded-[8px] border overflow-x-scroll">
+      <Table className="rounded-[8px] w-max md:w-full">
         <TableHeader className="!rounded-[8px] border overflow-hidden">
           {table.getHeaderGroups().map((headerGroup) => (
             <TableRow

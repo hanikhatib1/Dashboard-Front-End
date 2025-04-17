@@ -26,7 +26,7 @@ const Blogs = () => {
         <div>Error</div>
       ) : (
         blogInfo && (
-          <div className="flex gap-8">
+          <div className="flex flex-col md:flex-row gap-8">
             <Card
               item={{
                 title: "Total Blogs",
@@ -50,7 +50,7 @@ const Blogs = () => {
       <div className="flex justify-end">
         <AddBlogModel refetch={refetch} />
       </div>
-      <div className="flex flex-wrap gap-6">
+      <div className="flex flex-wrap gap-6 justify-center md:justify-start">
         {isLoading ? (
           <Loader />
         ) : isError ? (

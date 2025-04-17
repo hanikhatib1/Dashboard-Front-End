@@ -69,7 +69,7 @@ const EditModel = ({ editBlogData, setEditBlog, refetch }) => {
       open={editBlogData}
       onOpenChange={(open) => setEditBlog(open)}
     >
-      <DialogContent className="sm:max-w-[900px] !p-0 !border-none max-h-[calc(100vh-20%)] bg-white !rounded-[8px] overflow-y-auto scroll-right">
+      <DialogContent className="sm:max-w-[900px] max-w-[calc(100%-36px)] !p-0 !border-none max-h-[calc(100vh-20%)] bg-white !rounded-[8px] overflow-y-auto scroll-right">
         <form
           className="flex flex-col gap-6 mb-8"
           onSubmit={handleSubmit(onSubmit)}

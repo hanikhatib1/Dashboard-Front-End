@@ -86,7 +86,7 @@ const Details = (data) => {
   return (
     <div className="border rounded-[8px] bg-white border-gray-200 flex flex-col gap-2">
       {" "}
-      <div className="flex gap-4 px-4 py-2">
+      <div className="flex gap-4 px-4 py-2 overflow-scroll">
         {statusData.map((item) =>
           item.key === "Comparison" ? (
             <Link

@@ -21,8 +21,8 @@ const ClientAppealTable = ({ columns, data }) => {
     getCoreRowModel: getCoreRowModel(),
   });
   return (
-    <div className="!-z-10">
-      <Table className="!-z-10">
+    <div className="!-z-10 w-full overflow-x-scroll">
+      <Table className="!-z-10 w-max md:w-full">
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
             <TableRow
