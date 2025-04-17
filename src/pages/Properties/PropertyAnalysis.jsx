@@ -13,10 +13,10 @@ const PropertyAnalysis = ({ property }) => {
   const currentDate = data.toLocaleDateString("en-US");
 
   return (
-    <div className="h-[426px] flex gap-8 justify-between">
-      <div className="h-full  flex flex-col gap-4 !w-[580px]">
+    <div className="h-max md:h-[426px] flex flex-col md:flex-row gap-8 justify-between">
+      <div className="h-[350px] md:h-full  flex flex-col gap-4 w-full md:!w-[580px]">
         <p className="text-heading_3">{property.data.address}</p>
-        <div className="bg-gray-200 rounded-[8px] h-[372px] border flex-1 relative overflow-hidden">
+        <div className="bg-gray-200 rounded-[8px] !h-[372px] border flex-1 relative overflow-hidden">
           <ReplacedImage
             defaultImage={property.data.default_image}
             pickedImage={property.data.picked_image}
@@ -25,7 +25,7 @@ const PropertyAnalysis = ({ property }) => {
           <StreetView address={property.data.address} />
         </div>
       </div>
-      <div className="h-full w-[431px]  flex flex-col">
+      <div className="h-full w-full md:w-[431px] flex flex-col">
         <div className="flex justify-between mb-4">
           <p className="text-body text-[#9291A5]">Last Update</p>
           <p className="text-body text-[#9291A5]">{currentDate}</p>
@@ -35,7 +35,7 @@ const PropertyAnalysis = ({ property }) => {
         </div>
         <p className="text-heading_2">Expected tax savings per year </p>
         <hr className="w-full mt-5 mb-6 bg-primary" />
-        <div className="h-[256px] w-[250px] flex-1 flex flex-col gap-6 justify-center m-auto mt-4 text-center ">
+        <div className="h-[256px] w-[250px] flex-1 flex flex-col  gap-6 justify-center m-auto mt-4 text-center ">
           <CircularProgressbarWithChildren
             value={100 - property.data.fair_per}
             className=""

@@ -26,10 +26,10 @@ const Maps = ({
 }) => {
   return (
     <div className="p-4 flex flex-col gap-8">
-      <div className="flex justify-between">
+      <div className="flex justify-between flex-col md:flex-row gap-3">
         <SearchPropertiesComponent goToComparison />
         <div className="flex gap-4 justify-end items-center mb-2">
-          <p className="text-heading_3 text-[#054985]">View On Map</p>
+          <p className="text-heading_3 text-[#054985] whitespace-nowrap">View On Map</p>
           <Switch toggle={openMaps} setToggle={setOpenMaps} />
         </div>
       </div>
@@ -39,9 +39,9 @@ const Maps = ({
           {oneProperty && oneProperty.data.address}”
         </p>
       </div>
-      <div className="flex md:flex-row flex-col gap-12">
+      <div className="flex md:flex-row flex-col-reverse gap-12">
         <div className="flex-1">
-          <div className="flex gap-4 flex-wrap w-full">
+          <div className="flex gap-4 flex-wrap w-full justify-center">
             {onePropertyLoading ? (
               <Loader />
             ) : (
@@ -74,7 +74,7 @@ const Maps = ({
             )}
           </div>
         </div>
-        <div className="max-w-[605px] w-[605px]">
+        <div className="max-w-[605px] w-full md:w-[605px]">
           <MapContainer
             center={
               oneProperty && [

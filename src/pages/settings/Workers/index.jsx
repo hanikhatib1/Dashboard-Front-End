@@ -24,8 +24,8 @@ const Workers = () => {
   return (
     <div className="flex flex-col gap-8">
       <div className="flex flex-col gap-14 bg-white rounded-[8px] m-4 p-4 shadow-custom">
-        <div className="flex justify-between items-center">
-          <div className="rounded-[8px] overflow-hidden relative h-[40px] min-w-[400px] text-[#A1A1AA]">
+        <div className="flex justify-between items-center gap-3">
+          <div className="rounded-[8px] border overflow-hidden relative h-[40px] w-full md:min-w-[400px] text-[#A1A1AA]">
             <Search
               className="absolute top-0 left-1 w-[20px] h-full z-10"
               color="#A1A1AA"
@@ -41,7 +41,7 @@ const Workers = () => {
             <AddWorkerModel refetch={getAllWorkers} />
           </div>
         </div>
-        <div className="rounded-[8px] flex gap-4 flex-wrap">
+        <div className="rounded-[8px] flex gap-4 flex-wrap justify-center md:justify-start">
           {isLoading ? (
             <Loader />
           ) : isError ? (

@@ -11,16 +11,16 @@ import { Link } from "react-router-dom";
 
 const Blog = ({ blogData, setEditBlog, setDeleteBlog }) => {
   return (
-    <div className="flex flex-col gap-6 h-[350px] w-[250px] relative">
-      <div className="relative w-[225px] h-[200px] rounded-[8px] overflow-hidden border border-[#eee]">
+    <div className="flex flex-col gap-6 h-[350px] w-[250px] relative border rounded-[8px] overflow-hidden">
+      <div className="relative w-[250px] h-[200px] rounded-[8px] overflow-hidden border border-[#eee]">
         <img
           src={blogData.image}
           alt={blogData.title}
           className="absolute w-full h-full object-cover rounded-lg top-0 left-0"
         />
       </div>
-      <div className="flex flex-col gap-1 relative">
-        <p className="text-[#333333] text-[24px] leading-[150%] font-bold truncate w-[calc(100%-40px)]">
+      <div className="flex flex-col gap-1 relative px-2">
+        <p className="text-[#333333] text-[18px] leading-[150%] font-bold truncate w-[calc(100%-40px)]">
           {blogData.title}
         </p>
         <p className="text-[#465668] text-[18px] leading-[150%] font-[400] truncate">
@@ -33,7 +33,7 @@ const Blog = ({ blogData, setEditBlog, setDeleteBlog }) => {
         >
           Read More
         </Link>
-        <div className="absolute top-0 cursor-pointer right-0 w-[40px] h-[40px] flex justify-center items-center">
+        <div className="absolute -top-2 cursor-pointer right-0 w-[40px] h-[40px] flex justify-center items-center">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" className="h-8 w-8 p-0">

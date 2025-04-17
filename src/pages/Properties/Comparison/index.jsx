@@ -212,9 +212,9 @@ const Comparison = () => {
         />
       ) : (
         <div className="p-4 flex flex-col gap-8">
-          <div className="flex gap-8 justify-between">
-            <div className="flex gap-6 items-center ">
-              <div className="flex gap-6">
+          <div className="flex gap-8 justify-between  flex-col-reverse md:flex-row">
+            <div className="flex gap-6 items-center  flex-col md:flex-row">
+              <div className="flex gap-6 self-start">
                 {tapsData.map((item) => (
                   <button
                     key={item.key}
@@ -229,80 +229,39 @@ const Comparison = () => {
                   </button>
                 ))}
               </div>
-              <div
-                className={`border bg-primary h-[32px] rounded-[40px]  flex items-center gap-4 px-2 py-1  ${!filterSate.by_distance_only ? "bg-opacity-75" : ""}`}
-              >
-                <input
-                  type="radio"
-                  name="radio"
-                  value="true"
-                  checked={filterSate.by_distance_only === true}
-                  onChange={(e) =>
-                    setFilterSate((prev) => ({
-                      ...prev,
-                      by_distance_only: true,
-                    }))
-                  }
-                />
-                <Select
-                  onValueChange={(e) =>
-                    setFilterSate({ ...filterSate, [mails.key]: e })
-                  }
+              <div className="flex gap-4 justify-between flex-col md:flex-row w-full">
+                <div
+                  className={` bg-primary h-[32px] rounded-[40px] w-max flex items-center gap-4 px-2 py-1  ${!filterSate.by_distance_only ? "bg-opacity-75" : ""}`}
                 >
-                  <SelectTrigger
-                    className={`flex items-center gap-1 rounded-[20px]  p-1 text-body  ${!filterSate.by_distance_only ? "bg-opacity-75 border-none" : "bg-primary border-primary"} text-white h-[24px]`}
-                    onClick={() => {
-                      setFilterStatusKey(mails.key);
-                    }}
-                  >
-                    <SelectValue placeholder={mails.defaultValue} />
-                    <span>{mails.name}</span>
-                  </SelectTrigger>
-                  <SelectContent className="bg-white">
-                    <SelectGroup>
-                      {mails.options.map((option) => (
-                        <SelectItem key={option} value={option}>
-                          {option}
-                        </SelectItem>
-                      ))}
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
-              </div>
-              <div
-                className={`border bg-primary h-[32px] rounded-[40px] flex items-center gap-4 px-2 py-1 ${filterSate.by_distance_only ? "bg-opacity-75" : ""}`}
-              >
-                <input
-                  type="radio"
-                  name="radio"
-                  value="false"
-                  checked={filterSate.by_distance_only === false}
-                  onChange={(e) => {
-                    setFilterSate((prev) => ({
-                      ...prev,
-                      by_distance_only: false,
-                    }));
-                  }}
-                />
-                {FilterStatusData.map((item, index) => (
+                  <input
+                    type="radio"
+                    name="radio"
+                    value="true"
+                    checked={filterSate.by_distance_only === true}
+                    onChange={(e) =>
+                      setFilterSate((prev) => ({
+                        ...prev,
+                        by_distance_only: true,
+                      }))
+                    }
+                  />
                   <Select
-                    key={item.key}
                     onValueChange={(e) =>
-                      setFilterSate({ ...filterSate, [item.key]: e })
+                      setFilterSate({ ...filterSate, [mails.key]: e })
                     }
                   >
                     <SelectTrigger
-                      className={`flex items-center gap-1 rounded-[20px] p-1 text-body  ${filterSate.by_distance_only ? "bg-opacity-75 border-none" : "bg-primary border-primary"} text-white h-[24px]`}
+                      className={`flex items-center gap-1 rounded-[20px]  p-1 text-body  ${!filterSate.by_distance_only ? "bg-opacity-75 border-none" : "bg-primary border-primary"} text-white h-[24px]`}
                       onClick={() => {
-                        setFilterStatusKey(item.key);
+                        setFilterStatusKey(mails.key);
                       }}
                     >
-                      <SelectValue placeholder={item.defaultValue} />
-                      <span>{item.name}</span>
+                      <SelectValue placeholder={mails.defaultValue} />
+                      <span>{mails.name}</span>
                     </SelectTrigger>
                     <SelectContent className="bg-white">
                       <SelectGroup>
-                        {item.options.map((option) => (
+                        {mails.options.map((option) => (
                           <SelectItem key={option} value={option}>
                             {option}
                           </SelectItem>
@@ -310,7 +269,50 @@ const Comparison = () => {
                       </SelectGroup>
                     </SelectContent>
                   </Select>
-                ))}
+                </div>
+                <div
+                  className={`border w-full justify-start self-start bg-primary min-h-[32px] rounded-[12px] md:rounded-[40px] flex flex-row items-center gap-1 md:gap-4 px-2 py-1 ${filterSate.by_distance_only ? "bg-opacity-75" : ""}`}
+                >
+                  <input
+                    type="radio"
+                    name="radio"
+                    value="false"
+                    checked={filterSate.by_distance_only === false}
+                    onChange={(e) => {
+                      setFilterSate((prev) => ({
+                        ...prev,
+                        by_distance_only: false,
+                      }));
+                    }}
+                  />
+                  {FilterStatusData.map((item, index) => (
+                    <Select
+                      key={item.key}
+                      onValueChange={(e) =>
+                        setFilterSate({ ...filterSate, [item.key]: e })
+                      }
+                    >
+                      <SelectTrigger
+                        className={`flex items-center gap-0 md:gap-1 flex-1 rounded-[20px] w-max p-0 md:p-1 text-body  ${filterSate.by_distance_only ? "bg-opacity-75 border-none" : "bg-primary border-primary"} text-white h-[24px]`}
+                        onClick={() => {
+                          setFilterStatusKey(item.key);
+                        }}
+                      >
+                        <SelectValue placeholder={item.defaultValue} />
+                        <span className="text-[10px]">{item.name}</span>
+                      </SelectTrigger>
+                      <SelectContent className="bg-white">
+                        <SelectGroup>
+                          {item.options.map((option) => (
+                            <SelectItem key={option} value={option}>
+                              {option}
+                            </SelectItem>
+                          ))}
+                        </SelectGroup>
+                      </SelectContent>
+                    </Select>
+                  ))}
+                </div>
               </div>
             </div>
             <SearchProperties goToComparison />
@@ -325,7 +327,7 @@ const Comparison = () => {
                     <p className="text-heading_3 text-[#054985]">View On Map</p>
                     <Switch toggle={openMaps} setToggle={setOpenMaps} />
                   </div>
-                  <div className="flex gap-4 w-full h-[238px]">
+                  <div className="flex gap-4 w-full h-max md:h-[238px] flex-col md:flex-row">
                     {onePropertyLoading ? (
                       <Loader />
                     ) : (
@@ -341,7 +343,7 @@ const Comparison = () => {
                     {listOfPropertiesLoading ? (
                       <Loader />
                     ) : (
-                      <div className="overflow-x-auto scroll-right scroll-property flex gap-4 w-full pb-2">
+                      <div className="overflow-x-auto h-[238px] scroll-right scroll-property flex gap-4 w-full pb-2">
                         {listOfProperties &&
                           listOfProperties.data.map((item) => (
                             <PropertyCard
@@ -362,10 +364,10 @@ const Comparison = () => {
               </div>
 
               <div
-                className={`flex justify-between px-2 items-center relative`}
+                className={`flex flex-col gap-3 w-full justify-between px-2  relative`}
               >
-                <div className="flex gap-6">
-                  <div className="">
+                <div className="flex justify-between">
+                  <div className="flex gap-6 w-max">
                     <Select
                       onValueChange={(e) =>
                         setFilterSate({ ...filterSate, sort_by: e })
@@ -389,31 +391,41 @@ const Comparison = () => {
                         </SelectGroup>
                       </SelectContent>
                     </Select>
+                    <p
+                      className={`hidden gap-2 md:flex border-l-[3px] pl-2 border-primary w-max`}
+                    >
+                      <span className="leading-[45px] whitespace-nowrap">Total Saving </span>
+                      <span className="text-[30px] leading-[45px] font-bold">
+                        {listOfProperties
+                          ? `$${formattedNumber(listOfProperties.saves)}`
+                          : ""}
+                      </span>
+                    </p>
                   </div>
-                  <p
-                    className={`flex gap-2 border-l-[3px] pl-2 border-primary `}
-                  >
-                    <span className="leading-[45px]">Total Saving </span>
-                    <span className="text-[30px] leading-[45px] font-bold">
-                      {listOfProperties
-                        ? `$${formattedNumber(listOfProperties.saves)}`
-                        : ""}
-                    </span>
-                  </p>
+                  <div className="flex gap-2">
+                    {oneProperty && (
+                      <NewAppeals
+                        defaultProperty={oneProperty?.data}
+                        buttonClassName="!bg-white !text-dark !border-primary border"
+                        hasIcon={false}
+                        textButton="Appeals"
+                        fillByAPI={true}
+                      />
+                    )}
+                    {/* <FileReportPDF mainPin={id} pins={propertiesListArray} /> */}
+                    <FileReportPDF2 mainPin={id} pins={propertiesListArray} />
+                  </div>
                 </div>
-                <div className="flex gap-2">
-                  {oneProperty && (
-                    <NewAppeals
-                      defaultProperty={oneProperty?.data}
-                      buttonClassName="!bg-white !text-dark !border-primary border"
-                      hasIcon={false}
-                      textButton="Appeals"
-                      fillByAPI={true}
-                    />
-                  )}
-                  {/* <FileReportPDF mainPin={id} pins={propertiesListArray} /> */}
-                  <FileReportPDF2 mainPin={id} pins={propertiesListArray} />
-                </div>
+                <p
+                  className={`flex md:hidden gap-2 self-center md:border-l-[3px] pl-2 border-primary `}
+                >
+                  <span className="leading-[45px]">Total Saving </span>
+                  <span className="text-[30px] leading-[45px] font-bold">
+                    {listOfProperties
+                      ? `$${formattedNumber(listOfProperties.saves)}`
+                      : ""}
+                  </span>
+                </p>
               </div>
 
               {isLoading ? (

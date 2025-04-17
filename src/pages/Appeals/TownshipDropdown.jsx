@@ -28,7 +28,7 @@ const TownshipDropdown = ({ setTownshipId, className = "" }) => {
         className="rounded-[8px] sm:w-[calc(50%-16px)] w-full"
         onValueChange={(value) => setTownshipId(value)}
       >
-        <SelectTrigger className="rounded-[8px] h-[48px]">
+        <SelectTrigger className="rounded-[8px] h-[48px] p-1">
           <SelectValue placeholder="Select Township" />
         </SelectTrigger>
         <SelectContent className="rounded-[8px] bg-white ">

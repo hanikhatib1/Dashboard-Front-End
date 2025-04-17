@@ -41,14 +41,14 @@ const DeletePropertySale = () => {
       <DialogTrigger asChild>
         <Button variant="outline">Delete Appeal</Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px] bg-white !rounded-[8px]">
+      <DialogContent className="sm:max-w-[425px] max-w-[calc(100%-32px)] bg-white !rounded-[8px]">
         <DialogHeader>
           <DialogTitle>Delete Property Sale</DialogTitle>
           <DialogDescription>
             Are you sure you want to delete this property sale?
           </DialogDescription>
         </DialogHeader>
-        <DialogFooter>
+        <DialogFooter className="flex flex-col gap-4 ">
           <Button
             type="submit"
             className="bg-red-500 hover:bg-red-600 rounded-[8px]  text-white"

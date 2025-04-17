@@ -32,8 +32,8 @@ const AppealsTable = ({ columns, appeals }) => {
   });
   const navigate = useNavigate();
   return (
-    <div className="w-full">
-      <Table className="">
+    <div className="w-full overflow-x-scroll">
+      <Table className="w-max min-w-full">
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
             <TableRow key={headerGroup.id} className="border-[#E6EFF5]">

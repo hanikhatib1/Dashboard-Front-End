@@ -448,14 +448,14 @@ const FileReportPDF2 = ({ mainPin, pins }) => {
   return (
     <div
       onClick={fillForm}
-      className="border !bg-primary rounded-[8px] h-[40px] w-[145px] text-white px-2 flex items-center gap-1 justify-center cursor-pointer"
+      className="border !bg-primary rounded-[8px] h-[40px] w-max md:w-[145px] text-white px-2 flex items-center gap-1 justify-center cursor-pointer"
     >
       {isLoading ? (
         <Loader />
       ) : (
         <>
           <Download color="#fff" size={20} />
-          <p className="!text-[14px] font-medium">Export Report</p>
+          <p className="!text-[14px] font-medium hidden md:block">Export Report</p>
         </>
       )}
     </div>

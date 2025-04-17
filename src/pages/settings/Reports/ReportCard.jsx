@@ -16,7 +16,7 @@ const ReportCard = ({
   setImageReportData,
 }) => {
   return (
-    <div className="p-3 relative border rounded-[12px] flex flex-col gap-3 w-[340px]">
+    <div className="p-3 relative border rounded-[12px] flex flex-col gap-3  md:w-[340px]">
       <p className="text-[#2C3E50] font-[700] text-[20px]">
         {report.full_name}
       </p>

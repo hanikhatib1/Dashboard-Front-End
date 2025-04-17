@@ -185,7 +185,7 @@ const AddInvoice = ({ hideButton = false, open, setOpen, defaultAppeal }) => {
           </Button>
         </DialogTrigger>
       )}
-      <DialogContent className="h-[calc(100vh-40%)]  bg-white !rounded-[8px] overflow-y-auto scroll-right">
+      <DialogContent className="h-[calc(100vh-40%)] w-[calc(100%-32px)]  bg-white !rounded-[8px] overflow-y-auto scroll-right">
         <form
           onSubmit={handleSubmit(onSubmit)}
           className="flex flex-col gap-5 justify-between"

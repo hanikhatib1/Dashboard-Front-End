@@ -31,9 +31,18 @@ const Header = ({ expand, setExpand, setShowSideBarMenu, showSideBarMenu }) => {
     >
       <div className="flex gap-4 items-center">
         <div
-          className=" gap-1 p-4 items-center cursor-pointer flex md:hidden"
+          className="gap-4 p-4 items-center cursor-pointer flex md:hidden"
           onClick={() => setShowSideBarMenu(true)}
         >
+          <Menu
+            onClick={() => {
+              setShowSideBarMenu(true);
+              setExpand(true);
+            }}
+            size={28}
+            color="#1A73E8"
+            className="cursor-pointer md:hidden block"
+          />
           <img src="/assets/logo.png" alt="" className="w-[120px] h-[40px]" />
         </div>
         <div className="hidden md:flex gap-1 p-4 items-center cursor-pointer">

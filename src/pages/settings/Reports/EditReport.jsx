@@ -60,7 +60,7 @@ const EditReport = ({ editReportData, setEditReport, refetch }) => {
       open={editReportData}
       onOpenChange={(open) => setEditReport(open)}
     >
-      <DialogContent className="sm:max-w-[500px] !p-0 !border-none max-h-[calc(100vh-20%)] bg-white !rounded-[8px] overflow-y-auto scroll-right">
+      <DialogContent className="sm:max-w-[500px] max-w-[calc(100%-32px)] !p-0 !border-none max-h-[calc(100vh-20%)] bg-white !rounded-[8px] overflow-y-auto scroll-right">
         <div>
           <form
             className="flex flex-col gap-6 mb-8"

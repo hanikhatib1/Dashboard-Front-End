@@ -46,11 +46,11 @@ const SearchPropertiesComponent = ({
   }, [searchText, searchFor]);
 
   return (
-    <div className={`flex ${containerClassName}`}>
+    <div className={`flex ${containerClassName} w-full`}>
       <div
         className={`${
           searchText !== "" ? "rounded-tl-[8px]" : "rounded-l-[8px]"
-        } border border-r-0 relative h-[40px] max-w-[500px] min-w-[350px] w-full text-[#A1A1AA] z-10 ${className}`}
+        } border border-r-0 relative h-[40px] max-w-full md:max-w-[500px] min-w-max w-full text-[#A1A1AA] z-10 ${className}`}
       >
         <Search
           className="absolute top-0 left-1 w-[20px] h-full z-10"
@@ -131,7 +131,7 @@ const SearchPropertiesComponent = ({
         className="focus-visible:outline-0 focus-visible:ring-0 focus-visible:ring-offset-0"
         defaultValue={searchFor}
       >
-        <SelectTrigger className="w-[180px] focus-visible:outline-0 focus-visible:ring-0 focus-visible:ring-offset-0 rounded-r-[8px]">
+        <SelectTrigger className="w-max md:w-[180px] focus-visible:outline-0 focus-visible:ring-0 focus-visible:ring-offset-0 rounded-r-[8px]">
           <SelectValue placeholder={searchFor} />
         </SelectTrigger>
         <SelectContent className="bg-white">

@@ -22,8 +22,8 @@ const ContactUsTable = ({ columns, data }) => {
   });
 
   return (
-    <div>
-      <Table className="!-z-10">
+    <div className="w-full overflow-x-scroll">
+      <Table className="!-z-10 w-max md:w-full">
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
             <TableRow

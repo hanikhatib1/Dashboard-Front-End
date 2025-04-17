@@ -148,7 +148,7 @@ const AddNewClientModal = ({ buttonClassName, refetch }) => {
           <p>Add New Client</p>
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[800px] max-h-[calc(100vh-20%)]  bg-white !rounded-[8px] overflow-y-auto scroll-right">
+      <DialogContent className="sm:max-w-[800px] max-w-[calc(100%-32px)] max-h-[calc(100vh-20%)]  bg-white !rounded-[8px] overflow-y-auto scroll-right">
         <form>
           <DialogHeader>
             <DialogTitle className="text-heading_1">Add New Client</DialogTitle>
@@ -258,7 +258,7 @@ const AddNewClientModal = ({ buttonClassName, refetch }) => {
               <p className="text-heading_3">Address</p>
 
               <div className="flex gap-4 flex-wrap justify-between my-4">
-                <div className="sm:w-[calc(50%-8px)] w-full flex flex-col gap-2 flex-2 h-[48px]">
+                <div className="sm:w-[calc(50%-8px)] w-full flex flex-col gap-2 flex-2 h-max md:h-[48px]">
                   <AddressSearch setAddressData={setAddressData} />
                 </div>
                 <CustomInput

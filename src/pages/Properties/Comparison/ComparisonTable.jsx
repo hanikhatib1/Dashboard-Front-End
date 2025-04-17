@@ -12,27 +12,10 @@ import {
   TableHeader,
   TableRow,
 } from "../../../components/ui/table";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "../../../components/ui/select";
 import { Button } from "../../../components/ui/button";
-
 import PropTypes from "prop-types";
-import {
-  ArrowUp,
-  ChevronDown,
-  ChevronLeftIcon,
-  ChevronRightIcon,
-  ChevronsLeft,
-  ChevronsRight,
-  ChevronUp,
-} from "lucide-react";
+import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import Pagination from "@/components/Pagination";
 
 const ComparisonTable = ({ columns, data, hasPagination = true }) => {
   const navigate = useNavigate();
@@ -57,8 +40,8 @@ const ComparisonTable = ({ columns, data, hasPagination = true }) => {
 
   return (
     <>
-      <div className="relative w-full border rounded-[8px] max-h-[450px] overflow-y-auto">
-        <Table className="relative">
+      <div className="relative w-full border rounded-[8px] max-h-[450px] overflow-y-auto overflow-x-scroll">
+        <Table className="relative w-max min-w-full">
           <TableHeader className="sticky  bg-white w-full top-0 mb-[200px]">
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow

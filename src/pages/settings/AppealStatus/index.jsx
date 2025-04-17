@@ -80,24 +80,26 @@ const AppealStatus = () => {
   return (
     <div className="p-4 flex flex-col gap-6">
       <p className="text-heading_2 text-[#80838E]">Appeal Status</p>
-      <div className="flex items-center gap-4">
-        <Input
-          className="w-[40%] rounded-[8px]"
-          placeholder="Status"
-          value={statusText ?? ""}
-          onChange={(e) => setStatusText(e.target.value)}
-        />
-        <Input
-          className="rounded-[8px] w-[120px]"
-          placeholder="Sort"
-          type="number"
-          value={statusSort}
-          onChange={(e) => setStatusSort(e.target.value)}
-        />
+      <div className="flex gap-3 flex-col md:flex-row  w-full">
+        <div className="flex gap-3">
+          <Input
+            className="w-[40%] rounded-[8px]"
+            placeholder="Status"
+            value={statusText ?? ""}
+            onChange={(e) => setStatusText(e.target.value)}
+          />
+          <Input
+            className="rounded-[8px] w-[120px]"
+            placeholder="Sort"
+            type="number"
+            value={statusSort}
+            onChange={(e) => setStatusSort(e.target.value)}
+          />
+        </div>
         {editStatus ? (
-          <>
+          <div className="flex gap-3 w-full">
             <Button
-              className={`flex gap-2 items-center text-white rounded-[8px] bg-primary  px-4 py-2 ${statusText ? "" : "opacity-50"}`}
+              className={`flex gap-2  items-center text-white rounded-[8px] bg-primary  px-4 py-2 ${statusText ? "" : "opacity-50"}`}
               disabled={statusText === ""}
               onClick={() => handleUpdateStatus()}
             >
@@ -113,7 +115,7 @@ const AppealStatus = () => {
             >
               Cancel
             </Button>
-          </>
+          </div>
         ) : (
           <Button
             className={`flex gap-2 items-center text-white rounded-[8px] bg-primary  px-4 py-2 ${statusText ? "" : "opacity-50"}`}

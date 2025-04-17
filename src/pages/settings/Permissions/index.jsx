@@ -18,8 +18,8 @@ const Permissions = () => {
   return (
     <div className="p-4 flex flex-col gap-6">
       <p className="text-heading_2 text-[#80838E]">Group Permissions </p>
-      <div className="flex justify-between items-center">
-        <div className="rounded-[8px] overflow-hidden relative h-[40px] min-w-[400px] text-[#A1A1AA] border !bg-white">
+      <div className="flex justify-between items-center gap-3">
+        <div className="rounded-[8px] overflow-hidden relative h-[40px] w-full md:w-[320px] md:min-w-[400px] text-[#A1A1AA] border !bg-white">
           <Search
             className="absolute top-0 left-1 w-[20px] h-full z-10"
             color="#A1A1AA"
@@ -36,14 +36,14 @@ const Permissions = () => {
           className="flex gap-2 items-center text-white rounded-[8px] bg-primary  px-4 py-2"
         >
           <Plus />
-          <span>Add New Permission</span>
+          <span className="hidden md:block">Add New Permission</span>
         </Link>
       </div>
 
       <div className="flex flex-col gap-8">
         <p className="text-heading_3 text-primary">Permission Name</p>
         {isLoading ? (
-          <Loader className="flex-1" />
+          <Loader className="flex-1" /> 
         ) : isError ? (
           <p>Error</p>
         ) : (
