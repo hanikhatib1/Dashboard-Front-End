@@ -24,7 +24,9 @@ export const appealDatesColumns = [
       const rowData = row.original;
       return (
         <p>
-          {rowData.last_file_date ? reverseDate(rowData.last_file_date) : ""}
+          {rowData.current_last_file_date
+            ? reverseDate(rowData.current_last_file_date)
+            : "Not issued yet"}
         </p>
       );
     },
@@ -35,9 +37,9 @@ export const appealDatesColumns = [
       const rowData = row.original;
       return (
         <p>
-          {rowData.bor_appeal_begin
-            ? reverseDate(rowData.bor_appeal_begin)
-            : ""}
+          {rowData.current_bor_appeal_begin
+            ? reverseDate(rowData.current_bor_appeal_begin)
+            : "Not issued yet"}
         </p>
       );
     },
@@ -46,7 +48,13 @@ export const appealDatesColumns = [
     header: "BOR Appeal Closes",
     cell: ({ row }) => {
       const rowData = row.original;
-      return <p>{reverseDate(rowData.bor_appeal_end)}</p>;
+      return (
+        <p>
+          {rowData.current_bor_appeal_end
+            ? reverseDate(rowData.current_bor_appeal_end)
+            : "Not issued yet"}
+        </p>
+      );
     },
   },
   {
