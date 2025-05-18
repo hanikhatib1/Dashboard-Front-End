@@ -132,6 +132,18 @@ export const comparisonAssessmentsColumns = [
     },
   },
   {
+    accessorKey: "building_sq_ft",
+    header: "Building Size",
+    cell: ({ row }) => {
+      const rowData = row.original;
+      return (
+        <p>
+          {rowData.building_sq_ft && rowData.building_sq_ft.toLocaleString()}
+        </p>
+      );
+    },
+  },
+  {
     accessorKey: "distance",
     header: "Distance",
     cell: ({ row }) => {

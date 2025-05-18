@@ -87,6 +87,14 @@ const SortData = [
     name: "Large Building Ratio",
     key: "large_building_ratio_first",
   },
+  {
+    name: "Large Building Size",
+    key: "large_building_size",
+  },
+  {
+    name: "Small Building Size",
+    key: "small_building_size",
+  },
 ];
 
 const Comparison = () => {
@@ -394,7 +402,9 @@ const Comparison = () => {
                     <p
                       className={`hidden gap-2 md:flex border-l-[3px] pl-2 border-primary w-max`}
                     >
-                      <span className="leading-[45px] whitespace-nowrap">Total Saving </span>
+                      <span className="leading-[45px] whitespace-nowrap">
+                        Total Saving{" "}
+                      </span>
                       <span className="text-[30px] leading-[45px] font-bold">
                         {listOfProperties
                           ? `$${formattedNumber(listOfProperties.saves)}`
