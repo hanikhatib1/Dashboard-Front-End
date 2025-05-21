@@ -9,12 +9,12 @@ import { formattedNumber } from "@/utiles/formattedNumber";
 import Loader from "./Loader";
 
 const comparableData = [
-  { x: 295, y: 258, label: "COMPARABLE 1" },
-  { x: 435, y: 258, label: "COMPARABLE 2" },
-  { x: 295, y: 150, label: "COMPARABLE 3" },
-  { x: 435, y: 150, label: "COMPARABLE 4" },
-  { x: 295, y: 40, label: "COMPARABLE 5" },
-  { x: 435, y: 40, label: "COMPARABLE 6" },
+  { x: 293, y: 255, label: "COMPARABLE 1" },
+  { x: 433, y: 255, label: "COMPARABLE 2" },
+  { x: 293, y: 148, label: "COMPARABLE 3" },
+  { x: 433, y: 148, label: "COMPARABLE 4" },
+  { x: 293, y: 41, label: "COMPARABLE 5" },
+  { x: 433, y: 41, label: "COMPARABLE 6" },
 ];
 
 const FileReportPDF3 = ({ mainPin, pins }) => {
@@ -329,8 +329,8 @@ const FileReportPDF3 = ({ mainPin, pins }) => {
       secondPage.drawImage(jpgImage, {
         x: dataXY.x,
         y: dataXY.y,
-        width: 120,
-        height: 70,
+        width: 122,
+        height: 74,
       });
       /* secondPage.drawText(dataXY.label, {
           x: dataXY.x,
@@ -348,10 +348,10 @@ const FileReportPDF3 = ({ mainPin, pins }) => {
       );
       const jpgImage = await pdfDoc.embedJpg(jpgImageBytes);
       pages[0].drawImage(jpgImage, {
-        x: 435,
-        y: 670,
-        width: 140,
-        height: 68,
+        x: 434,
+        y: 668,
+        width: 142,
+        height: 73,
       });
     }
 
