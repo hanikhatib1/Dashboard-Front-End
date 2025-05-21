@@ -30,6 +30,7 @@ import { SelectValue } from "@radix-ui/react-select";
 import queryString from "query-string";
 import NewAppeals from "@/pages/Appeals/NewAppeals";
 import FileReportPDF2 from "@/components/FileReportPDF2";
+import FileReportPDF3 from "@/components/FileReportPDF3";
 
 const mails = {
   name: "Miles",
@@ -100,11 +101,12 @@ const SortData = [
 const Comparison = () => {
   const { id } = useParams();
   const [searchParams] = useSearchParams();
-  const pageCount = searchParams.get("page")
+  /* const pageCount = searchParams.get("page")
     ? Number(searchParams.get("page")) > 0
       ? Number(searchParams.get("page"))
       : 1
-    : 1;
+    : 1; */
+  const [pageCount, setPageCount] = useState(1);
   const [FilterStatusKey, setFilterStatusKey] = useState("city");
   const dispatch = useDispatch();
   const { propertiesList, propertyDetailsData } = useSelector(
@@ -423,7 +425,7 @@ const Comparison = () => {
                       />
                     )}
                     {/* <FileReportPDF mainPin={id} pins={propertiesListArray} /> */}
-                    <FileReportPDF2 mainPin={id} pins={propertiesListArray} />
+                    <FileReportPDF3 mainPin={id} pins={propertiesListArray} />
                   </div>
                 </div>
                 <p
@@ -453,6 +455,8 @@ const Comparison = () => {
                       }
                       data={ComparisonProperties.data}
                       hasPagination={true}
+                      pagination={ComparisonProperties.pagination}
+                      setPageCount={setPageCount}
                     />
                     <PropertySheet />
                   </>

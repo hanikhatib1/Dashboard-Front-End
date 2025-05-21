@@ -3,21 +3,21 @@ import { useGetReportDataMutation } from "@/redux/apiSlice";
 import PropTypes from "prop-types";
 import { setFieldPDF } from "@/utiles/setFieldPDF";
 import { PDFDocument, StandardFonts, TextAlignment } from "pdf-lib";
-import ReportPDF2 from "../assets/PDFs/Report_Blank.pdf";
+import ReportPDF3 from "../assets/PDFs/newReportForm2.pdf";
 import { formatePin } from "@/utiles/formatePin";
 import { formattedNumber } from "@/utiles/formattedNumber";
 import Loader from "./Loader";
 
 const comparableData = [
-  { x: 320, y: 270, label: "COMPARABLE 1" },
-  { x: 460, y: 270, label: "COMPARABLE 2" },
-  { x: 320, y: 150, label: "COMPARABLE 3" },
-  { x: 460, y: 150, label: "COMPARABLE 4" },
-  { x: 320, y: 30, label: "COMPARABLE 5" },
-  { x: 460, y: 30, label: "COMPARABLE 6" },
+  { x: 295, y: 258, label: "COMPARABLE 1" },
+  { x: 435, y: 258, label: "COMPARABLE 2" },
+  { x: 295, y: 150, label: "COMPARABLE 3" },
+  { x: 435, y: 150, label: "COMPARABLE 4" },
+  { x: 295, y: 40, label: "COMPARABLE 5" },
+  { x: 435, y: 40, label: "COMPARABLE 6" },
 ];
 
-const FileReportPDF2 = ({ mainPin, pins }) => {
+const FileReportPDF3 = ({ mainPin, pins }) => {
   const [getReportData, { isLoading }] = useGetReportDataMutation();
   const currentYear = new Date().getFullYear();
   const currentMonth = new Date().getMonth();
@@ -32,7 +32,7 @@ const FileReportPDF2 = ({ mainPin, pins }) => {
 
     if ("error" in res) return null;
     const reportData = res.data;
-    const formPdfBytes = await fetch(ReportPDF2).then((res) =>
+    const formPdfBytes = await fetch(ReportPDF3).then((res) =>
       res.arrayBuffer()
     );
     const pdfDoc = await PDFDocument.load(formPdfBytes);
@@ -44,10 +44,24 @@ const FileReportPDF2 = ({ mainPin, pins }) => {
 
     const fildes = form.getFields();
     for (let i = 0; i < fildes.length; i++) {
-      setFieldPDF(form, fildes[i].getName(), fildes[i].getName());
-      //form.getTextField(fildes[i].getName()).setAlignment(TextAlignment.Left);
-      //console.log("fildes", fildes[i].getName());
+      const isReturnNull =
+        fildes[i].getName() === "Property Image" ||
+        fildes[i].getName() === "Comparable 1 Image" ||
+        fildes[i].getName() === "Comparable 2 Image" ||
+        fildes[i].getName() === "Comparable 3 Image" ||
+        fildes[i].getName() === "Comparable 4 Image" ||
+        fildes[i].getName() === "Comparable 5 Image" ||
+        fildes[i].getName() === "Comparable 6 Image" ||
+        fildes[i].getName() === "Subject Property Image" ||
+        fildes[i].getName() === "Property Map Location";
+
+      if (!isReturnNull) {
+        setFieldPDF(form, `${fildes[i].getName()}`, fildes[i].getName());
+        //form.getTextField(fildes[i].getName()).setAlignment(TextAlignment.Left);
+      }
     }
+
+    //setFieldPDF(form, "COMPARABLE 1 PIN", "1111111111111111");
 
     /* Header */
     setFieldPDF(form, "Date", `${currentDate}`);
@@ -107,7 +121,7 @@ const FileReportPDF2 = ({ mainPin, pins }) => {
     setFieldPDF(
       form,
       "Requested Total Assessment",
-      `$ ${formattedNumber(reportData?.data.requested_total,true)}`
+      `$ ${formattedNumber(reportData?.data.requested_total, true)}`
     );
 
     /* Second Table */
@@ -139,24 +153,28 @@ const FileReportPDF2 = ({ mainPin, pins }) => {
     setFieldPDF(
       form,
       "Fair Build AV/SF",
-      `$ ${formattedNumber(reportData?.data.suggested_building_assessed_value, true)}`
+      `$ ${formattedNumber(reportData?.data.suggested_building_assessed_value, true)}`,
+      16
     );
     setFieldPDF(
       form,
       "Requested Market Value",
-      `$ ${formattedNumber(reportData?.data.requested_market_value)}`
+      `$ ${formattedNumber(reportData?.data.requested_market_value)}`,
+      16
     );
 
     /* Third Table */
     setFieldPDF(
       form,
       "Requested Total AV",
-      `$ ${formattedNumber(reportData?.data.requested_total_av,true)}`
+      `$ ${formattedNumber(reportData?.data.requested_total_av, true)}`,
+      16
     );
     setFieldPDF(
       form,
       "AVG Building AV/SF",
-      `$ ${formattedNumber(reportData?.data["avg_building_av/sf"])}`
+      `$ ${formattedNumber(reportData?.data["avg_building_av/sf"])}`,
+      16
     );
 
     /* Comparison Table */
@@ -311,16 +329,16 @@ const FileReportPDF2 = ({ mainPin, pins }) => {
       secondPage.drawImage(jpgImage, {
         x: dataXY.x,
         y: dataXY.y,
-        width: 130,
-        height: 90,
+        width: 120,
+        height: 70,
       });
       /* secondPage.drawText(dataXY.label, {
-        x: dataXY.x,
-        y: dataXY.y - 15,
-        size: 10,
-        font: helveticaFont,
-        color: rgb(0, 0, 0),
-      }); */
+          x: dataXY.x,
+          y: dataXY.y - 15,
+          size: 10,
+          font: helveticaFont,
+          color: rgb(0, 0, 0),
+        }); */
     };
 
     if (reportData?.data?.properties[0]) {
@@ -330,8 +348,8 @@ const FileReportPDF2 = ({ mainPin, pins }) => {
       );
       const jpgImage = await pdfDoc.embedJpg(jpgImageBytes);
       pages[0].drawImage(jpgImage, {
-        x: 445,
-        y: 588,
+        x: 435,
+        y: 670,
         width: 140,
         height: 68,
       });
@@ -344,10 +362,10 @@ const FileReportPDF2 = ({ mainPin, pins }) => {
       );
       const jpgImage = await pdfDoc.embedJpg(jpgImageBytes);
       secondPage.drawImage(jpgImage, {
-        x: 80,
-        y: 30,
-        width: 180,
-        height: 80,
+        x: 41,
+        y: 42,
+        width: 221,
+        height: 71,
       });
     }
 
@@ -430,10 +448,10 @@ const FileReportPDF2 = ({ mainPin, pins }) => {
     );
     const jpgImage = await pdfDoc.embedPng(jpgImageBytes);
     secondPage.drawImage(jpgImage, {
-      x: 25,
-      y: 160,
-      width: 280,
-      height: 220,
+      x: 41,
+      y: 149,
+      width: 220,
+      height: 177,
     });
 
     const pdfBytes = await pdfDoc.save();
@@ -455,16 +473,18 @@ const FileReportPDF2 = ({ mainPin, pins }) => {
       ) : (
         <>
           <Download color="#fff" size={20} />
-          <p className="!text-[14px] font-medium hidden md:block">Export Report</p>
+          <p className="!text-[14px] font-medium hidden md:block">
+            Export Report
+          </p>
         </>
       )}
     </div>
   );
 };
 
-FileReportPDF2.propTypes = {
+FileReportPDF3.propTypes = {
   mainPin: PropTypes.string,
   pins: PropTypes.array.isRequired,
 };
 
-export default FileReportPDF2;
+export default FileReportPDF3;

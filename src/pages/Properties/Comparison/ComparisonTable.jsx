@@ -16,8 +16,15 @@ import { Button } from "../../../components/ui/button";
 import PropTypes from "prop-types";
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import CustomPagination from "@/components/Pagination";
 
-const ComparisonTable = ({ columns, data, hasPagination = true }) => {
+const ComparisonTable = ({
+  columns,
+  data,
+  hasPagination = true,
+  setPageCount,
+  pagination,
+}) => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const pageCount = searchParams.get("page")
@@ -98,7 +105,7 @@ const ComparisonTable = ({ columns, data, hasPagination = true }) => {
       </div>
       {hasPagination && (
         <>
-          <div className="flex items-center justify-center px-2 mt-4">
+          {/*  <div className="flex items-center justify-center px-2 mt-4">
             <div className="flex items-center space-x-2">
               <Button
                 variant="outline"
@@ -118,7 +125,12 @@ const ComparisonTable = ({ columns, data, hasPagination = true }) => {
                 <ChevronRightIcon className="h-4 w-4" />
               </Button>
             </div>
-          </div>
+          </div> */}
+          <CustomPagination
+            total_pages={pagination?.total_pages}
+            page={pagination?.page}
+            setPage={setPageCount}
+          />
           {/* <Pagination page={pageCount} setPage={} total_pages={} /> */}
         </>
       )}

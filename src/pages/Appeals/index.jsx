@@ -54,7 +54,7 @@ const Appeals = () => {
       if (!filterObject[key]) delete filterObject[key];
     });
     await getAppeals(
-      `search=${searchText}&sort=${sortBy.value}&limit=10&page=${page}&filters=${JSON.stringify(filterObject)}`
+      `search=${searchText}&sort=${sortBy.value}&limit=20&page=${page}&filters=${JSON.stringify(filterObject)}`
     );
   }, [status.id, townshipId, getAppeals, searchText, sortBy, page]);
 
