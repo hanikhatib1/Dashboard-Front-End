@@ -343,19 +343,59 @@ const FileReportPDF3 = ({ mainPin, pins }) => {
 
     if (reportData?.data?.properties[0]) {
       const jpgUrl = reportData?.data?.properties[0].property_image;
-      const jpgImageBytes = await fetch(jpgUrl).then((res) =>
-        res.arrayBuffer()
-      );
-      const jpgImage = await pdfDoc.embedJpg(jpgImageBytes);
-      pages[0].drawImage(jpgImage, {
-        x: 434,
-        y: 668,
-        width: 142,
-        height: 73,
-      });
+
+      if (jpgUrl) {
+        try {
+          const response = await fetch(jpgUrl);
+          if (!response.ok) {
+            throw new Error(`Image fetch failed: ${response.status}`);
+          }
+
+          const jpgImageBytes = await response.arrayBuffer();
+          const jpgImage = await pdfDoc.embedJpg(jpgImageBytes);
+
+          pages[0].drawImage(jpgImage, {
+            x: 434,
+            y: 668,
+            width: 142,
+            height: 73,
+          });
+        } catch (error) {
+          console.error("Failed to load or embed image:", error.message);
+        }
+      } else {
+        console.warn("Image URL is empty or undefined");
+      }
     }
 
     if (reportData?.data?.properties[0]) {
+      const jpgUrl = reportData?.data?.properties[0].property_image;
+
+      if (jpgUrl) {
+        try {
+          const response = await fetch(jpgUrl);
+          if (!response.ok) {
+            throw new Error(`Image fetch failed: ${response.status}`);
+          }
+
+          const jpgImageBytes = await response.arrayBuffer();
+          const jpgImage = await pdfDoc.embedJpg(jpgImageBytes);
+
+          secondPage.drawImage(jpgImage, {
+            x: 41,
+            y: 42,
+            width: 221,
+            height: 71,
+          });
+        } catch (error) {
+          console.error("Failed to load or embed image:", error.message);
+        }
+      } else {
+        console.warn("Image URL is empty or undefined");
+      }
+    }
+
+    /* if (reportData?.data?.properties[0]) {
       const jpgUrl = reportData?.data?.properties[0].property_image;
       const jpgImageBytes = await fetch(jpgUrl).then((res) =>
         res.arrayBuffer()
@@ -367,7 +407,7 @@ const FileReportPDF3 = ({ mainPin, pins }) => {
         width: 221,
         height: 71,
       });
-    }
+    } */
 
     if (reportData?.data?.properties[1]) {
       const jpgUrl = reportData?.data?.properties[1].property_image;
