@@ -545,7 +545,7 @@ const FileReportPDF3 = ({ mainPin, pins }) => {
     }
 
     if (reportData?.data?.properties[3]) {
-      const jpgUrl = reportData?.data?.properties[2].property_image;
+      const jpgUrl = reportData?.data?.properties[3].property_image;
 
       if (jpgUrl.includes("maps.googleapis.com")) {
         if (jpgUrl) {
@@ -580,7 +580,7 @@ const FileReportPDF3 = ({ mainPin, pins }) => {
     }
 
     if (reportData?.data?.properties[4]) {
-      const jpgUrl = reportData?.data?.properties[3].property_image;
+      const jpgUrl = reportData?.data?.properties[4].property_image;
 
       if (jpgUrl.includes("maps.googleapis.com")) {
         if (jpgUrl) {
@@ -615,7 +615,7 @@ const FileReportPDF3 = ({ mainPin, pins }) => {
     }
 
     if (reportData?.data?.properties[5]) {
-      const jpgUrl = reportData?.data?.properties[4].property_image;
+      const jpgUrl = reportData?.data?.properties[5].property_image;
 
       if (jpgUrl.includes("maps.googleapis.com")) {
         if (jpgUrl) {
@@ -650,7 +650,7 @@ const FileReportPDF3 = ({ mainPin, pins }) => {
     }
 
     if (reportData?.data?.properties[6]) {
-      const jpgUrl = reportData?.data?.properties[5].property_image;
+      const jpgUrl = reportData?.data?.properties[6].property_image;
 
       if (jpgUrl.includes("maps.googleapis.com")) {
         if (jpgUrl) {
