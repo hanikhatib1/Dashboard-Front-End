@@ -132,6 +132,10 @@ export const comparisonAssessmentsColumns = [
     },
   },
   {
+    accessorKey: "age",
+    header: "Age",
+  },
+  {
     accessorKey: "building_sq_ft",
     header: "Building Size",
     cell: ({ row }) => {
