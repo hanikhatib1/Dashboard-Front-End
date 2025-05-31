@@ -332,42 +332,8 @@ const FileReportPDF3 = ({ mainPin, pins }) => {
         width: 122,
         height: 74,
       });
-      /* secondPage.drawText(dataXY.label, {
-          x: dataXY.x,
-          y: dataXY.y - 15,
-          size: 10,
-          font: helveticaFont,
-          color: rgb(0, 0, 0),
-        }); */
     };
 
-    /* if (reportData?.data?.properties[0]) {
-      const jpgUrl = reportData?.data?.properties[0].property_image;
-
-      if (jpgUrl) {
-        try {
-          const response = await fetch(jpgUrl);
-          if (!response.ok) {
-            throw new Error(`Image fetch failed: ${response.status}`);
-          }
-
-          const jpgImageBytes = await response.arrayBuffer();
-          const jpgImage = await pdfDoc.embedJpg(jpgImageBytes);
-
-          pages[0].drawImage(jpgImage, {
-            x: 434,
-            y: 668,
-            width: 142,
-            height: 73,
-          });
-        } catch (error) {
-          console.error("Failed to load or embed image:", error.message);
-        }
-      } else {
-        console.warn("Image URL is empty or undefined");
-      }
-    } */
-
     if (reportData?.data?.properties[0]) {
       const originalUrl = reportData?.data?.properties[0].property_image;
 
@@ -432,255 +398,164 @@ const FileReportPDF3 = ({ mainPin, pins }) => {
         console.warn("Image URL is empty or undefined");
       }
     }
-
-    /*  if (reportData?.data?.properties[0]) {
-      const jpgUrl = reportData?.data?.properties[0].property_image;
-
-      if (jpgUrl) {
-        try {
-          const response = await fetch(jpgUrl);
-          if (!response.ok) {
-            throw new Error(`Image fetch failed: ${response.status}`);
-          }
-
-          const jpgImageBytes = await response.arrayBuffer();
-          const jpgImage = await pdfDoc.embedJpg(jpgImageBytes);
-
-          secondPage.drawImage(jpgImage, {
-            x: 41,
-            y: 42,
-            width: 221,
-            height: 71,
-          });
-        } catch (error) {
-          console.error("Failed to load or embed image:", error.message);
-        }
-      } else {
-        console.warn("Image URL is empty or undefined");
-      }
-    } */
-
-    /* if (reportData?.data?.properties[0]) {
-      const jpgUrl = reportData?.data?.properties[0].property_image;
-      const jpgImageBytes = await fetch(jpgUrl).then((res) =>
-        res.arrayBuffer()
-      );
-      const jpgImage = await pdfDoc.embedJpg(jpgImageBytes);
-      secondPage.drawImage(jpgImage, {
-        x: 41,
-        y: 42,
-        width: 221,
-        height: 71,
-      });
-    } */
 
     if (reportData?.data?.properties[1]) {
       const jpgUrl = reportData?.data?.properties[1].property_image;
 
-      if (jpgUrl.includes("maps.googleapis.com")) {
-        if (jpgUrl) {
-          try {
-            const proxyUrl = `${import.meta.env.VITE_BASE_URL_BACKEND}/property/image_proxy?url=${encodeURIComponent(jpgUrl)}`;
+      if (jpgUrl) {
+        try {
+          const proxyUrl = `${import.meta.env.VITE_BASE_URL_BACKEND}/property/image_proxy?url=${encodeURIComponent(jpgUrl)}`;
 
-            const response = await fetch(proxyUrl);
-            if (!response.ok) {
-              throw new Error(`Image proxy fetch failed: ${response.status}`);
-            }
-
-            const jpgImageBytes = await response.arrayBuffer();
-            const jpgImage = await pdfDoc.embedJpg(jpgImageBytes);
-
-            setImageXY(secondPage, jpgImage, 0);
-          } catch (error) {
-            console.error(
-              "Failed to load or embed image via proxy:",
-              error.message
-            );
+          const response = await fetch(proxyUrl);
+          if (!response.ok) {
+            throw new Error(`Image proxy fetch failed: ${response.status}`);
           }
-        } else {
-          console.warn("Image URL is empty or undefined");
+
+          const jpgImageBytes = await response.arrayBuffer();
+          const jpgImage = await pdfDoc.embedJpg(jpgImageBytes);
+
+          setImageXY(secondPage, jpgImage, 0);
+        } catch (error) {
+          console.error(
+            "Failed to load or embed image via proxy:",
+            error.message
+          );
         }
       } else {
-        const jpgImageBytes = await fetch(jpgUrl).then((res) =>
-          res.arrayBuffer()
-        );
-        const jpgImage = await pdfDoc.embedJpg(jpgImageBytes);
-        setImageXY(secondPage, jpgImage, 0);
+        console.warn("Image URL is empty or undefined");
       }
     }
 
     if (reportData?.data?.properties[2]) {
       const jpgUrl = reportData?.data?.properties[2].property_image;
 
-      if (jpgUrl.includes("maps.googleapis.com")) {
-        if (jpgUrl) {
-          try {
-            const proxyUrl = `${import.meta.env.VITE_BASE_URL_BACKEND}/property/image_proxy?url=${encodeURIComponent(jpgUrl)}`;
+      if (jpgUrl) {
+        try {
+          const proxyUrl = `${import.meta.env.VITE_BASE_URL_BACKEND}/property/image_proxy?url=${encodeURIComponent(jpgUrl)}`;
 
-            const response = await fetch(proxyUrl);
-            if (!response.ok) {
-              throw new Error(`Image proxy fetch failed: ${response.status}`);
-            }
-
-            const jpgImageBytes = await response.arrayBuffer();
-            const jpgImage = await pdfDoc.embedJpg(jpgImageBytes);
-
-            setImageXY(secondPage, jpgImage, 1);
-          } catch (error) {
-            console.error(
-              "Failed to load or embed image via proxy:",
-              error.message
-            );
+          const response = await fetch(proxyUrl);
+          if (!response.ok) {
+            throw new Error(`Image proxy fetch failed: ${response.status}`);
           }
-        } else {
-          console.warn("Image URL is empty or undefined");
+
+          const jpgImageBytes = await response.arrayBuffer();
+          const jpgImage = await pdfDoc.embedJpg(jpgImageBytes);
+
+          setImageXY(secondPage, jpgImage, 1);
+        } catch (error) {
+          console.error(
+            "Failed to load or embed image via proxy:",
+            error.message
+          );
         }
       } else {
-        const jpgImageBytes = await fetch(jpgUrl).then((res) =>
-          res.arrayBuffer()
-        );
-        const jpgImage = await pdfDoc.embedJpg(jpgImageBytes);
-        setImageXY(secondPage, jpgImage, 1);
+        console.warn("Image URL is empty or undefined");
       }
     }
 
     if (reportData?.data?.properties[3]) {
       const jpgUrl = reportData?.data?.properties[3].property_image;
+      if (jpgUrl) {
+        try {
+          const proxyUrl = `${import.meta.env.VITE_BASE_URL_BACKEND}/property/image_proxy?url=${encodeURIComponent(jpgUrl)}`;
 
-      if (jpgUrl.includes("maps.googleapis.com")) {
-        if (jpgUrl) {
-          try {
-            const proxyUrl = `${import.meta.env.VITE_BASE_URL_BACKEND}/property/image_proxy?url=${encodeURIComponent(jpgUrl)}`;
-
-            const response = await fetch(proxyUrl);
-            if (!response.ok) {
-              throw new Error(`Image proxy fetch failed: ${response.status}`);
-            }
-
-            const jpgImageBytes = await response.arrayBuffer();
-            const jpgImage = await pdfDoc.embedJpg(jpgImageBytes);
-
-            setImageXY(secondPage, jpgImage, 2);
-          } catch (error) {
-            console.error(
-              "Failed to load or embed image via proxy:",
-              error.message
-            );
+          const response = await fetch(proxyUrl);
+          if (!response.ok) {
+            throw new Error(`Image proxy fetch failed: ${response.status}`);
           }
-        } else {
-          console.warn("Image URL is empty or undefined");
+
+          const jpgImageBytes = await response.arrayBuffer();
+          const jpgImage = await pdfDoc.embedJpg(jpgImageBytes);
+
+          setImageXY(secondPage, jpgImage, 2);
+        } catch (error) {
+          console.error(
+            "Failed to load or embed image via proxy:",
+            error.message
+          );
         }
       } else {
-        const jpgImageBytes = await fetch(jpgUrl).then((res) =>
-          res.arrayBuffer()
-        );
-        const jpgImage = await pdfDoc.embedJpg(jpgImageBytes);
-        setImageXY(secondPage, jpgImage, 2);
+        console.warn("Image URL is empty or undefined");
       }
     }
 
     if (reportData?.data?.properties[4]) {
       const jpgUrl = reportData?.data?.properties[4].property_image;
 
-      if (jpgUrl.includes("maps.googleapis.com")) {
-        if (jpgUrl) {
-          try {
-            const proxyUrl = `${import.meta.env.VITE_BASE_URL_BACKEND}/property/image_proxy?url=${encodeURIComponent(jpgUrl)}`;
+      if (jpgUrl) {
+        try {
+          const proxyUrl = `${import.meta.env.VITE_BASE_URL_BACKEND}/property/image_proxy?url=${encodeURIComponent(jpgUrl)}`;
 
-            const response = await fetch(proxyUrl);
-            if (!response.ok) {
-              throw new Error(`Image proxy fetch failed: ${response.status}`);
-            }
-
-            const jpgImageBytes = await response.arrayBuffer();
-            const jpgImage = await pdfDoc.embedJpg(jpgImageBytes);
-
-            setImageXY(secondPage, jpgImage, 3);
-          } catch (error) {
-            console.error(
-              "Failed to load or embed image via proxy:",
-              error.message
-            );
+          const response = await fetch(proxyUrl);
+          if (!response.ok) {
+            throw new Error(`Image proxy fetch failed: ${response.status}`);
           }
-        } else {
-          console.warn("Image URL is empty or undefined");
+
+          const jpgImageBytes = await response.arrayBuffer();
+          const jpgImage = await pdfDoc.embedJpg(jpgImageBytes);
+
+          setImageXY(secondPage, jpgImage, 3);
+        } catch (error) {
+          console.error(
+            "Failed to load or embed image via proxy:",
+            error.message
+          );
         }
       } else {
-        const jpgImageBytes = await fetch(jpgUrl).then((res) =>
-          res.arrayBuffer()
-        );
-        const jpgImage = await pdfDoc.embedJpg(jpgImageBytes);
-        setImageXY(secondPage, jpgImage, 3);
+        console.warn("Image URL is empty or undefined");
       }
     }
 
     if (reportData?.data?.properties[5]) {
       const jpgUrl = reportData?.data?.properties[5].property_image;
+      if (jpgUrl) {
+        try {
+          const proxyUrl = `${import.meta.env.VITE_BASE_URL_BACKEND}/property/image_proxy?url=${encodeURIComponent(jpgUrl)}`;
 
-      if (jpgUrl.includes("maps.googleapis.com")) {
-        if (jpgUrl) {
-          try {
-            const proxyUrl = `${import.meta.env.VITE_BASE_URL_BACKEND}/property/image_proxy?url=${encodeURIComponent(jpgUrl)}`;
-
-            const response = await fetch(proxyUrl);
-            if (!response.ok) {
-              throw new Error(`Image proxy fetch failed: ${response.status}`);
-            }
-
-            const jpgImageBytes = await response.arrayBuffer();
-            const jpgImage = await pdfDoc.embedJpg(jpgImageBytes);
-
-            setImageXY(secondPage, jpgImage, 4);
-          } catch (error) {
-            console.error(
-              "Failed to load or embed image via proxy:",
-              error.message
-            );
+          const response = await fetch(proxyUrl);
+          if (!response.ok) {
+            throw new Error(`Image proxy fetch failed: ${response.status}`);
           }
-        } else {
-          console.warn("Image URL is empty or undefined");
+
+          const jpgImageBytes = await response.arrayBuffer();
+          const jpgImage = await pdfDoc.embedJpg(jpgImageBytes);
+
+          setImageXY(secondPage, jpgImage, 4);
+        } catch (error) {
+          console.error(
+            "Failed to load or embed image via proxy:",
+            error.message
+          );
         }
       } else {
-        const jpgImageBytes = await fetch(jpgUrl).then((res) =>
-          res.arrayBuffer()
-        );
-        const jpgImage = await pdfDoc.embedJpg(jpgImageBytes);
-        setImageXY(secondPage, jpgImage, 4);
+        console.warn("Image URL is empty or undefined");
       }
     }
 
     if (reportData?.data?.properties[6]) {
       const jpgUrl = reportData?.data?.properties[6].property_image;
 
-      if (jpgUrl.includes("maps.googleapis.com")) {
-        if (jpgUrl) {
-          try {
-            const proxyUrl = `${import.meta.env.VITE_BASE_URL_BACKEND}/property/image_proxy?url=${encodeURIComponent(jpgUrl)}`;
+      if (jpgUrl) {
+        try {
+          const proxyUrl = `${import.meta.env.VITE_BASE_URL_BACKEND}/property/image_proxy?url=${encodeURIComponent(jpgUrl)}`;
 
-            const response = await fetch(proxyUrl);
-            if (!response.ok) {
-              throw new Error(`Image proxy fetch failed: ${response.status}`);
-            }
-
-            const jpgImageBytes = await response.arrayBuffer();
-            const jpgImage = await pdfDoc.embedJpg(jpgImageBytes);
-
-            setImageXY(secondPage, jpgImage, 5);
-          } catch (error) {
-            console.error(
-              "Failed to load or embed image via proxy:",
-              error.message
-            );
+          const response = await fetch(proxyUrl);
+          if (!response.ok) {
+            throw new Error(`Image proxy fetch failed: ${response.status}`);
           }
-        } else {
-          console.warn("Image URL is empty or undefined");
+
+          const jpgImageBytes = await response.arrayBuffer();
+          const jpgImage = await pdfDoc.embedJpg(jpgImageBytes);
+
+          setImageXY(secondPage, jpgImage, 5);
+        } catch (error) {
+          console.error(
+            "Failed to load or embed image via proxy:",
+            error.message
+          );
         }
       } else {
-        const jpgImageBytes = await fetch(jpgUrl).then((res) =>
-          res.arrayBuffer()
-        );
-        const jpgImage = await pdfDoc.embedJpg(jpgImageBytes);
-        setImageXY(secondPage, jpgImage, 5);
+        console.warn("Image URL is empty or undefined");
       }
     }
 
