@@ -8,6 +8,7 @@ import {
   deletePropertiesById,
   deletePropertyDetailsDataById,
 } from "@/redux/features/Properties";
+import PropertyImageSlider from "../PropertyImageSlider";
 
 const PropertyCard = ({
   className,
@@ -21,7 +22,7 @@ const PropertyCard = ({
     <div
       className={`relative bg-white p-4 rounded-[16px] h-[230px] min-w-[262px] max-w-[300px] flex flex-col gap-2 shadow-custom ${className}`}
     >
-      <Link
+      {/*  <Link
         to={`https://www.cookcountyassessor.com/pin/${property.pin}`}
         target="_blank"
         className={`w-full  relative ${classNameImage}`}
@@ -31,18 +32,22 @@ const PropertyCard = ({
           alt=""
           className="absolute w-full h-full object-cover rounded-[8px]"
         />
-        {hasDelete && (
-          <i
-            className="absolute top-2 right-2 z-[1]"
-            onClick={() => {
-              dispatch(deletePropertiesById(property.pin));
-              dispatch(deletePropertyDetailsDataById(property.pin));
-            }}
-          >
-            <DeleteIcon />
-          </i>
-        )}
-      </Link>
+      </Link> */}
+      <PropertyImageSlider
+        replaceImageAction={false}
+        defaultImages={property.default_image}
+      />
+      {hasDelete && (
+        <i
+          className="absolute top-5 right-5 z-[1]"
+          onClick={() => {
+            dispatch(deletePropertiesById(property.pin));
+            dispatch(deletePropertyDetailsDataById(property.pin));
+          }}
+        >
+          <DeleteIcon />
+        </i>
+      )}
       <div>
         <Link to={`/properties/${property.pin}`} className="hover:underline">
           <p className="flex gap-1">

@@ -25,6 +25,7 @@ import DeleteInvoiceModel from "@/pages/Invoices/DeleteInvoiceModel";
 import { Download, Upload } from "lucide-react";
 import Files from "./Files";
 import DocumentsStatusAppealModel from "../DocumentsStatusAppealModel";
+import PropertyImageSlider from "@/pages/Properties/PropertyImageSlider";
 
 const tableData = [
   {
@@ -176,11 +177,8 @@ const Appeal = () => {
                 </div>
               </div>
               <div className="border mt-5 w-full md:w-[40%] h-[200px] md:h-auto relative rounded-[16px] overflow-hidden">
-                <img
-                  src={appealData.property_image}
-                  alt=""
-                  className="absolute top-0 left-0 w-full h-full object-cover"
-                />
+               
+                <PropertyImageSlider defaultImages={appealData.default_image} />
               </div>
             </div>
             <div className="flex flex-wrap gap-8">

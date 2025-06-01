@@ -7,6 +7,7 @@ import "react-circular-progressbar/dist/styles.css";
 import { formattedNumber } from "@/utiles/formattedNumber";
 import ReplacedImage from "@/components/ReplacedImage";
 import StreetView from "./StreetView";
+import PropertyImageSlider from "./PropertyImageSlider";
 
 const PropertyAnalysis = ({ property }) => {
   const data = new Date(property.data.last_update);
@@ -17,11 +18,12 @@ const PropertyAnalysis = ({ property }) => {
       <div className="h-[350px] md:h-full  flex flex-col gap-4 w-full md:!w-[580px]">
         <p className="text-heading_3">{property.data.address}</p>
         <div className="bg-gray-200 rounded-[8px] !h-[372px] border flex-1 relative overflow-hidden">
-          <ReplacedImage
+          {/* <ReplacedImage
             defaultImage={property.data.default_image}
             pickedImage={property.data.picked_image}
             pin={property.data.pin}
-          />
+          /> */}
+          <PropertyImageSlider defaultImages={property.data.default_image} />
           <StreetView address={property.data.address} />
         </div>
       </div>

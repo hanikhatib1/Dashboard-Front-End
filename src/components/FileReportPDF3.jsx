@@ -3,7 +3,7 @@ import { useGetReportDataMutation } from "@/redux/apiSlice";
 import PropTypes from "prop-types";
 import { setFieldPDF } from "@/utiles/setFieldPDF";
 import { PDFDocument, StandardFonts, TextAlignment } from "pdf-lib";
-import ReportPDF3 from "../assets/PDFs/newReportForm2.pdf";
+import ReportPDF3 from "../assets/PDFs/newReportForm3.pdf";
 import { formatePin } from "@/utiles/formatePin";
 import { formattedNumber } from "@/utiles/formattedNumber";
 import Loader from "./Loader";

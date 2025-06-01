@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useRef } from "react";
 import { setPropertyDetails } from "@/redux/features/Properties";
 import ReplacedImage from "@/components/ReplacedImage";
+import PropertyImageSlider from "../PropertyImageSlider";
 const formateDescription = (description) =>
   Object.keys(description).map((key) => ({ key, value: description[key] }));
 
@@ -40,10 +41,13 @@ export default function PropertySheet() {
               className={`bg-white p-4 rounded-[16px] h-[343px] min-w-[262px] flex flex-col gap-2 shadow-custom `}
             >
               <div className="w-full relative h-[240px]">
-                <ReplacedImage
+                {/* <ReplacedImage
                   pin={propertyDetails.pin}
                   defaultImage={propertyDetails?.default_image}
                   pickedImage={propertyDetails?.picked_image}
+                /> */}
+                <PropertyImageSlider
+                  defaultImages={propertyDetails.default_image}
                 />
               </div>
               <div>

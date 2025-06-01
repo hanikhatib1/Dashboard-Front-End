@@ -15,7 +15,7 @@ const StreetView = ({ address }) => {
   const [open, setOpen] = React.useState(false);
 
   return (
-    <Dialog open={open} defaultOpen={open}>
+    <Dialog open={open} defaultOpen={open} className="!z-[100]">
       <DialogTrigger asChild onClick={() => setOpen(true)}>
         <Button
           onClick={() => setOpen(true)}
