@@ -40,6 +40,7 @@ const PropertyImageSlider = ({
         onSwiper={(swiper) => (swiperRef.current = swiper)}
         onSlideChange={() => console.log("slide change")}
         className="h-full z-0"
+        nested={true}
       >
         {defaultImages.map((image, index) => (
           <SwiperSlide key={index} className="h-full">
