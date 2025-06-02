@@ -1,12 +1,16 @@
 import { useRef, useEffect } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination } from "swiper/modules";
+import { Pagination } from "swiper/modules";
+import ReplacedImage from "@/components/ReplacedImage";
+import PropTypes from "prop-types";
 import "swiper/css";
 import "swiper/css/pagination";
-import ReplacedImage from "@/components/ReplacedImage";
-import { ChevronLeft } from "lucide-react";
 
-const PropertyImageSlider = ({ replaceImageAction = false, defaultImages }) => {
+const PropertyImageSlider = ({
+  replaceImageAction = true,
+  defaultImages,
+  pin,
+}) => {
   const prevRef = useRef(null);
   const nextRef = useRef(null);
   const swiperRef = useRef(null);
@@ -43,12 +47,19 @@ const PropertyImageSlider = ({ replaceImageAction = false, defaultImages }) => {
               pickedImage={image}
               defaultImage={image}
               replaceImageAction={replaceImageAction}
+              pin={pin}
             />
           </SwiperSlide>
         ))}
       </Swiper>
     </div>
   );
+};
+
+PropertyImageSlider.propTypes = {
+  replaceImageAction: PropTypes.bool,
+  defaultImages: PropTypes.arrayOf(PropTypes.string).isRequired,
+  pin: PropTypes.string.isRequired,
 };
 
 export default PropertyImageSlider;

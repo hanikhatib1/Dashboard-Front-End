@@ -177,8 +177,10 @@ const Appeal = () => {
                 </div>
               </div>
               <div className="border mt-5 w-full md:w-[40%] h-[200px] md:h-auto relative rounded-[16px] overflow-hidden">
-               
-                <PropertyImageSlider defaultImages={appealData.default_image} />
+                <PropertyImageSlider
+                  defaultImages={appealData.default_image}
+                  pin={appealData.pin}
+                />
               </div>
             </div>
             <div className="flex flex-wrap gap-8">

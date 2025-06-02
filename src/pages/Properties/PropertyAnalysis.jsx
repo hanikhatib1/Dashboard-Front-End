@@ -23,7 +23,10 @@ const PropertyAnalysis = ({ property }) => {
             pickedImage={property.data.picked_image}
             pin={property.data.pin}
           /> */}
-          <PropertyImageSlider defaultImages={property.data.default_image} />
+          <PropertyImageSlider
+            defaultImages={property.data.default_image}
+            pin={property.data.pin}
+          />
           <StreetView address={property.data.address} />
         </div>
       </div>

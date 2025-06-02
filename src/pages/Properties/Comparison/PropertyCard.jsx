@@ -36,6 +36,7 @@ const PropertyCard = ({
       <PropertyImageSlider
         replaceImageAction={false}
         defaultImages={property.default_image}
+        pin={property.pin}
       />
       {hasDelete && (
         <i

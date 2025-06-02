@@ -9,10 +9,16 @@ import { formatePin } from "@/utiles/formatePin";
 import { Pin } from "lucide-react";
 import { Link } from "react-router-dom";
 import PropertyImageSlider from "../Properties/PropertyImageSlider";
+import { useState } from "react";
+
 const Properties = ({ data }) => {
+  const [isDragging, setIsDragging] = useState(false);
+
   return (
     <Carousel
-      className="max-w-full md:max-w-[380px] h-[350px] !bg-white"
+      className={`max-w-full md:max-w-[380px] h-[350px] !bg-white ${
+        isDragging ? "pointer-events-none" : ""
+      }`}
       hideArrows
     >
       <CarouselContent className="!bg-white !shadow-none">
@@ -26,15 +32,11 @@ const Properties = ({ data }) => {
                 className={`relative p-4 rounded-[16px] h-full md:min-w-[262px] md:max-w-[380px] flex flex-col gap-4 shadow-custom `}
               >
                 <div className={`relative md:w-[350px] h-[210px]`}>
-                  {/*  
-                  <img
-                    src={item.default_image}
-                    alt=""
-                    className="absolute w-full h-full object-cover rounded-[8px]"
-                  />
-                  */}{" "}
                   <PropertyImageSlider
                     defaultImages={item.default_image}
+                    onDragStart={() => setIsDragging(true)}
+                    onDragEnd={() => setIsDragging(false)}
+                    pin={item.pin}
                   />
                 </div>
                 <div className="flex flex-col gap-2">

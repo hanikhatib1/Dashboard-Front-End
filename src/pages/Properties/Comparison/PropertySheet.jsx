@@ -48,6 +48,7 @@ export default function PropertySheet() {
                 /> */}
                 <PropertyImageSlider
                   defaultImages={propertyDetails.default_image}
+                  pin={propertyDetails.pin}
                 />
               </div>
               <div>
