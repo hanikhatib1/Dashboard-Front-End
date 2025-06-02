@@ -75,7 +75,7 @@ const FileReportPDF3 = ({ mainPin, pins }) => {
       "Subject Property PIN",
       `${formatePin(reportData?.data.subject_pin)}`
     );
-    setFieldPDF(form, "Township", "Orland Township");
+    setFieldPDF(form, "Township", reportData?.data.properties[0].township);
 
     /* First Table  */
     setFieldPDF(
