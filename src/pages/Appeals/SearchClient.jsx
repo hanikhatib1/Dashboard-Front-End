@@ -46,7 +46,7 @@ const SearchClient = ({ setClient }) => {
   return (
     <div
       ref={inputRef}
-      className={` ${
+      className={` border z-30 ${
         searchText !== "" ? "rounded-tl-[8px]" : "rounded-[8px]"
       } border flex flex-1 relative h-[40px] rounded-tr-[8px] w-full text-[#A1A1AA]`}
     >
@@ -73,26 +73,28 @@ const SearchClient = ({ setClient }) => {
           ) : (
             <>
               {clients.length && (
-                <ul
-                  ref={ulRef}
-                  className="rounded-b-[8px] absolute w-[calc(100%+2px)] scroll-right overflow-y-auto h-auto -left-[1px] top-full border  bg-white shadow-custom"
-                >
-                  {clients.slice(0, 8).map((client, index) => (
-                    <li
-                      key={client}
-                      className={`hover:bg-primary px-2 py-2 leading-7 text-[#80838E] hover:text-white cursor-pointer flex justify-between items-center ${
-                        index === 0 ? "" : "border-t"
-                      }`}
-                      onClick={() => {
-                        setClient(client);
-                        setSearchText("");
-                        setClients([]);
-                      }}
-                    >
-                      {`${client.first_name} ${client.last_name}`}
-                    </li>
-                  ))}
-                </ul>
+                <div className="h-[200px] absolute w-[calc(100%+2px)] -left-[1px] top-full overflow-y-auto rounded-b-[8px] border">
+                  <ul
+                    ref={ulRef}
+                    className="scroll-right h-auto bg-white shadow-custom"
+                  >
+                    {clients.slice(0, 8).map((client, index) => (
+                      <li
+                        key={client}
+                        className={`hover:bg-primary px-2 py-2 leading-7 text-[#80838E] hover:text-white cursor-pointer flex justify-between items-center ${
+                          index === 0 ? "" : "border-t"
+                        }`}
+                        onClick={() => {
+                          setClient(client);
+                          setSearchText("");
+                          setClients([]);
+                        }}
+                      >
+                        {`${client.first_name} ${client.last_name}`}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               )}
               {clients.length === 0 && searchText !== "" && (
                 <ul className="absolute flex justify-center items-center w-[calc(100%+2px)] scroll-right overflow-y-auto h-[100px]  -left-[1px] top-full border bg-white shadow-custom">
