@@ -55,10 +55,10 @@ const FileReportPDF3 = ({ mainPin, pins }) => {
         fildes[i].getName() === "Subject Property Image" ||
         fildes[i].getName() === "Property Map Location";
 
-      if (!isReturnNull) {
+      /* if (!isReturnNull) {
         setFieldPDF(form, `${fildes[i].getName()}`, fildes[i].getName());
-        //form.getTextField(fildes[i].getName()).setAlignment(TextAlignment.Left);
-      }
+        form.getTextField(fildes[i].getName()).setAlignment(TextAlignment.Left);
+      } */
     }
 
     //setFieldPDF(form, "COMPARABLE 1 PIN", "1111111111111111");

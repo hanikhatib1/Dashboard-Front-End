@@ -58,14 +58,14 @@ const FilterStatusData = [
   {
     name: "Building",
     key: "building_sq_ft",
-    defaultValue: "2000",
+    defaultValue: "500",
     options: [500, 1000, 1500, 2000],
     type: "select",
   },
   {
     name: "Age",
     key: "age",
-    defaultValue: "40",
+    defaultValue: "10",
     options: [10, 20, 30, 40],
     type: "select",
   },
@@ -119,8 +119,8 @@ const Comparison = () => {
   const [filterSate, setFilterSate] = useState({
     range_in_mile: "0.25",
     land_sq_ft: "20000",
-    building_sq_ft: "2000",
-    age: "40",
+    building_sq_ft: "500",
+    age: "10",
     sort_by: "small_building_ratio_first",
     by_distance_only: true,
   });

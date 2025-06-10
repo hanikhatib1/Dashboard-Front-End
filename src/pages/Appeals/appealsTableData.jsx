@@ -22,6 +22,15 @@ import { formatPhoneNumber } from "@/utiles/formatPhoneNumber";
 
 export const appealsColumns = [
   {
+    accessorKey: "appeal_number",
+    header: "ID",
+    cell: ({ row }) => {
+      return (
+        <p>{row.original.appeal_number ? row.original.appeal_number : "N/A"}</p>
+      );
+    },
+  },
+  {
     accessorKey: "client_first_name",
     header: "Name",
     cell: ({ row }) => {

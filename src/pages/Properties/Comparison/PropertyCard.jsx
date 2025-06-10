@@ -22,22 +22,18 @@ const PropertyCard = ({
     <div
       className={`relative bg-white p-4 rounded-[16px] h-[230px] min-w-[262px] max-w-[300px] flex flex-col gap-2 shadow-custom ${className}`}
     >
-      {/*  <Link
+      <Link
         to={`https://www.cookcountyassessor.com/pin/${property.pin}`}
         target="_blank"
         className={`w-full  relative ${classNameImage}`}
       >
-        <img
-          src={property?.picked_image ?? property?.default_image}
-          alt=""
-          className="absolute w-full h-full object-cover rounded-[8px]"
+        <PropertyImageSlider
+          replaceImageAction={false}
+          defaultImages={property.default_image}
+          pin={property.pin}
         />
-      </Link> */}
-      <PropertyImageSlider
-        replaceImageAction={false}
-        defaultImages={property.default_image}
-        pin={property.pin}
-      />
+      </Link>
+
       {hasDelete && (
         <i
           className="absolute top-5 right-5 z-[1]"

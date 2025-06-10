@@ -18,6 +18,7 @@ import Fill_EDIT_API from "./PDFs/Fill_EDIT_API";
 import AppealStatusSelect from "./AppealStatusSelect";
 import UploadFile from "./UploadFile";
 import DownloadedFileItem from "./DownloadedFileItem";
+import { Input } from "@/components/ui/input";
 
 const EditAppeal = ({ fetchData }) => {
   const [open, setOpen] = useState(true);
@@ -30,6 +31,8 @@ const EditAppeal = ({ fetchData }) => {
   const [ranFile, setRanFile] = useState(null);
   const [sqFile, setSqFile] = useState(null);
   const [saFile, setSaFile] = useState(null);
+  const [anFile, setAnFile] = useState(null);
+
   const [status, setStatus] = useState({ status: "New" });
   const [updateAppeal, { isLoading }] = useUpdateAppealMutation();
   const {
@@ -46,16 +49,21 @@ const EditAppeal = ({ fetchData }) => {
       lour: "",
       ran: null,
       sq: null,
+      an: null,
       deleted_ccoa: "", // editAppealData.ccoa ? editAppealData.ccoa.real_id :
       deleted_bor: "", // editAppealData.bor ? editAppealData.bor.real_id :
       deleted_sa: "",
       deleted_lour: "",
       deleted_ran: "",
       deleted_sq: "",
+      deleted_an: "",
       note: editAppealData.note ? editAppealData.note : "",
       appeal_status_id: editAppealData.appeal_status_id
         ? editAppealData.appeal_status_id
         : 1,
+      appeal_number: editAppealData?.appeal_number
+        ? editAppealData?.appeal_number
+        : "",
     },
   });
 
@@ -186,6 +194,15 @@ const EditAppeal = ({ fetchData }) => {
                     deletedFileKey="deleted_sa"
                   />
                 )}
+                {editAppealData.an && (
+                  <DownloadedFileItem
+                    title="Appeal Narrative :"
+                    file={editAppealData.an}
+                    deletedFileValue={watch("deleted_an")}
+                    setValue={setValue}
+                    deletedFileKey="deleted_an"
+                  />
+                )}
               </div>
             </div>
             <div className="pb-5 flex flex-col gap-3">
@@ -244,7 +261,30 @@ const EditAppeal = ({ fetchData }) => {
                   setValue={setValue}
                   _key={"sq"}
                 />
+                <UploadFile
+                  file={anFile}
+                  setFile={setAnFile}
+                  title="Import Appeal Narrative"
+                  setValue={setValue}
+                  _key={"an"}
+                />
               </div>
+            </div>
+
+            <div className="sm:w-[calc(50%-16px)] w-full flex flex-col gap-2 flex-2">
+              <label
+                htmlFor="appeal_number"
+                className="text-body text-[#80838E]"
+              >
+                Appeal Number
+              </label>
+              <Input
+                id="appeal_number"
+                type="text"
+                className="rounded-[8px] h-[48px]"
+                name="appeal_number"
+                {...register("appeal_number")}
+              />
             </div>
 
             <AppealStatusSelect

@@ -34,6 +34,7 @@ import EditClientModal from "../Clients/EditClientModal";
 import { setEditClientData } from "@/redux/features/Clients";
 import { useDispatch } from "react-redux";
 import Fill_All_PDFs from "./PDFs/Fill_All_PDFs";
+import { Input } from "@/components/ui/input";
 
 const schema = yup
   .object({
@@ -62,6 +63,8 @@ const NewAppeals = ({
   const [ranFile, setRanFile] = useState(null);
   const [sqFile, setSqFile] = useState(null);
   const [saFile, setSaFile] = useState(null);
+  const [anFile, setAnFile] = useState(null);
+
   const dispatch = useDispatch();
   const [openEditClientModel, setOpenEditClientModel] = useState(false);
   const {
@@ -82,8 +85,10 @@ const NewAppeals = ({
       sa: null,
       ran: null,
       sq: null,
+      an: null,
       note: "",
       appeal_status_id: 1,
+      appeal_number: "",
     },
     resolver: yupResolver(schema),
   });
@@ -120,6 +125,7 @@ const NewAppeals = ({
     if (property) setValue("pin1", property.pin);
     else setValue("pin1", null);
   }, [property]);
+
   useEffect(() => {
     if (client) {
       setValue("client_id", client.id);
@@ -129,6 +135,7 @@ const NewAppeals = ({
       setOpenEditClientModel(false);
     }
   }, [client]);
+
   useEffect(() => {
     const hasErrors = Object.keys(errors).length > 0;
     if (hasErrors) {
@@ -159,7 +166,7 @@ const NewAppeals = ({
           <DialogHeader>
             <DialogTitle className="text-heading_1">Add New Appeal</DialogTitle>
           </DialogHeader>
-          <div className="grid gap-4 py-4 ">
+          <div className="grid gap-4 py-4">
             <div className="h-[52px] flex items-center justify-center relative">
               <SearchPropertiesComponent
                 className="z-20 !max-w-full flex-1"
@@ -223,7 +230,7 @@ const NewAppeals = ({
               </div>
             )}
 
-            <div className="border-b pb-5 flex flex-col gap-3">
+            <div className="border-b pb-5 flex flex-col gap-3 relative">
               <p>Export Files</p>
               {fillByAPI ? (
                 <Fill_EDIT_API
@@ -319,7 +326,31 @@ const NewAppeals = ({
                   setValue={setValue}
                   _key={"sq"}
                 />
+                {/* ///// */}
+                <UploadFile
+                  file={anFile}
+                  setFile={setAnFile}
+                  title="Import Appeal Narrative"
+                  setValue={setValue}
+                  _key={"an"}
+                />
               </div>
+            </div>
+
+            <div className="sm:w-[calc(50%-16px)] w-full flex flex-col gap-2 flex-2">
+              <label
+                htmlFor="appeal_number"
+                className="text-body text-[#80838E]"
+              >
+                Appeal Number
+              </label>
+              <Input
+                id="appeal_number"
+                type="text"
+                className="rounded-[8px] h-[48px]"
+                name="appeal_number"
+                {...register("appeal_number")}
+              />
             </div>
 
             <AppealStatusSelect

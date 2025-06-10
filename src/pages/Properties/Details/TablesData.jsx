@@ -75,7 +75,14 @@ export const purchaseDetailsColumns = [
     header: "Purchase Price",
     cell: ({ row }) => {
       const rowData = row.original;
-      return <p>$ {rowData.purchase_price.toLocaleString()}</p>;
+      return (
+        <p>
+          ${" "}
+          {rowData.purchase_price
+            ? rowData.purchase_price.toLocaleString()
+            : ""}
+        </p>
+      );
     },
   },
   {
@@ -130,14 +137,14 @@ export const detailRecordsColumns = [
     header: "Total",
     cell: ({ row }) => {
       const rowData = row.original;
-      return <p>$ {rowData.total.toLocaleString()}</p>;
+      return <p>$ {rowData.total?.toLocaleString()}</p>;
     },
   },
   {
     header: "Land Average Per Square Foot",
     cell: ({ row }) => {
       const rowData = row.original;
-      return <p>$ {rowData.building_square_feet.toLocaleString()}</p>;
+      return <p>$ {rowData.building_square_feet?.toLocaleString()}</p>;
     },
   },
   {
@@ -145,7 +152,7 @@ export const detailRecordsColumns = [
     header: "Ovacals",
     cell: ({ row }) => {
       const rowData = row.original;
-      return <p>$ {rowData.ovacls.toLocaleString()}</p>;
+      return <p>$ {rowData.ovacls?.toLocaleString()}</p>;
     },
   },
   {
@@ -153,7 +160,7 @@ export const detailRecordsColumns = [
     header: "Building Square Foot",
     cell: ({ row }) => {
       const rowData = row.original;
-      return <p>$ {rowData.building_square_foot.toLocaleString()}</p>;
+      return <p>$ {rowData.building_square_foot?.toLocaleString()}</p>;
     },
   },
   {
@@ -161,14 +168,14 @@ export const detailRecordsColumns = [
     header: "Land Assesses Value",
     cell: ({ row }) => {
       const rowData = row.original;
-      return <p>$ {rowData.land_assessed_value.toLocaleString()}</p>;
+      return <p>$ {rowData.land_assessed_value?.toLocaleString()}</p>;
     },
   },
   {
     header: "Land MV",
     cell: ({ row }) => {
       const rowData = row.original;
-      return <p>$ {rowData.land_value.toLocaleString()}</p>;
+      return <p>$ {rowData.land_value?.toLocaleString()}</p>;
     },
   },
   {
@@ -176,7 +183,7 @@ export const detailRecordsColumns = [
     header: "Land Square Foot",
     cell: ({ row }) => {
       const rowData = row.original;
-      return <p>$ {rowData.land_square_foot.toLocaleString()}</p>;
+      return <p>$ {rowData.land_square_foot?.toLocaleString()}</p>;
     },
   },
 ];
@@ -461,6 +468,24 @@ export const documentsColumns = [
       return hasLink ? (
         <Link
           to={rowData.sq.link}
+          target="_blank"
+          className="capitalize underline"
+        >
+          Show PDF
+        </Link>
+      ) : (
+        "N/A"
+      );
+    },
+  },
+  {
+    header: "Appeal Narrative",
+    cell: ({ row }) => {
+      const rowData = row.original;
+      const hasLink = rowData.an;
+      return hasLink ? (
+        <Link
+          to={rowData.an.link}
           target="_blank"
           className="capitalize underline"
         >

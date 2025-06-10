@@ -343,7 +343,7 @@ const EditClientModal = ({ onClose, setClient, refetch }) => {
                     type="text"
                     className="rounded-[8px] h-[48px]"
                     name="annual income"
-                    value={`$ ${Number(watch("annual_income").toString().replace("$", "").split(",").join("")).toLocaleString()}`}
+                    value={`$ ${Number(watch("annual_income")?.toString().replace("$", "").split(",").join("")).toLocaleString()}`}
                     onChange={(e) => {
                       setValue("annual_income", e.target.value);
                     }}
