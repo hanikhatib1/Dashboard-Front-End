@@ -12,7 +12,10 @@ import {
 import { useToast } from "@/components/ui/use-toast";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setDocumentsStatusAppealModel, setFormsAppeal } from "@/redux/features/AppealSlice";
+import {
+  setDocumentsStatusAppealModel,
+  setFormsAppeal,
+} from "@/redux/features/AppealSlice";
 
 const Fill_Form_Client = ({
   client_email,
@@ -21,7 +24,8 @@ const Fill_Form_Client = ({
   pin3,
   text,
   className,
-  isOpenToSendDocument = false
+  isOpenToSendDocument = false,
+  appealId,
 }) => {
   const currentYear = new Date().getFullYear();
   const currentMonth = new Date().getMonth();
@@ -30,10 +34,12 @@ const Fill_Form_Client = ({
   const [sendForm] = useSendFormSignatureMutation();
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
-  const { formsAppeal, documentsStatusAppealModel } = useSelector((state) => state.appeals);
-  const [openToSendDocument, { isLoading: openToSendDocumentIsLoading }] = useOpenToSendDocumentMutation();
+  const { formsAppeal, documentsStatusAppealModel } = useSelector(
+    (state) => state.appeals
+  );
+  const [openToSendDocument, { isLoading: openToSendDocumentIsLoading }] =
+    useOpenToSendDocumentMutation();
   const dispatch = useDispatch();
-
 
   const fillPOC_CCA = async () => {
     setIsLoading(true);
@@ -42,6 +48,7 @@ const Fill_Form_Client = ({
       pin1,
       pin2,
       pin3,
+      appeal_id: appealId,
     });
     if ("error" in res) {
       toast({
@@ -74,6 +81,8 @@ const Fill_Form_Client = ({
         "Property Street Address",
         res.data?.data.property_address
       );
+      setFieldPDF(form, "Appeal Number", res.data?.data.appeal_number);
+
       setFieldPDF(form, "City", res.data?.data.property_city);
       setFieldPDF(form, "Zip", res.data?.data.property_zipcode);
       setFieldPDF(form, "Township", res.data.data.property_township);
@@ -252,7 +261,6 @@ const Fill_Form_Client = ({
         variant: "success",
       });
       dispatch(setDocumentsStatusAppealModel(null));
-
     }
     if ("error" in res) {
       toast({
@@ -265,11 +273,19 @@ const Fill_Form_Client = ({
 
   return (
     <div
-      onClick={() => isOpenToSendDocument ? handleOpenToSendDocument() : fillPOC_CCA()}
+      onClick={() =>
+        isOpenToSendDocument ? handleOpenToSendDocument() : fillPOC_CCA()
+      }
       disabled={isLoading || openToSendDocumentIsLoading}
       className={`${className} bg-primary rounded-[8px]  text-white flex items-center justify-center cursor-pointer px-4`}
     >
-      <p>{isLoading || openToSendDocumentIsLoading ? "Loading..." : text ? text : "Send Form"}</p>
+      <p>
+        {isLoading || openToSendDocumentIsLoading
+          ? "Loading..."
+          : text
+            ? text
+            : "Send Form"}
+      </p>
     </div>
   );
 };

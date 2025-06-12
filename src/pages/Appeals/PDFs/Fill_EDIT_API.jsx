@@ -8,7 +8,7 @@ import Fill_Appeal_Narrative_API from "./Fill_Appeal_Narrative_API";
 import Fill_Sales_Questions_API from "./Fill_Sales_Questions_API";
 import Fill_All_PDFs_API from "./Fill_All_PDFs_API";
 
-const Fill_EDIT_API = ({ client_email, pin1, pin2, pin3 }) => {
+const Fill_EDIT_API = ({ client_email, pin1, pin2, pin3, appeal_number, appeal_id }) => {
   const [exportAppealData, { data }] = useExportAppealDataMutation();
   const [hasData, setHasData] = useState(false);
 
@@ -20,6 +20,7 @@ const Fill_EDIT_API = ({ client_email, pin1, pin2, pin3 }) => {
         pin1,
         pin2,
         pin3,
+        appeal_id,
       });
       if ("data" in res) setHasData(true);
     }
@@ -28,18 +29,30 @@ const Fill_EDIT_API = ({ client_email, pin1, pin2, pin3 }) => {
 
   return (
     <div className="flex flex-wrap [&>div]:w-full  md:[&>div]:w-[calc(50%-16px)] gap-6">
-      <FillPOC_CCA_API hasData={hasData} data={data ? data.data : false} />
-      <FillPOC_BOR_API hasData={hasData} data={data ? data.data : false} />
-      <Fill_SA_API hasData={hasData} data={data ? data.data : false} />
+      <FillPOC_CCA_API
+        hasData={hasData && appeal_number}
+        data={data ? data.data : false}
+      />
+      <FillPOC_BOR_API
+        hasData={hasData && appeal_number}
+        data={data ? data.data : false}
+      />
+      <Fill_SA_API
+        hasData={hasData && appeal_number}
+        data={data ? data.data : false}
+      />
       <Fill_Appeal_Narrative_API
-        hasData={hasData}
+        hasData={hasData && appeal_number}
         data={data ? data.data : false}
       />
       <Fill_Sales_Questions_API
-        hasData={hasData}
+        hasData={hasData && appeal_number}
         data={data ? data.data : false}
       />
-      <Fill_All_PDFs_API hasData={hasData} data={data ? data.data : false} />
+      <Fill_All_PDFs_API
+        hasData={hasData && appeal_number}
+        data={data ? data.data : false}
+      />
     </div>
   );
 };
@@ -49,6 +62,7 @@ Fill_EDIT_API.propTypes = {
   pin1: PropTypes.string,
   pin2: PropTypes.string,
   pin3: PropTypes.string,
+  appeal_number: PropTypes.string,
 };
 
 export default Fill_EDIT_API;

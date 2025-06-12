@@ -13,7 +13,10 @@ import {
 import Loader from "@/components/Loader";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, useSearchParams } from "react-router-dom";
-import { clearPropertiesList } from "@/redux/features/Properties";
+import {
+  clearPropertiesList,
+  setPageCountStore,
+} from "@/redux/features/Properties";
 import PropertySheet from "./PropertySheet.jsx";
 import PropertyCard from "./PropertyCard";
 import { formattedNumber } from "@/utiles/formattedNumber";
@@ -29,7 +32,6 @@ import {
 import { SelectValue } from "@radix-ui/react-select";
 import queryString from "query-string";
 import NewAppeals from "@/pages/Appeals/NewAppeals";
-import FileReportPDF2 from "@/components/FileReportPDF2";
 import FileReportPDF3 from "@/components/FileReportPDF3";
 
 const mails = {
@@ -100,21 +102,15 @@ const SortData = [
 
 const Comparison = () => {
   const { id } = useParams();
-  const [searchParams] = useSearchParams();
-  /* const pageCount = searchParams.get("page")
-    ? Number(searchParams.get("page")) > 0
-      ? Number(searchParams.get("page"))
-      : 1
-    : 1; */
   const [pageCount, setPageCount] = useState(1);
   const [FilterStatusKey, setFilterStatusKey] = useState("city");
   const dispatch = useDispatch();
+  const [selectedProperties, setSelectedProperties] = useState([]);
   const { propertiesList, propertyDetailsData } = useSelector(
     (state) => state.properties
   );
-
   const propertiesListFilter = new Set(propertiesList);
-  const propertiesListArray = Array.from(propertiesListFilter);
+  //const propertiesListArray = Array.from(propertiesListFilter);
 
   const [filterSate, setFilterSate] = useState({
     range_in_mile: "0.25",
@@ -182,14 +178,14 @@ const Comparison = () => {
 
   const getListOfPropertiesHandler = async () => {
     await getListOfProperties({
-      pins: propertiesListArray,
+      pins: selectedProperties,
       comparable_property_pin: oneProperty.data.pin,
     });
   };
 
   useEffect(() => {
     getListOfPropertiesHandler();
-  }, [propertiesListArray.length]);
+  }, [selectedProperties.length]);
 
   useEffect(() => {
     getOneProperty(id);
@@ -197,7 +193,25 @@ const Comparison = () => {
 
   useEffect(() => {
     if (oneProperty) {
-      dispatch(clearPropertiesList());
+      //dispatch(clearPropertiesList());
+      setPageCount(1);
+      getPropertiesComparison({
+        id: oneProperty.data.id,
+        query: queryString.stringify({
+          ...filterSate,
+          page: 1,
+          limit: 50,
+        }),
+      });
+    }
+    if (pageCount) {
+      dispatch(setPageCountStore(pageCount));
+    }
+  }, [oneProperty, filterSate]);
+
+  useEffect(() => {
+    if (oneProperty) {
+      //dispatch(clearPropertiesList());
       getPropertiesComparison({
         id: oneProperty.data.id,
         query: queryString.stringify({
@@ -207,7 +221,22 @@ const Comparison = () => {
         }),
       });
     }
-  }, [oneProperty, pageCount, filterSate]);
+    if (pageCount) {
+      dispatch(setPageCountStore(pageCount));
+    }
+  }, [oneProperty, pageCount]);
+
+  useEffect(() => {
+    //console.log("propertiesList", propertiesList);
+    const propertiesListFilter = new Set(propertiesList);
+    const propertiesListArray = Array.from(propertiesListFilter);
+
+    setSelectedProperties((prev) => {
+      const filter2 = Array.from(new Set([...propertiesListArray]));
+      console.log("selectedProperties", filter2);
+      return filter2;
+    });
+  }, [propertiesList]);
 
   return (
     <>
@@ -425,7 +454,7 @@ const Comparison = () => {
                       />
                     )}
                     {/* <FileReportPDF mainPin={id} pins={propertiesListArray} /> */}
-                    <FileReportPDF3 mainPin={id} pins={propertiesListArray} />
+                    <FileReportPDF3 mainPin={id} pins={selectedProperties} />
                   </div>
                 </div>
                 <p

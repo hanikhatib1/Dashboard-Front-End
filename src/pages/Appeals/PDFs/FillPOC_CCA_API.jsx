@@ -18,6 +18,11 @@ const FillPOC_CCA_API = ({ data, hasData, iconOnly }) => {
     const currentMonth = new Date().getMonth();
     const currentDay = new Date().getDate();
 
+    setFieldPDF(
+      form,
+      "Appeal Number",
+      data?.appeal_number ? data?.appeal_number : ""
+    );
     setFieldPDF(form, "Appeal Year", currentYear.toString());
     setFieldPDF(form, "Property Index Numbers", formatePin(data?.pin1));
     setFieldPDF(form, "Property Street Address", data?.property_address);

@@ -8,11 +8,11 @@ import { useCallback, useEffect, useState } from "react";
 import { useGetTownshipNameMutation } from "@/redux/apiSlice";
 import { formatPhoneNumber } from "@/utiles/formatPhoneNumber";
 
-const FillPOC_CCA = ({ property, client, pin2, pin3 }) => {
+const FillPOC_CCA = ({ property, client, pin2, pin3, appeal_number }) => {
   const [townShip, setTownShip] = useState("");
   const hasProperty = Boolean(property);
   const hasClient = Boolean(client);
-  const hasData = hasProperty && hasClient;
+  const hasData = hasProperty && hasClient && appeal_number;
   const [getTownshipName, { isLoading }] = useGetTownshipNameMutation({});
   const fillForm = async () => {
     // Step 1: Load the PDF form.
@@ -25,6 +25,8 @@ const FillPOC_CCA = ({ property, client, pin2, pin3 }) => {
     const currentYear = new Date().getFullYear();
     const currentMonth = new Date().getMonth();
     const currentDay = new Date().getDate();
+    
+    setFieldPDF(form, "Appeal Number", appeal_number);
 
     setFieldPDF(form, "Appeal Year", currentYear.toString());
     setFieldPDF(form, "Property Index Numbers", formatePin(property?.pin));
@@ -93,7 +95,7 @@ const FillPOC_CCA = ({ property, client, pin2, pin3 }) => {
     /* setFieldPDF(form, "Text4", "Text4");
     setFieldPDF(form, "Text5", "Text5"); */
     setFieldPDF(form, "Text6", `${currentYear}`);
-    setFieldPDF(form, "Text7", 'IL');
+    setFieldPDF(form, "Text7", "IL");
 
     for (let i = 0; i < fildes.length; i++) {
       console.log("fildes", fildes[i].getName());
@@ -144,6 +146,7 @@ FillPOC_CCA.propTypes = {
   client: PropTypes.object,
   pin2: PropTypes.string,
   pin3: PropTypes.string,
+  appeal_number: PropTypes.string,
 };
 
 export default FillPOC_CCA;

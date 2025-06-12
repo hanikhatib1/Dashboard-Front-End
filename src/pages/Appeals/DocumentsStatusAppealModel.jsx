@@ -99,6 +99,7 @@ const DocumentsStatusAppealModel = () => {
                       client_email={documentsStatusAppealModel.client_email}
                       isOpenToSendDocument={true}
                       text="Send Form again"
+                      appealId={documentsStatusAppealModel?.id}
                       className="bg-white rounded-[8px]  !text-primary border border-primary hover:bg-primary hover:!text-white py-2"
                     />
                   </div>

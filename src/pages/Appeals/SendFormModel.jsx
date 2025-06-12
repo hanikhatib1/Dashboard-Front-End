@@ -15,7 +15,7 @@ import Fill_Form_Client from "./PDFs/Fill_Form_Client";
 const SendFormModel = () => {
   const dispatch = useDispatch();
   const { formsAppeal } = useSelector((state) => state.appeals);
-
+  console.log("formsAppeal", formsAppeal);
   return (
     <Dialog
       open={formsAppeal}
@@ -38,6 +38,7 @@ const SendFormModel = () => {
             pin2={formsAppeal.pin2}
             pin3={formsAppeal.pin3}
             client_email={formsAppeal.client_email}
+            appealId={formsAppeal?.id}
           />
           <Button
             type="submit"

@@ -238,6 +238,8 @@ const NewAppeals = ({
                   pin1={property.pin}
                   pin2={watch("pin2")}
                   pin3={watch("pin3")}
+                  appeal_number={watch("appeal_number")}
+                  appeal_id={""}
                 />
               ) : (
                 <div className="flex flex-wrap [&>div]:w-full  md:[&>div]:w-[calc(50%-16px)] gap-6">
@@ -246,36 +248,42 @@ const NewAppeals = ({
                     client={client}
                     pin2={watch("pin2")}
                     pin3={watch("pin3")}
+                    appeal_number={watch("appeal_number")}
                   />
                   <FillPOC_BOR
                     property={property}
                     client={client}
                     pin2={watch("pin2")}
                     pin3={watch("pin3")}
+                    appeal_number={watch("appeal_number")}
                   />
                   <Fill_SA
                     property={property}
                     client={client}
                     pin2={watch("pin2")}
                     pin3={watch("pin3")}
+                    appeal_number={watch("appeal_number")}
                   />
                   <Fill_Appeal_Narrative
                     property={property}
                     client={client}
                     pin2={watch("pin2")}
                     pin3={watch("pin3")}
+                    appeal_number={watch("appeal_number")}
                   />
                   <Fill_Sales_Questions
                     property={property}
                     client={client}
                     pin2={watch("pin2")}
                     pin3={watch("pin3")}
+                    appeal_number={watch("appeal_number")}
                   />
                   <Fill_All_PDFs
                     property={property}
                     client={client}
                     pin2={watch("pin2")}
                     pin3={watch("pin3")}
+                    appeal_number={watch("appeal_number")}
                   />
                 </div>
               )}

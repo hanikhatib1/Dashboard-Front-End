@@ -5,10 +5,10 @@ import PropTypes from "prop-types";
 import { setFieldPDF } from "@/utiles/setFieldPDF";
 import { formatePin } from "@/utiles/formatePin";
 
-const Fill_SA = ({ property, client, pin3, pin2 }) => {
+const Fill_SA = ({ property, client, pin3, pin2, appeal_number }) => {
   const hasProperty = Boolean(property);
   const hasClient = Boolean(client);
-  const hasData = hasProperty && hasClient;
+  const hasData = hasProperty && hasClient && appeal_number;
   const fillForm = async () => {
     // Step 1: Load the PDF form.
     const formUrl = Representation_Agreement;

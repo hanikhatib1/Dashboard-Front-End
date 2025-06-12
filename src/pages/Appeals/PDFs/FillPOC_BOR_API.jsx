@@ -20,6 +20,14 @@ const FillPOC_BOR_API = ({ hasData, data, iconOnly }) => {
     form.getTextField("PINs 1").setFontSize(10);
     form.getTextField("PINs 2").setFontSize(10);
     form.getTextField("PINs 3").setFontSize(10);
+
+    const fildes = form.getFields();
+    for (let i = 0; i < fildes.length; i++) {
+      //setFieldPDF(form, fildes[i].getName(), `${fildes[i].getName()}`);
+
+      console.log("fildes", fildes[i].getName());
+    }
+
     setFieldPDF(form, "PINs 1", `${formatePin(data?.pin1)}`);
     setFieldPDF(
       form,
@@ -31,6 +39,7 @@ const FillPOC_BOR_API = ({ hasData, data, iconOnly }) => {
       "PINs 3",
       `${data.pin3 ? `${formatePin(data.pin3)}` : ""}`
     );
+
     setFieldPDF(form, "undefined", data?.property_zipcode);
     setFieldPDF(form, "City", data?.property_city);
     setFieldPDF(form, "ZIP Code", data?.property_state);

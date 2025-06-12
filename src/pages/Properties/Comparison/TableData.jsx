@@ -18,17 +18,15 @@ export const comparisonAssessmentsColumns = [
     id: "select",
     cell: ({ row }) => {
       const dispatch = useDispatch();
-      const { propertiesList, propertyDetailsData } = useSelector(
-        (state) => state.properties
-      );
+      const { propertiesList, propertyDetailsData, pageCountComparison } =
+        useSelector((state) => state.properties);
       const propertiesListFilter = new Set(propertiesList);
       const propertiesListArray = Array.from(propertiesListFilter);
       const isIncluded = propertyDetailsData.includes(row.original.pin);
 
       useEffect(() => {
-        if (row.index < RowsNumberSelected) {
+        /* if (row.index < RowsNumberSelected && pageCountComparison === 1) {
           row.toggleSelected(!!true);
-          console.log(row.index);
           dispatch(setPropertiesList(row.original.pin));
           if (!isIncluded)
             dispatch(
@@ -37,7 +35,7 @@ export const comparisonAssessmentsColumns = [
                 index: row.index,
               })
             );
-        }
+        } */
       }, []);
 
       return (

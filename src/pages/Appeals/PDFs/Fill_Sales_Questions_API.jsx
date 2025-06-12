@@ -22,7 +22,11 @@ const Fill_Sales_Questions_API = ({ data, hasData, iconOnly }) => {
     for (let i = 0; i < fildes.length; i++) {
       console.log("fildes", fildes[i].getName());
     }
-
+    setFieldPDF(
+      form,
+      "Appeal Number",
+      data?.appeal_number ? data?.appeal_number : ""
+    );
     setFieldPDF(form, "WWWCOOKCOUNTYASSESSORCOM 2", currentYear.toString());
     setFieldPDF(form, "Property Index Numbers", `${formatePin(data?.pin1)}`);
     setFieldPDF(

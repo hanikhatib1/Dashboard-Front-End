@@ -213,6 +213,8 @@ const EditAppeal = ({ fetchData }) => {
                 pin1={editAppealData.pin1}
                 pin2={editAppealData.pin2}
                 pin3={editAppealData.pin3}
+                appeal_number={editAppealData.appeal_number}
+                appeal_id={editAppealData.id}
               />
             </div>
 

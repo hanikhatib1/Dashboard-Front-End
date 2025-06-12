@@ -26,6 +26,7 @@ import { Download, Upload } from "lucide-react";
 import Files from "./Files";
 import DocumentsStatusAppealModel from "../DocumentsStatusAppealModel";
 import PropertyImageSlider from "@/pages/Properties/PropertyImageSlider";
+import { useToast } from "@/components/ui/use-toast";
 
 const tableData = [
   {
@@ -58,6 +59,7 @@ const tableData = [
 const Appeal = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
+  const { toast } = useToast();
   const {
     data,
     isError,
@@ -120,10 +122,18 @@ const Appeal = () => {
               <button
                 //className="bg-[#1A73E833] text-[#2C3E50] px-4 py-2 rounded-[8px] ml-3"
                 className={`px-4 py-2 rounded-[8px] ml-3 cursor-pointer bg-[#1A73E833] ${appealData.signature_sent ? "text-[#80838E] cursor-not-allowed " : ""}`}
-                onClick={() =>
-                  !appealData.signature_sent &&
-                  dispatch(setFormsAppeal(appealData))
-                }
+                onClick={() => {
+                  if (appealData.appeal_number) {
+                    if (!appealData.signature_sent)
+                      dispatch(setFormsAppeal(appealData));
+                  } else {
+                    toast({
+                      title: "Appeal number!",
+                      description: "Appeal number is Required",
+                      type: "success",
+                    });
+                  }
+                }}
                 disabled={appealData.signature_sent}
               >
                 Send Forms
@@ -148,6 +158,12 @@ const Appeal = () => {
           <div className="border rounded-[10px] border-[#1A73E833] p-4 flex flex-col  gap-10 h-max">
             <div className="flex flex-col md:flex-row justify-between">
               <div className="flex flex-col gap-4">
+                <div className="flex gap-4">
+                  <p>Appeal Number :</p>
+                  <p className="text-[#80838E]">
+                    {`${appealData?.appeal_number ? appealData?.appeal_number : "N/A"} `}
+                  </p>
+                </div>
                 <div className="flex gap-4">
                   <p>Name :</p>
                   <p className="text-[#80838E]">

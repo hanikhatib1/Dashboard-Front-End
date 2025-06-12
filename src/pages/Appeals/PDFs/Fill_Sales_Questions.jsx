@@ -8,11 +8,17 @@ import { useCallback, useEffect, useState } from "react";
 import { useGetTownshipNameMutation } from "@/redux/apiSlice";
 import { formatPhoneNumber } from "@/utiles/formatPhoneNumber";
 
-const Fill_Sales_Questions = ({ property, client, pin2, pin3 }) => {
+const Fill_Sales_Questions = ({
+  property,
+  client,
+  pin2,
+  pin3,
+  appeal_number,
+}) => {
   const [townShip, setTownShip] = useState("");
   const hasProperty = Boolean(property);
   const hasClient = Boolean(client);
-  const hasData = hasProperty && hasClient;
+  const hasData = hasProperty && hasClient && appeal_number;
   const currentYear = new Date().getFullYear();
   const currentMonth = new Date().getMonth();
   const currentDay = new Date().getDate();

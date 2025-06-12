@@ -7,7 +7,7 @@ import { formatePin } from "@/utiles/formatePin";
 import { useCallback, useEffect, useState } from "react";
 import { useGetTownshipNameMutation } from "@/redux/apiSlice";
 
-const FillPOC_BOR = ({ property, client, pin2, pin3 }) => {
+const FillPOC_BOR = ({ property, client, pin2, pin3, appeal_number }) => {
   const [pins, setPins] = useState({
     pin2: "",
     pin3: "",
@@ -15,7 +15,7 @@ const FillPOC_BOR = ({ property, client, pin2, pin3 }) => {
   const [townShip, setTownShip] = useState("");
   const hasProperty = Boolean(property);
   const hasClient = Boolean(client);
-  const hasData = hasProperty && hasClient;
+  const hasData = hasProperty && hasClient && appeal_number;
   const currentYear = new Date().getFullYear();
   const currentMonth = new Date().getMonth();
   const currentDay = new Date().getDate();
@@ -29,6 +29,7 @@ const FillPOC_BOR = ({ property, client, pin2, pin3 }) => {
     // Step 2: Retrieve the form fields.
     const form = pdfDoc.getForm();
     const fildes = form.getFields();
+
     form.getTextField("PINs 1").setFontSize(10);
     form.getTextField("PINs 2").setFontSize(10);
     form.getTextField("PINs 3").setFontSize(10);

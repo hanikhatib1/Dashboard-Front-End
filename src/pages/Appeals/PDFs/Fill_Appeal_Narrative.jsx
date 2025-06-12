@@ -8,11 +8,17 @@ import { setFieldPDF } from "@/utiles/setFieldPDF";
 import { formatePin } from "@/utiles/formatePin";
 import { formatPhoneNumber } from "@/utiles/formatPhoneNumber";
 
-const Fill_Appeal_Narrative = ({ property, client, pin2, pin3 }) => {
+const Fill_Appeal_Narrative = ({
+  property,
+  client,
+  pin2,
+  pin3,
+  appeal_number,
+}) => {
   const [townShip, setTownShip] = useState("");
   const hasProperty = Boolean(property);
   const hasClient = Boolean(client);
-  const hasData = hasProperty && hasClient;
+  const hasData = hasProperty && hasClient && appeal_number;
   const [getTownshipName, { isLoading }] = useGetTownshipNameMutation({});
 
   const fillForm = async () => {
@@ -24,6 +30,8 @@ const Fill_Appeal_Narrative = ({ property, client, pin2, pin3 }) => {
     const form = pdfDoc.getForm();
     const fildes = form.getFields();
     const currentYear = new Date().getFullYear();
+
+    setFieldPDF(form, "Appeal Number", appeal_number);
 
     setFieldPDF(form, "Appeal Year", currentYear.toString());
     setFieldPDF(form, "Property Index Numbers", formatePin(property?.pin));

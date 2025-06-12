@@ -17,6 +17,12 @@ const Fill_Appeal_Narrative_API = ({ data, hasData, iconOnly }) => {
     const fildes = form.getFields();
     const currentYear = new Date().getFullYear();
 
+    setFieldPDF(
+      form,
+      "Appeal Number",
+      data?.appeal_number ? data?.appeal_number : ""
+    );
+
     setFieldPDF(form, "Appeal Year", currentYear.toString());
     setFieldPDF(form, "Property Index Numbers", formatePin(data?.pin1));
     setFieldPDF(form, "Property Street Address", data?.property_address);
