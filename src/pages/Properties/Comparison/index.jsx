@@ -118,7 +118,7 @@ const Comparison = () => {
     building_sq_ft: "500",
     age: "10",
     sort_by: "small_building_ratio_first",
-    by_distance_only: true,
+    by_distance_only: false,
   });
   const [openMaps, setOpenMaps] = useState(false);
   const [

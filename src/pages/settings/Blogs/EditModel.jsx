@@ -7,6 +7,7 @@ import { useEditBlogMutation } from "@/redux/apiSlice";
 import PropTypes from "prop-types";
 import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
+import Linkify from "react-linkify";
 
 const EditModel = ({ editBlogData, setEditBlog, refetch }) => {
   const [image, setImage] = React.useState(null);
@@ -18,6 +19,7 @@ const EditModel = ({ editBlogData, setEditBlog, refetch }) => {
     setValue,
     formState: { isValid },
     handleSubmit,
+    watch,
   } = useForm({
     defaultValues: {
       title: editBlogData.title,
@@ -124,6 +126,7 @@ const EditModel = ({ editBlogData, setEditBlog, refetch }) => {
               <label htmlFor="Description" className="text-body text-[#80838E]">
                 Description
               </label>
+
               <Textarea
                 id="Description"
                 type=""
