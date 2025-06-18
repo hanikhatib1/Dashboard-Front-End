@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
@@ -7,7 +7,6 @@ import { useEditBlogMutation } from "@/redux/apiSlice";
 import PropTypes from "prop-types";
 import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import Linkify from "react-linkify";
 
 const EditModel = ({ editBlogData, setEditBlog, refetch }) => {
   const [image, setImage] = React.useState(null);
@@ -19,12 +18,12 @@ const EditModel = ({ editBlogData, setEditBlog, refetch }) => {
     setValue,
     formState: { isValid },
     handleSubmit,
-    watch,
   } = useForm({
     defaultValues: {
       title: editBlogData.title,
       description: editBlogData.description,
       short_description: editBlogData.short_description,
+      meta_description: editBlogData.meta_description,
     },
   });
 
@@ -132,6 +131,20 @@ const EditModel = ({ editBlogData, setEditBlog, refetch }) => {
                 type=""
                 className="rounded-[8px] h-[380px]"
                 {...register("description", { required: true })}
+              />
+            </div>
+            <div className="w-full flex flex-col gap-2 flex-2">
+              <label
+                htmlFor="Short_description"
+                className="text-body text-[#80838E]"
+              >
+                Meta Description
+              </label>
+              <Input
+                id="meta_description"
+                type="text"
+                className="rounded-[8px] h-[48px]"
+                {...register("meta_description", { required: true })}
               />
             </div>
             <div className="flex gap-4">

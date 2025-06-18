@@ -28,7 +28,7 @@ const Blog = ({ blogData, setEditBlog, setDeleteBlog }) => {
         </p>
         <Link
           target="_blank"
-          to={`${import.meta.env.VITE_PUBLIC_WEB_SITE_URL}/blogs/${blogData.id}`}
+          to={`${import.meta.env.VITE_PUBLIC_WEB_SITE_URL}/property-tax-appeal-blogs/${blogData.id}`}
           className="text-[#4693D6] text-[16px] leading-[150%] underline"
         >
           Read More
