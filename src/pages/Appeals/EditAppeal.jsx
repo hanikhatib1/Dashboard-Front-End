@@ -19,6 +19,9 @@ import AppealStatusSelect from "./AppealStatusSelect";
 import UploadFile from "./UploadFile";
 import DownloadedFileItem from "./DownloadedFileItem";
 import { Input } from "@/components/ui/input";
+import { PDFDownloadLink } from "@react-pdf/renderer";
+import AppealPDF from "@/AppealPDF";
+import { Download } from "lucide-react";
 
 const EditAppeal = ({ fetchData }) => {
   const [open, setOpen] = useState(true);
@@ -120,6 +123,23 @@ const EditAppeal = ({ fetchData }) => {
     setStatus(editAppealData?.appeal_status);
   }, [editAppealData]);
 
+  const sampleData = {
+    taxpayer: "Carmen Servin",
+    address: "2612 Harvey Ave, Berwyn, IL 60402",
+    pin: "16-29-302-023-0000",
+    attorneyId: "11352",
+    attorneyName: "Hani H. Khatib",
+    seller: "Juan Valerio Corpus",
+    buyer: "Carmen Servin",
+    purchaseDate: "May 03, 2024",
+    purchasePrice: 296000,
+    landAV: 46310,
+    buildingAV: 249690,
+    totalAV: 296000,
+    imageUrl:
+      "https://plus.unsplash.com/premium_photo-1664474619075-644dd191935f?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8aW1hZ2V8ZW58MHx8MHx8fDA%3D",
+  };
+
   return (
     <Dialog
       defaultOpen={editAppealData}
@@ -196,7 +216,7 @@ const EditAppeal = ({ fetchData }) => {
                 )}
                 {editAppealData.an && (
                   <DownloadedFileItem
-                    title="Appeal Narrative :"
+                    title="Board of Review Appeal :"
                     file={editAppealData.an}
                     deletedFileValue={watch("deleted_an")}
                     setValue={setValue}
@@ -266,7 +286,8 @@ const EditAppeal = ({ fetchData }) => {
                 <UploadFile
                   file={anFile}
                   setFile={setAnFile}
-                  title="Import Appeal Narrative"
+                  //title="Import Appeal Narrative"
+                  title="Import Board of Review Appeal"
                   setValue={setValue}
                   _key={"an"}
                 />

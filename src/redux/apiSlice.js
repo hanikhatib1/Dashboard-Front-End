@@ -517,6 +517,31 @@ export const apiSlice = createApi({
     getAppeal: builder.query({
       query: (id) => `/appeal/get_one_appeal/${id}`,
     }),
+    getAllFAQs: builder.query({
+      query: (q) => ({
+        url: `/faq/get_all_faq?sort=-id&${q}`,
+      }),
+    }),
+    addFAQ: builder.mutation({
+      query: (body) => ({
+        url: "/faq/add_faq",
+        method: "POST",
+        body,
+      }),
+    }),
+    deleteFAQ: builder.mutation({
+      query: (id) => ({
+        url: `/faq/delete_faq/${id}`,
+        method: "DELETE",
+      }),
+    }), ///faq/delete_faq/3
+    updateFAQ: builder.mutation({
+      query: ({ body, id }) => ({
+        url: `/faq/update_faq/${id}`,
+        body,
+        method: "PATCH",
+      }),
+    }),
   }),
 });
 
@@ -597,4 +622,8 @@ export const {
   useEditCurrentTownshipMutation,
   useMigrateTownshipMutation,
   useGetAppealQuery,
+  useGetAllFAQsQuery,
+  useAddFAQMutation,
+  useDeleteFAQMutation,
+  useUpdateFAQMutation,
 } = apiSlice;

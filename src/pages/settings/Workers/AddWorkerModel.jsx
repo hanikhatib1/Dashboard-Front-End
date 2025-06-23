@@ -27,6 +27,7 @@ const AddWorkerModel = ({ refetch }) => {
       image: "",
       job_title: "",
       sort: 0,
+      meta_description: "",
     },
   });
 
@@ -182,6 +183,20 @@ const AddWorkerModel = ({ refetch }) => {
                   type=""
                   className="rounded-[8px] h-[48px]"
                   {...register("description", { required: true })}
+                />
+              </div>
+              <div className="w-full flex flex-col gap-2 flex-2">
+                <label
+                  htmlFor="Short_description"
+                  className="text-body text-[#80838E]"
+                >
+                  Meta Description
+                </label>
+                <Input
+                  id="meta_description"
+                  type="text"
+                  className="rounded-[8px] h-[48px]"
+                  {...register("meta_description", { required: true })}
                 />
               </div>
               <div className="w-full flex flex-col gap-2 flex-2">

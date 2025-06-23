@@ -38,6 +38,7 @@ export const settings = {
   workers: "/settings/workers",
   contactUs: "/settings/contact-us",
   reports: "/settings/reports",
+  faqs: "/settings/faqs",
 };
 
 export const dataScript = {

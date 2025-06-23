@@ -8,7 +8,7 @@ import {
 } from "../../components/ui/dialog";
 import { Button } from "../../components/ui/button";
 import { useEffect, useState } from "react";
-import { Edit2, Plus, Trash2 } from "lucide-react";
+import { Download, Edit2, Plus, Trash2 } from "lucide-react";
 import PropertyAppealCard from "./PropertyAppealCard";
 import PinInput from "./PinInput";
 import { useForm } from "react-hook-form";
@@ -285,6 +285,14 @@ const NewAppeals = ({
                     pin3={watch("pin3")}
                     appeal_number={watch("appeal_number")}
                   />
+                  <div
+                    className={`flex gap-2 !p-1 !bg-white !text-black items-center  border border-white `}
+                  >
+                    <Download color="#80838E" />
+                    <p className={`text-[16px] font-medium text-[#80838E]`}>
+                      Export Board of Review Appeal
+                    </p>
+                  </div>
                 </div>
               )}
             </div>
@@ -338,7 +346,8 @@ const NewAppeals = ({
                 <UploadFile
                   file={anFile}
                   setFile={setAnFile}
-                  title="Import Appeal Narrative"
+                  //title="Import Appeal Narrative"
+                  title="Board of Review Appeal"
                   setValue={setValue}
                   _key={"an"}
                 />

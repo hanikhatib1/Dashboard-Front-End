@@ -42,6 +42,7 @@ import Workers from "./pages/settings/Workers";
 import ContactUs from "./pages/settings/ContactUs";
 import Reports from "./pages/settings/Reports";
 import Appeal from "./pages/Appeals/Appeal";
+import FAQs from "./pages/settings/FAQs";
 
 function App() {
   const { isSuccess, data, isError } = useGetUserQuery({});
@@ -80,6 +81,7 @@ function App() {
             <Route path={settings.workers} element={<Workers />} />
             <Route path={settings.contactUs} element={<ContactUs />} />
             <Route path={settings.reports} element={<Reports />} />
+            <Route path={settings.faqs} element={<FAQs />} />
 
             <Route path={invoices.index} element={<Invoices />} />
 

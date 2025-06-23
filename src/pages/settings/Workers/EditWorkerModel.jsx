@@ -27,6 +27,7 @@ const EditWorkerModel = ({ editWorkerData, setEditWorker, refetch }) => {
       job_title: editWorkerData.job_title,
       image: editWorkerData.job_title ? "" : "oooo",
       sort: editWorkerData.sort,
+      meta_description: editWorkerData.meta_description || "",
     },
   });
 
@@ -178,6 +179,20 @@ const EditWorkerModel = ({ editWorkerData, setEditWorker, refetch }) => {
                   type=""
                   className="rounded-[8px] h-[48px]"
                   {...register("description", { required: true })}
+                />
+              </div>
+              <div className="w-full flex flex-col gap-2 flex-2">
+                <label
+                  htmlFor="Short_description"
+                  className="text-body text-[#80838E]"
+                >
+                  Meta Description
+                </label>
+                <Input
+                  id="meta_description"
+                  type="text"
+                  className="rounded-[8px] h-[48px]"
+                  {...register("meta_description", { required: true })}
                 />
               </div>
               <div className="w-full flex flex-col gap-2 flex-2">

@@ -7,8 +7,18 @@ import Fill_SA_API from "./Fill_SA_API";
 import Fill_Appeal_Narrative_API from "./Fill_Appeal_Narrative_API";
 import Fill_Sales_Questions_API from "./Fill_Sales_Questions_API";
 import Fill_All_PDFs_API from "./Fill_All_PDFs_API";
+import { PDFDownloadLink } from "@react-pdf/renderer";
+import AppealPDF from "@/AppealPDF";
+import { Download } from "lucide-react";
 
-const Fill_EDIT_API = ({ client_email, pin1, pin2, pin3, appeal_number, appeal_id }) => {
+const Fill_EDIT_API = ({
+  client_email,
+  pin1,
+  pin2,
+  pin3,
+  appeal_number,
+  appeal_id,
+}) => {
   const [exportAppealData, { data }] = useExportAppealDataMutation();
   const [hasData, setHasData] = useState(false);
 
@@ -53,6 +63,24 @@ const Fill_EDIT_API = ({ client_email, pin1, pin2, pin3, appeal_number, appeal_i
         hasData={hasData && appeal_number}
         data={data ? data.data : false}
       />
+      {data && (
+        <PDFDownloadLink
+          document={<AppealPDF editAppealData={data ? data.data : false} />}
+          fileName="CookCounty_Appeal.pdf"
+        >
+          {/* {({ loading }) => (loading ? "Loading PDF..." : "Export POA BOR")} */}
+          <div
+            className={`flex gap-2 !p-1 !bg-white !text-black items-center ${data.data ? "cursor-pointer hover:border-gray-400 rounded-[8px] overflow-hidden" : ""} border border-white `}
+          >
+            <Download color="#80838E" />{" "}
+            <p
+              className={`text-[16px] font-medium ${data.data ? "" : "text-[#80838E]"}`}
+            >
+              Board of Review Appeal
+            </p>
+          </div>
+        </PDFDownloadLink>
+      )}
     </div>
   );
 };

@@ -18,6 +18,7 @@ import {
   Star,
   Upload,
   Users,
+  FileQuestionMark,
 } from "lucide-react";
 
 export const TapsData = [
@@ -116,6 +117,11 @@ export const TapsData = [
         name: "Appeal Status",
         Icon: <Star className="text-inherit" />,
         url: "/settings/appeal-status",
+      },
+      {
+        name: "FAQs",
+        Icon: <FileQuestionMark className="text-inherit" />,
+        url: "/settings/faqs",
       },
     ],
   },
