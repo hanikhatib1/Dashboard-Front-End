@@ -143,7 +143,9 @@ const AddBlogModel = ({ refetch }) => {
             </div>
             <div className="w-full flex flex-col gap-2 flex-2">
               <label htmlFor="Description" className="text-body text-[#80838E]">
-                Description
+                Description ( write # before the phase to make it a h1 , write
+                ## before the phase to make it a h2, write ### before the phase
+                to make it a h3)
               </label>
               <Textarea
                 id="Description"

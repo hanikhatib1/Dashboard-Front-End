@@ -64,6 +64,26 @@ const EditModel = ({ editBlogData, setEditBlog, refetch }) => {
     setImage(editBlogData.image);
   }, [editBlogData]);
 
+  const MarkdownParser = ({ content }) => {
+    const lines = content.split("\n"); // نفصل السطور
+
+    const renderLine = (line, index) => {
+      if (line.startsWith("### ")) {
+        return <h3 key={index}>{line.replace(/^###\s/, "")}</h3>;
+      } else if (line.startsWith("## ")) {
+        return <h2 key={index}>{line.replace(/^##\s/, "")}</h2>;
+      } else if (line.startsWith("# ")) {
+        return <h1 key={index}>{line.replace(/^#\s/, "")}</h1>;
+      } else if (line.trim() === "") {
+        return <br key={index} />;
+      } else {
+        return <p key={index}>{line}</p>;
+      }
+    };
+
+    return <div>{lines.map(renderLine)}</div>;
+  };
+
   return (
     <Dialog
       defaultOpen={editBlogData}
@@ -121,6 +141,7 @@ const EditModel = ({ editBlogData, setEditBlog, refetch }) => {
                 {...register("short_description", { required: true })}
               />
             </div>
+            {/* <div>{MarkdownParser({ content: editBlogData.description })}</div> */}
             <div className="w-full flex flex-col gap-2 flex-2">
               <label htmlFor="Description" className="text-body text-[#80838E]">
                 Description

@@ -40,6 +40,7 @@ const AddPropertySale = ({ pin, refetch }) => {
       sale_buyer_name: null,
       sale_document_num: null,
       sale_type: "Warranty Deed",
+      mred: "",
     },
   });
 
@@ -47,7 +48,7 @@ const AddPropertySale = ({ pin, refetch }) => {
     const res = await addPropertySale({ ...data, pin });
     if ("data" in res) {
       setOpen(false);
-      if(refetch) refetch();
+      if (refetch) refetch();
       toast({
         title: "Property Sale Added",
         description: "Property Sale has been added successfully",
@@ -186,6 +187,17 @@ const AddPropertySale = ({ pin, refetch }) => {
                   </SelectGroup>
                 </SelectContent>
               </Select>
+            </div>
+            <div className="w-full md:w-[45%] flex flex-col gap-2">
+              <label htmlFor="buyer" className="text-body text-[#80838E]">
+                Mred{" "}
+              </label>
+              <Input
+                id="buyer"
+                type="text"
+                className="rounded-[8px] h-[48px]"
+                {...register("mred")}
+              />
             </div>
           </div>
 

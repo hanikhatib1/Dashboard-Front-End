@@ -98,6 +98,10 @@ export const purchaseDetailsColumns = [
     header: "Seller's Name ",
   },
   {
+    accessorKey: "mred",
+    header: "MRED",
+  },
+  {
     id: "actions",
     enableHiding: false,
     cell: ({ row }) => {

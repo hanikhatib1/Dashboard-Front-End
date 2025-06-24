@@ -40,10 +40,11 @@ const EditPropertySale = () => {
     defaultValues: {
       pin: id,
       sale_price: editPurchaseProperty.purchase_price,
-      sale_date: editPurchaseProperty.purchase_date,
+      sale_date: formatDate(editPurchaseProperty.purchase_date, "yyyy-MM-dd"),
       sale_seller_name: editPurchaseProperty.seller_Name,
       sale_buyer_name: editPurchaseProperty.buyer_name,
       sale_type: editPurchaseProperty.type_of_deed,
+      mred: editPurchaseProperty.mred,
     },
   });
 
@@ -187,6 +188,17 @@ const EditPropertySale = () => {
                   </SelectGroup>
                 </SelectContent>
               </Select>
+            </div>
+            <div className="w-full md:w-[45%] flex flex-col gap-2">
+              <label htmlFor="buyer" className="text-body text-[#80838E]">
+                Mred{" "}
+              </label>
+              <Input
+                id="buyer"
+                type="text"
+                className="rounded-[8px] h-[48px]"
+                {...register("mred")}
+              />
             </div>
           </div>
 
