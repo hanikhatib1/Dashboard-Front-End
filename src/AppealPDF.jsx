@@ -28,7 +28,7 @@ const AppealPDF = ({ editAppealData }) => (
           (Overvaluation / Recent Purchase)
         </Text>
         <View style={styles.section}>
-          <Text>Taxpayer: {editAppealData.sale_buyer_name}</Text>
+          <Text>Taxpayer: {editAppealData.client_name}</Text>
           <Text>
             Property Address: {editAppealData.property_address},{" "}
             {editAppealData.property_city}, {editAppealData.property_state},{" "}
