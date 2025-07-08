@@ -1,7 +1,5 @@
-import downloadPDF from "@/utiles/downloadPDF";
-import { Download, Trash2, X } from "lucide-react";
+import {  Trash2, X } from "lucide-react";
 import PropTypes from "prop-types";
-import React from "react";
 import { Link } from "react-router-dom";
 
 const DownloadedFileItem = ({

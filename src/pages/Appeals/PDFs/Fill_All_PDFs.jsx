@@ -2,7 +2,7 @@ import { Download } from "lucide-react";
 import { PDFDocument } from "pdf-lib";
 import POA_CCA from "../../../assets/PDFs/POA_CCA.pdf";
 import POA_BOR from "../../../assets/PDFs/POA_BOR.pdf";
-import Representation_Agreement from "../../../assets/PDFs/Representation_Agreement.pdf";
+import Representation_Agreement from "../../../assets/PDFs/Representation_Agreement2.pdf";
 import Appeal_Narrative from "../../../assets/PDFs/Appeal_Narrative_2.pdf";
 import Sales_Questions from "../../../assets/PDFs/salesquest.pdf";
 
@@ -149,19 +149,19 @@ const Fill_All_PDFs = ({ property, client, pin2, pin3, appeal_number }) => {
 
     setFieldPDF(
       form,
-      "Date",
+      "Date_RA",
       `${currentMonth + 1}/${currentDay}/${currentYear}`
     );
-    setFieldPDF(form, "Client", `${client?.first_name} ${client?.last_name}`);
-    setFieldPDF(form, "Property Address", `${property?.address}`);
+    setFieldPDF(form, "Client_RA", `${client?.first_name} ${client?.last_name}`);
+    setFieldPDF(form, "Property Address_RA", `${property?.address}`);
     setFieldPDF(
       form,
-      "PINs",
+      "PINs_RA",
       `${formatePin(property?.pin)} ${pin2 ? `,${formatePin(pin2)}` : ""} ${pin3 ? `,${formatePin(pin3)}` : ""}`
     );
     setFieldPDF(
       form,
-      "Mailing Address",
+      "Mailing Address_RA",
       `${client?.address}, ${client?.city}, ${client?.state}, ${client?.zip_code}`
     );
     await pdfDoc.save();

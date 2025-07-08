@@ -1,6 +1,7 @@
 import { Download } from "lucide-react";
 import { PDFDocument } from "pdf-lib";
-import Representation_Agreement from "../../../assets/PDFs/Representation_Agreement.pdf";
+import Representation_Agreement_2 from "../../../assets/PDFs/Representation_Agreement2.pdf";
+
 import PropTypes from "prop-types";
 import { setFieldPDF } from "@/utiles/setFieldPDF";
 import { formatePin } from "@/utiles/formatePin";
@@ -11,7 +12,7 @@ const Fill_SA = ({ property, client, pin3, pin2, appeal_number }) => {
   const hasData = hasProperty && hasClient && appeal_number;
   const fillForm = async () => {
     // Step 1: Load the PDF form.
-    const formUrl = Representation_Agreement;
+    const formUrl = Representation_Agreement_2;
     const formPdfBytes = await fetch(formUrl).then((res) => res.arrayBuffer());
     const pdfDoc = await PDFDocument.load(formPdfBytes);
     // Step 2: Retrieve the form fields.
@@ -20,22 +21,27 @@ const Fill_SA = ({ property, client, pin3, pin2, appeal_number }) => {
     const currentYear = new Date().getFullYear();
     const currentMonth = new Date().getMonth();
     const currentDay = new Date().getDate();
+    for (let i = 0; i < fildes.length; i++) {
+      const field = fildes[i];
+      console.log("Field Name:", field.getName());
+      // You can also log other properties of the field if needed
+    }
 
     setFieldPDF(
       form,
-      "Date",
+      "Date_RA",
       `${currentMonth + 1}/${currentDay}/${currentYear}`
     );
-    setFieldPDF(form, "Client", `${client?.first_name} ${client?.last_name}`);
-    setFieldPDF(form, "Property Address", `${property?.address}`);
+    setFieldPDF(form, "Client_RA", `${client?.first_name} ${client?.last_name}`);
+    setFieldPDF(form, "Property Address_RA", `${property?.address}`);
     setFieldPDF(
       form,
-      "PINs",
+      "PINs_RA",
       `${formatePin(property?.pin)} ${pin2 ? `,${formatePin(pin2)}` : ""} ${pin3 ? `,${formatePin(pin3)}` : ""}`
     );
     setFieldPDF(
       form,
-      "Mailing Address",
+      "Mailing Address_RA",
       `${client?.address}, ${client?.city}, ${client?.state}, ${client?.zip_code}`
     );
 
