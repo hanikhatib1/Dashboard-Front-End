@@ -1,5 +1,5 @@
 import { PDFDocument } from "pdf-lib";
-import Client_Forms from "../../../assets/PDFs/Client_Forms.pdf";
+import Client_Forms from "../../../assets/PDFs/Client_Forms4.pdf";
 import { setFieldPDF } from "@/utiles/setFieldPDF";
 import { formatePin } from "@/utiles/formatePin";
 import { formatPhoneNumber } from "@/utiles/formatPhoneNumber";
@@ -69,6 +69,9 @@ const Fill_Form_Client = ({
       const pdfDoc = await PDFDocument.load(formPdfBytes);
       // Step 2: Retrieve the form fields.
       const form = pdfDoc.getForm();
+      for (let i = 0; i < form.getFields().length; i++) {
+        console.log("Field Name:", form.getFields()[i].getName());
+      }
 
       setFieldPDF(form, "Appeal Year", currentYear.toString());
       setFieldPDF(
@@ -145,8 +148,6 @@ const Fill_Form_Client = ({
       setFieldPDF(form, "Text3", res.data.data.property_state);
       setFieldPDF(form, "Text6", `${currentYear}`);
       setFieldPDF(form, "Text7", "IL");
-
-      /* ////////////////////// */
 
       form.getTextField("PINs 1_BOR").setFontSize(10);
       form.getTextField("PINs 2_BOR").setFontSize(10);
