@@ -1,5 +1,5 @@
 import { PDFDocument } from "pdf-lib";
-import Client_Forms from "../../../assets/PDFs/Client_Forms4.pdf";
+import Client_Forms from "../../../assets/PDFs/Client_Forms7.pdf";
 import { setFieldPDF } from "@/utiles/setFieldPDF";
 import { formatePin } from "@/utiles/formatePin";
 import { formatPhoneNumber } from "@/utiles/formatPhoneNumber";
@@ -16,6 +16,7 @@ import {
   setDocumentsStatusAppealModel,
   setFormsAppeal,
 } from "@/redux/features/AppealSlice";
+import { capitalizeName } from "@/utiles/capitalizeName";
 
 const Fill_Form_Client = ({
   client_email,
@@ -69,9 +70,9 @@ const Fill_Form_Client = ({
       const pdfDoc = await PDFDocument.load(formPdfBytes);
       // Step 2: Retrieve the form fields.
       const form = pdfDoc.getForm();
-      for (let i = 0; i < form.getFields().length; i++) {
+      /* for (let i = 0; i < form.getFields().length; i++) {
         console.log("Field Name:", form.getFields()[i].getName());
-      }
+      } */
 
       setFieldPDF(form, "Appeal Year", currentYear.toString());
       setFieldPDF(
@@ -82,20 +83,28 @@ const Fill_Form_Client = ({
       setFieldPDF(
         form,
         "Property Street Address",
-        res.data?.data.property_address
+        capitalizeName(res.data?.data.property_address)
       );
       setFieldPDF(form, "Appeal Number", res.data?.data.appeal_number);
 
-      setFieldPDF(form, "City", res.data?.data.property_city);
+      setFieldPDF(form, "City", capitalizeName(res.data?.data.property_city));
       setFieldPDF(form, "Zip", res.data?.data.property_zipcode);
-      setFieldPDF(form, "Township", res.data.data.property_township);
-      setFieldPDF(form, "Owner I Taxpayer", `${res.data?.data.client_name}`);
+      setFieldPDF(
+        form,
+        "Township",
+        capitalizeName(res.data.data.property_township)
+      );
+      setFieldPDF(
+        form,
+        "Owner I Taxpayer",
+        `${capitalizeName(res.data?.data.client_name)}`
+      );
       setFieldPDF(
         form,
         "Owners Mailing Address",
-        res.data?.data.client_address
+        capitalizeName(res.data?.data.client_address)
       );
-      setFieldPDF(form, "City_2", res.data?.data.client_city);
+      setFieldPDF(form, "City_2", capitalizeName(res.data?.data.client_city));
       setFieldPDF(form, "Zip_2", res.data?.data.client_zipcode);
       setFieldPDF(
         form,
@@ -111,12 +120,16 @@ const Fill_Form_Client = ({
         "whose name appears on the appeal form to represent me before the Assessor relative to the",
         "Hani Khatib"
       );
-      setFieldPDF(form, "Print Name", `${res.data?.data.client_name}`);
       setFieldPDF(
+        form,
+        "Print Name",
+        `${capitalizeName(res.data?.data.client_name)}`
+      );
+      /* setFieldPDF(
         form,
         "Date",
         `${currentMonth + 1}/${currentDay}/${currentYear}`
-      );
+      ); */
       setFieldPDF(
         form,
         "Daytime Phone Number_2",
@@ -124,7 +137,7 @@ const Fill_Form_Client = ({
           ? formatPhoneNumber(res.data?.data.client_phone)
           : ""
       );
-      setFieldPDF(form, "Firm Name", "Khatib Law, LLC");
+      //setFieldPDF(form, "Firm Name", "Khatib Law, LLC");
       setFieldPDF(form, "Street Address", "6600 W. College Drive, Suite 207");
       setFieldPDF(form, "City_3", "Palos Heights");
       setFieldPDF(form, "Zip_3", "60463");
@@ -134,7 +147,7 @@ const Fill_Form_Client = ({
       setFieldPDF(
         form,
         "being first duly sworn on oath state",
-        `${res.data?.data.client_name}`
+        `${capitalizeName(res.data?.data.client_name)}`
       );
       setFieldPDF(
         form,
@@ -144,7 +157,7 @@ const Fill_Form_Client = ({
 
       const townShip_filed = form.getTextField("Text2");
       townShip_filed.setFontSize(8);
-      townShip_filed.setText(res.data?.data.property_township);
+      townShip_filed.setText(capitalizeName(res.data?.data.property_township));
       setFieldPDF(form, "Text3", res.data.data.property_state);
       setFieldPDF(form, "Text6", `${currentYear}`);
       setFieldPDF(form, "Text7", "IL");
@@ -164,10 +177,22 @@ const Fill_Form_Client = ({
         `${res.data.data.pin3 ? `${formatePin(res.data.data.pin3)}` : ""}`
       );
       setFieldPDF(form, "undefined_BOR", res.data?.data.property_zipcode);
-      setFieldPDF(form, "City_BOR", res.data?.data.property_city);
+      setFieldPDF(
+        form,
+        "City_BOR",
+        capitalizeName(res.data?.data.property_city)
+      );
       setFieldPDF(form, "ZIP Code_BOR", res.data?.data.property_state);
-      setFieldPDF(form, "State_BOR", res.data?.data.property_address);
-      setFieldPDF(form, "Township", res.data.data.property_township);
+      setFieldPDF(
+        form,
+        "State_BOR",
+        capitalizeName(res.data?.data.property_address)
+      );
+      setFieldPDF(
+        form,
+        "Township",
+        capitalizeName(res.data.data.property_township)
+      );
       setFieldPDF(
         form,
         "For assessment year 20 1_BOR",
@@ -176,32 +201,42 @@ const Fill_Form_Client = ({
       setFieldPDF(
         form,
         "PrintNameofaffiant_BOR",
-        `${res.data?.data.client_name}`
+        `${capitalizeName(res.data?.data.client_name)}`
       );
       setFieldPDF(
+        form,
+        "Township_BOR",
+        capitalizeName(res.data.data.property_township)
+      );
+      /* setFieldPDF(
         form,
         "Date",
         `${currentMonth + 1}/${currentDay}/${currentYear}`
-      );
-      setFieldPDF(
+      ); */
+      /*  setFieldPDF(
         form,
         "Date_2",
         `${currentMonth + 1}/${currentDay}/${currentYear}`
-      );
+      ); */
       /* setFieldPDF(form, "BOR Atty Code", "11352"); */
 
       /* /////////////////////////////// */
 
-      setFieldPDF(
+      /* setFieldPDF(
         form,
         "Date",
         `${currentMonth + 1}/${currentDay}/${currentYear}`
+      ); */
+
+      setFieldPDF(
+        form,
+        "Client_RA",
+        ` ${capitalizeName(res.data?.data.client_name)}`
       );
-      setFieldPDF(form, "Client_RA", ` ${res.data?.data.client_name}`);
       setFieldPDF(
         form,
         "Property Address_RA",
-        `${res.data?.data.client_address}`
+        `${capitalizeName(res.data?.data.client_address)}`
       );
       setFieldPDF(
         form,
@@ -216,12 +251,17 @@ const Fill_Form_Client = ({
       setFieldPDF(
         form,
         "Mailing Address_RA",
-        `${formatPhoneNumber(res.data?.data.property_address)}`
+        `${formatPhoneNumber(capitalizeName(res.data?.data.property_address))}`
       );
 
       const pdfBytes = await pdfDoc.save();
 
       const blob = new Blob([pdfBytes], { type: "application/pdf" });
+      /* const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = `Report.pdf`;
+      link.click(); */
 
       const formData = new FormData();
       formData.append(
@@ -229,7 +269,7 @@ const Fill_Form_Client = ({
         blob,
         `${res.data?.data.client_name}-Form.pdf`
       );
-      formData.append("user_name", res.data?.data.client_name);
+      formData.append("user_name", capitalizeName(res.data?.data.client_name));
       formData.append("signer_email", res.data?.data.client_email);
       formData.append("appeal_id", formsAppeal.id);
 
