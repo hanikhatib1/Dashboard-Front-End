@@ -257,13 +257,13 @@ const Fill_Form_Client = ({
       const pdfBytes = await pdfDoc.save();
 
       const blob = new Blob([pdfBytes], { type: "application/pdf" });
-      const url = URL.createObjectURL(blob);
+     /*  const url = URL.createObjectURL(blob);
       const link = document.createElement("a");
       link.href = url;
       link.download = `Report.pdf`;
-      link.click();
+      link.click(); */
 
-      /*  const formData = new FormData();
+       const formData = new FormData();
       formData.append(
         "document",
         blob,
@@ -288,7 +288,7 @@ const Fill_Form_Client = ({
           description: "Error sending the form",
           variant: "error",
         });
-      } */
+      }
       setIsLoading(false);
     }
   };
