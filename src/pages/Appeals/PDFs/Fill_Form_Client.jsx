@@ -70,9 +70,9 @@ const Fill_Form_Client = ({
       const pdfDoc = await PDFDocument.load(formPdfBytes);
       // Step 2: Retrieve the form fields.
       const form = pdfDoc.getForm();
-      /* for (let i = 0; i < form.getFields().length; i++) {
+      for (let i = 0; i < form.getFields().length; i++) {
         console.log("Field Name:", form.getFields()[i].getName());
-      } */
+      }
 
       setFieldPDF(form, "Appeal Year", currentYear.toString());
       setFieldPDF(
@@ -162,6 +162,10 @@ const Fill_Form_Client = ({
       setFieldPDF(form, "Text6", `${currentYear}`);
       setFieldPDF(form, "Text7", "IL");
 
+      /* ========================== */
+
+      form.getCheckBox("Check Box2_BOR").check();
+      /* ============ */
       form.getTextField("PINs 1_BOR").setFontSize(10);
       form.getTextField("PINs 2_BOR").setFontSize(10);
       form.getTextField("PINs 3_BOR").setFontSize(10);
@@ -193,11 +197,7 @@ const Fill_Form_Client = ({
         "Township",
         capitalizeName(res.data.data.property_township)
       );
-      setFieldPDF(
-        form,
-        "For assessment year 20 1_BOR",
-        "Hani Khatib / Khatib Law, LLC"
-      );
+      setFieldPDF(form, "For assessment year 20 1_BOR", "Hani Khatib");
       setFieldPDF(
         form,
         "PrintNameofaffiant_BOR",
@@ -236,7 +236,7 @@ const Fill_Form_Client = ({
       setFieldPDF(
         form,
         "Property Address_RA",
-        `${capitalizeName(res.data?.data.client_address)}`
+        `${capitalizeName(res.data?.data.property_address)}, ${capitalizeName(res.data?.data.property_city)}, ${res.data?.data.property_state}, ${res.data?.data.property_zipcode}`
       );
       setFieldPDF(
         form,
@@ -251,19 +251,19 @@ const Fill_Form_Client = ({
       setFieldPDF(
         form,
         "Mailing Address_RA",
-        `${formatPhoneNumber(capitalizeName(res.data?.data.property_address))}`
+        `${capitalizeName(res.data?.data.client_address)}, ${capitalizeName(res.data?.data.client_city)}, ${res.data?.data.client_state}, ${res.data?.data.client_zipcode}`
       );
 
       const pdfBytes = await pdfDoc.save();
 
       const blob = new Blob([pdfBytes], { type: "application/pdf" });
-      /* const url = URL.createObjectURL(blob);
+      const url = URL.createObjectURL(blob);
       const link = document.createElement("a");
       link.href = url;
       link.download = `Report.pdf`;
-      link.click(); */
+      link.click();
 
-      const formData = new FormData();
+      /*  const formData = new FormData();
       formData.append(
         "document",
         blob,
@@ -288,7 +288,7 @@ const Fill_Form_Client = ({
           description: "Error sending the form",
           variant: "error",
         });
-      }
+      } */
       setIsLoading(false);
     }
   };
