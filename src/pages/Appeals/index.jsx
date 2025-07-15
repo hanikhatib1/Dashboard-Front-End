@@ -15,12 +15,16 @@ import TownshipDropdown from "./TownshipDropdown";
 import SortBy from "./SortBy";
 import DeleteAppealModel from "./DeleteAppealModel";
 import AddInvoice from "../Invoices/AddInvoice";
-import { addAppealToInvoice } from "@/redux/features/AppealSlice";
+import {
+  addAppealToInvoice,
+  setFormsAppeal,
+} from "@/redux/features/AppealSlice";
 import InvoicesModel from "./InvoicesModel";
 import EditInvoice from "../Invoices/EditInvoice";
 import DeleteInvoiceModel from "../Invoices/DeleteInvoiceModel";
 import SendFormModel from "./SendFormModel";
 import DocumentsStatusAppealModel from "./DocumentsStatusAppealModel";
+import SortBySignature from "./SortBySignature";
 
 const Appeals = () => {
   const [searchText, setSearchText] = useState("");
@@ -33,6 +37,7 @@ const Appeals = () => {
     appealInvoiceDetails,
     formsAppeal,
     documentsStatusAppealModel,
+    formsAppealArray,
   } = useSelector((state) => state.appeals);
   const { editInvoiceData, deleteInvoiceData } = useSelector(
     (state) => state.invoices
@@ -44,11 +49,14 @@ const Appeals = () => {
     name: "Date",
     value: "-id",
   });
+  const [sortBySignature, setSortBySignature] = useState(false);
 
   const fetchData = useCallback(async () => {
+    console.log("sortBySignature", sortBySignature);
     const filterObject = {
       appeal_status_id: status.id,
       township_id: townshipId,
+      signature_sent: sortBySignature,
     };
     Object.keys(filterObject).forEach((key) => {
       if (!filterObject[key]) delete filterObject[key];
@@ -56,12 +64,20 @@ const Appeals = () => {
     await getAppeals(
       `search=${searchText}&sort=${sortBy.value}&limit=20&page=${page}&filters=${JSON.stringify(filterObject)}`
     );
-  }, [status.id, townshipId, getAppeals, searchText, sortBy, page]);
+  }, [
+    status.id,
+    townshipId,
+    getAppeals,
+    searchText,
+    sortBy,
+    page,
+    sortBySignature,
+  ]);
 
   useEffect(() => {
     fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchText, status, page, townshipId, sortBy]);
+  }, [searchText, status, page, townshipId, sortBy, sortBySignature]);
 
   return (
     <div className="flex flex-col gap-8">
@@ -82,7 +98,16 @@ const Appeals = () => {
               />
             </div>
           </div>
-          <NewAppeals fetchData={fetchData} hasIcon={false} />
+          <div className="flex gap-4 items-center">
+            <button
+              disabled={formsAppealArray.length === 0}
+              className={`bg-white border border-primary rounded-[12px] text-black px-2 py-2 ${formsAppealArray.length ? "" : "text-opacity-15 border-opacity-15"}`}
+              onClick={() => dispatch(setFormsAppeal(true))}
+            >
+              Send Forms
+            </button>
+            <NewAppeals fetchData={fetchData} hasIcon={false} />
+          </div>
         </div>
         <div className="flex gap-4">
           <AppealStatusSelect
@@ -93,6 +118,10 @@ const Appeals = () => {
           />
           <TownshipDropdown setTownshipId={setTownshipId} />
           <SortBy setSortBy={setSortBy} sortBy={sortBy} />
+          <SortBySignature
+            sortBySignature={sortBySignature}
+            setSortBySignature={setSortBySignature}
+          />
         </div>
         <div className="rounded-[8px] flex flex-col">
           {isError ? (

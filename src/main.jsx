@@ -8,6 +8,7 @@ import { store } from "./redux/store.js";
 import { Toaster } from "./components/ui/toaster.jsx";
 import { PDFDownloadLink, PDFViewer } from "@react-pdf/renderer";
 import AppealPDF from "./AppealPDF.jsx";
+import AppealPDF2 from "./AppealPDF2.jsx";
 
 const sampleData = {
   taxpayer: "Carmen Servin",
@@ -31,16 +32,16 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     <BrowserRouter>
       <Provider store={store}>
         <App />
-        <Toaster className="!bg-white" />
+         <Toaster className="!bg-white" />
         {/* <PDFDownloadLink
           document={<AppealPDF data={sampleData} />}
           fileName="CookCounty_Appeal.pdf"
         >
           {({ loading }) => (loading ? "Loading PDF..." : "Download PDF")}
         </PDFDownloadLink> */}
-        {/* <div className="border h-[100vh] w-full">
+       {/*  <div className="border h-[100vh] w-full">
           <PDFViewer width="100%" height="100%">
-            <AppealPDF data={sampleData} />
+            <AppealPDF2 />
           </PDFViewer>
         </div> */}
       </Provider>

@@ -13,7 +13,6 @@ import { Link } from "react-router-dom";
 import Fill_Form_Client from "./PDFs/Fill_Form_Client";
 import { useGetAppealDocumentsStatusMutation } from "@/redux/apiSlice";
 import { useEffect } from "react";
-import { formatDate } from "date-fns";
 
 const DocumentsStatusAppealModel = () => {
   const { documentsStatusAppealModel } = useSelector((state) => state.appeals);
@@ -40,9 +39,7 @@ const DocumentsStatusAppealModel = () => {
         <DialogTitle>Signature Status</DialogTitle>
       </DialogHeader>
 
-      <DialogContent
-        className="sm:max-w-[525px] bg-white !rounded-[8px]"
-      >
+      <DialogContent className="sm:max-w-[525px] bg-white !rounded-[8px]">
         <DialogHeader>
           <DialogTitle>Signature Status</DialogTitle>
         </DialogHeader>
@@ -73,8 +70,9 @@ const DocumentsStatusAppealModel = () => {
                 <div className="flex justify-between items-center">
                   <p>Last Update Date :</p>
                   <p className=" text-[#80838E] px-2 py-1 rounded-[8px]">
-                    {data.email_statuses[data.email_statuses.length - 1].last_reaction_at
-
+                    {
+                      data.email_statuses[data.email_statuses.length - 1]
+                        .last_reaction_at
                     }
                   </p>
                 </div>
@@ -97,6 +95,15 @@ const DocumentsStatusAppealModel = () => {
                       pin2={documentsStatusAppealModel.pin2}
                       pin3={documentsStatusAppealModel.pin3}
                       client_email={documentsStatusAppealModel.client_email}
+                      appeals={[
+                        {
+                          pin1: documentsStatusAppealModel.pin1,
+                          pin2: documentsStatusAppealModel.pin2,
+                          pin3: documentsStatusAppealModel.pin3,
+                          client_email: documentsStatusAppealModel.client_email,
+                          id: documentsStatusAppealModel?.id,
+                        },
+                      ]}
                       isOpenToSendDocument={true}
                       text="Send Form again"
                       appealId={documentsStatusAppealModel?.id}

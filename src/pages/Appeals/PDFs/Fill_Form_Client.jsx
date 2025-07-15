@@ -24,9 +24,11 @@ const Fill_Form_Client = ({
   pin2,
   pin3,
   text,
+  appeals = [],
   className,
-  isOpenToSendDocument = false,
   appealId,
+  isOpenToSendDocument = false,
+  selectedPDF,
 }) => {
   const currentYear = new Date().getFullYear();
   const currentMonth = new Date().getMonth();
@@ -42,15 +44,16 @@ const Fill_Form_Client = ({
     useOpenToSendDocumentMutation();
   const dispatch = useDispatch();
 
-  const fillPOC_CCA = async () => {
+  const fillPOC_CCA = async (appeal) => {
     setIsLoading(true);
     const res = await exportAppealData({
-      client_email,
-      pin1,
-      pin2,
-      pin3,
-      appeal_id: appealId,
+      client_email: appeal.client_email,
+      pin1: appeal.pin1,
+      pin2: appeal.pin2,
+      pin3: appeal.pin3,
+      appeal_id: appeal.id,
     });
+    console.log("res", res);
     if ("error" in res) {
       toast({
         title: "Error",
@@ -243,35 +246,48 @@ const Fill_Form_Client = ({
         "PINs_RA",
         `${formatePin(res.data?.data.pin1)} ${res.data?.data.pin2 ? `,${formatePin(res.data?.data.pin2)}` : ""} ${res.data?.data.pin3 ? `,${formatePin(res.data?.data.pin3)}` : ""}`
       );
-      setFieldPDF(
+      /* setFieldPDF(
         form,
         "Date_RA",
         `${currentMonth + 1}/${currentDay}/${currentYear}`
-      );
+      ); */
       setFieldPDF(
         form,
         "Mailing Address_RA",
         `${capitalizeName(res.data?.data.client_address)}, ${capitalizeName(res.data?.data.client_city)}, ${res.data?.data.client_state}, ${res.data?.data.client_zipcode}`
       );
 
-      const pdfBytes = await pdfDoc.save();
+      const filledPdfBytes = await pdfDoc.save();
 
-      const blob = new Blob([pdfBytes], { type: "application/pdf" });
-     /*  const url = URL.createObjectURL(blob);
+      const filledPdfDoc = await PDFDocument.load(filledPdfBytes);
+
+      const totalPages = filledPdfDoc.getPageCount();
+      const newPdfDoc = await PDFDocument.create();
+
+      const pagesToCopy = selectedPDF?.pages || [0, 4];
+      const copiedPages = await newPdfDoc.copyPages(filledPdfDoc, pagesToCopy);
+
+      copiedPages.forEach((page) => newPdfDoc.addPage(page));
+
+      const finalPdfBytes = await newPdfDoc.save();
+      const blob = new Blob([finalPdfBytes], { type: "application/pdf" });
+      /* const url = URL.createObjectURL(blob);
       const link = document.createElement("a");
       link.href = url;
       link.download = `Report.pdf`;
-      link.click(); */
-
-       const formData = new FormData();
+      link.click();
+ */
+      const formData = new FormData();
       formData.append(
         "document",
         blob,
         `${res.data?.data.client_name}-Form.pdf`
       );
+      console.log("res res", res);
       formData.append("user_name", capitalizeName(res.data?.data.client_name));
       formData.append("signer_email", res.data?.data.client_email);
-      formData.append("appeal_id", formsAppeal.id);
+      formData.append("appeal_id", appeal.id);
+      formData.append("type", selectedPDF.key);
 
       const res2 = await sendForm(formData);
       if ("data" in res2) {
@@ -314,9 +330,15 @@ const Fill_Form_Client = ({
 
   return (
     <div
-      onClick={() =>
-        isOpenToSendDocument ? handleOpenToSendDocument() : fillPOC_CCA()
-      }
+      onClick={() => {
+        if (isOpenToSendDocument) handleOpenToSendDocument();
+        else {
+          console.log("appeals", appeals);
+          appeals.map((a) => {
+            fillPOC_CCA(a);
+          });
+        }
+      }}
       disabled={isLoading || openToSendDocumentIsLoading}
       className={`${className} bg-primary rounded-[8px]  text-white flex items-center justify-center cursor-pointer px-4`}
     >

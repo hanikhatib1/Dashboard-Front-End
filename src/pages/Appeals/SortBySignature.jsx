@@ -9,25 +9,22 @@ import {
 import PropTypes from "prop-types";
 
 const SortByData = [
-  { name: "Date", value: "-id" },
-  { name: "Name", value: "client_first_name" },
+  { name: "Yes", value: true },
+  { name: "No", value: false },
 ];
 
-const SortBy = ({ setSortBy, sortBy }) => {
+const SortBySignature = ({ setSortBySignature, sortBySignature }) => {
   return (
     <div className={`w-full flex flex-col gap-2 flex-2 h-[40px] sm:w-[20%]`}>
       <Select
         className="rounded-[8px] sm:w-[calc(50%-16px)] w-full"
-        onValueChange={(value) =>
-          setSortBy({
-            name: SortByData.find((item) => item.value === value).name,
-            value: value,
-          })
-        }
+        onValueChange={(value) => setSortBySignature(value)}
       >
         <SelectTrigger className="rounded-[8px] h-[48px]">
-          <SelectValue placeholder={`Sort By : ${sortBy.name}`}>
-            Sort By : {sortBy.name}
+          <SelectValue
+            placeholder={`Sort By Signature Sent: ${sortBySignature ? "Yes" : "No"}`}
+          >
+            Sort By Signature Sent : {sortBySignature ? "Yes" : "No"}
           </SelectValue>
         </SelectTrigger>
         <SelectContent className="rounded-[8px] bg-white ">
@@ -48,9 +45,9 @@ const SortBy = ({ setSortBy, sortBy }) => {
   );
 };
 
-SortBy.propTypes = {
-  setSortBy: PropTypes.func,
-  sortBy: PropTypes.object,
+SortBySignature.propTypes = {
+  setSortBySignature: PropTypes.func,
+  sortBySignature: PropTypes.object,
 };
 
-export default SortBy;
+export default SortBySignature;

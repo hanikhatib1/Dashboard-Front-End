@@ -11,11 +11,44 @@ import {
 import { setFormsAppeal } from "@/redux/features/AppealSlice";
 import { useDispatch, useSelector } from "react-redux";
 import Fill_Form_Client from "./PDFs/Fill_Form_Client";
+import { useState } from "react";
+
+const whichPDF = [
+  {
+    id: 1,
+    key: "all",
+    name: "All Forms",
+    pages: [0, 1, 2, 3, 4],
+  },
+  {
+    id: 2,
+    key: "cca",
+    name: "Attorney / Representative Authorization Form",
+    pages: [0, 1],
+    type: "cca",
+  },
+  {
+    id: 3,
+    key: "bor",
+    name: "Attorney Authorization Form",
+    pages: [2],
+  },
+  {
+    id: 4,
+    key: "ra",
+    name: "Representation Agreement",
+    pages: [3, 4],
+  },
+];
 
 const SendFormModel = () => {
   const dispatch = useDispatch();
-  const { formsAppeal } = useSelector((state) => state.appeals);
-  console.log("formsAppeal", formsAppeal);
+  const { formsAppeal, formsAppealArray } = useSelector(
+    (state) => state.appeals
+  );
+
+  const [selectedPDF, setSelectedPDF] = useState(whichPDF[0]);
+  console.log("formsAppealArray", formsAppealArray);
   return (
     <Dialog
       open={formsAppeal}
@@ -31,6 +64,20 @@ const SendFormModel = () => {
           <DialogDescription>
             Are you sure you want to send forms for this appeal?
           </DialogDescription>
+          <div className="flex flex-col gap-2">
+            {whichPDF.map((pdf) => (
+              <Button
+                key={pdf.id}
+                variant={selectedPDF.key === pdf.key ? "default" : "outline"}
+                onClick={() => setSelectedPDF(pdf)}
+                className={`!capitalize w-full justify-start ${
+                  selectedPDF.key === pdf.key ? "bg-primary text-white" : ""
+                }`}
+              >
+                {pdf.name}
+              </Button>
+            ))}
+          </div>
         </DialogHeader>
         <DialogFooter>
           <Fill_Form_Client
@@ -38,7 +85,21 @@ const SendFormModel = () => {
             pin2={formsAppeal.pin2}
             pin3={formsAppeal.pin3}
             client_email={formsAppeal.client_email}
+            appeals={
+              typeof formsAppeal === "object"
+                ? [
+                    {
+                      pin1: formsAppeal.pin1,
+                      pin2: formsAppeal.pin2,
+                      pin3: formsAppeal.pin3,
+                      client_email: formsAppeal.client_email,
+                      id: formsAppeal?.id,
+                    },
+                  ]
+                : formsAppealArray
+            }
             appealId={formsAppeal?.id}
+            selectedPDF={selectedPDF}
           />
           <Button
             type="submit"

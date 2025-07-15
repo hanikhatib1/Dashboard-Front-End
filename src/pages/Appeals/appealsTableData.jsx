@@ -12,15 +12,60 @@ import {
   setDocumentsStatusAppealModel,
   setEditAppealData,
   setFormsAppeal,
+  setFormsAppealArray,
 } from "@/redux/features/AppealSlice";
 import { reverseDate } from "@/utiles/revserDate";
 import { MoreHorizontal } from "lucide-react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import Fill_Form_Client from "./PDFs/Fill_Form_Client";
 import { formatPhoneNumber } from "@/utiles/formatPhoneNumber";
 
 export const appealsColumns = [
+  // add check box
+  {
+    id: "select",
+    /* header: ({ table }) => (
+      <div className="flex items-center justify-center">
+        <input
+          type="checkbox"
+          className="cursor-pointer"
+          onChange={table.getToggleAllRowsSelectedHandler()}
+          checked={table.getIsAllRowsSelected()}
+        />
+      </div>
+    ), */
+    cell: ({ row }) => {
+      const dispatch = useDispatch();
+      const { formsAppealArray } = useSelector((state) => state.appeals);
+
+      return (
+        <div className="flex items-center justify-center">
+          <input
+            type="checkbox"
+            className="cursor-pointer"
+            disabled={
+              row.original.signature_sent || !row.original.appeal_number
+            }
+            checked={formsAppealArray.find((v) => v.id === row.original.id)}
+            onChange={() => {
+              const newFormsAppeal = [...formsAppealArray];
+              if (newFormsAppeal.find((v) => v.id === row.original.id)) {
+                // If the appeal is already selected, remove it
+                const updatedFormsAppeal = newFormsAppeal.filter(
+                  (v) => v.id !== row.original.id
+                );
+                dispatch(setFormsAppealArray(updatedFormsAppeal));
+              } else {
+                newFormsAppeal.push(row.original);
+                dispatch(setFormsAppealArray(newFormsAppeal));
+              }
+            }}
+          />
+        </div>
+      );
+    },
+  },
   {
     accessorKey: "appeal_number",
     header: "ID",
