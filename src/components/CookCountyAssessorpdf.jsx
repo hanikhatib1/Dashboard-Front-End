@@ -99,6 +99,7 @@ const CookCountyAssessorpdf = ({ reportData, clientName }) => {
             foot
           </Text>
           <Text style={{ fontWeight: "bold", color: "#405E8D" }}>
+            {" "}
             Requested Relief:
           </Text>
           <Text style={{ marginTop: 5 }}>
@@ -117,10 +118,6 @@ const CookCountyAssessorpdf = ({ reportData, clientName }) => {
           <Text style={{ marginTop: 5, marginBottom: 5 }}>
             Respectfully submitted,
           </Text>
-          <Text style={{ marginTop: 5, marginBottom: 5 }}>
-            Attorney for the Taxpayer
-          </Text>
-          <Text style={{ marginTop: 5 }}>Attorney Code: 11352</Text>
         </View>
         <View style={styles.section}>
           <Text>Attorney for Taxpayer</Text>

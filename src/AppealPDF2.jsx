@@ -102,6 +102,7 @@ const AppealPDF2 = ({ editAppealData, stateNumber }) => {
           </Text>
 
           <Text style={{ fontWeight: "bold", color: "#405E8D" }}>
+            {" "}
             Requested Relief:
           </Text>
           <Text style={{ marginTop: 5 }}>
