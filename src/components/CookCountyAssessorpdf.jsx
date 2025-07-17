@@ -136,13 +136,14 @@ const CookCountyAssessorpdf = ({ reportData, clientName }) => {
           <Text style={{ marginTop: 5 }}>
             Exhibit A: Recent photo of subject property attached below
           </Text>
-          <Image
-            src={reportData.property_image}
+          <img
+            src={reportData?.data?.properties[0]?.property_image}
+            alt="Property"
             style={{
               width: "100%",
               height: 300,
               marginTop: 10,
-              objectFit: "cover",
+              objectFit: "cover"
             }}
           />
         </View>
