@@ -136,14 +136,13 @@ const CookCountyAssessorpdf = ({ reportData, clientName }) => {
           <Text style={{ marginTop: 5 }}>
             Exhibit A: Recent photo of subject property attached below
           </Text>
-          <img
-            src="https://maps.googleapis.com/maps/api/streetview?size=500x300&location=7636%20STICKNEY%20AVE%20BRIDGEVIEW%2C%20IL%2060455&key=AIzaSyB9OOQTWvViYtayTHY5orSSOx_lwacOD4o"
-            alt="Property"
+          <Image
+            src={reportData.property_image}
             style={{
               width: "100%",
               height: 300,
               marginTop: 10,
-              objectFit: "cover"
+              objectFit: "cover",
             }}
           />
         </View>
