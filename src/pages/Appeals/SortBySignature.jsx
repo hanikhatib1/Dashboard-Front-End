@@ -23,7 +23,7 @@ const SortBySignature = ({ setSortBySignature, sortBySignature }) => {
       >
         <SelectTrigger className="rounded-[8px] h-[48px]">
           <SelectValue
-            placeholder={`Sort By Signature Sent: ${sortBySignature ? "Yes" : "No"}`}
+            placeholder={`Sort By Signature Sent: ${sortBySignature === "none" ? sortBySignature : sortBySignature ? "Yes" : "No"}`}
           >
             Sort By Signature Sent : {sortBySignature ? "Yes" : "No"}
           </SelectValue>

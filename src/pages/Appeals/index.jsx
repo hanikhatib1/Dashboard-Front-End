@@ -58,9 +58,9 @@ const Appeals = () => {
       signature_sent: sortBySignature,
     };
     Object.keys(filterObject).forEach((key) => {
-      if (sortBySignature === false) return;
       if (!filterObject[key] || filterObject[key] === "none")
         delete filterObject[key];
+      if (sortBySignature === false) filterObject.signature_sent = false;
     });
 
     await getAppeals(
