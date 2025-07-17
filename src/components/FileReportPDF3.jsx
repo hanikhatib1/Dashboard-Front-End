@@ -138,7 +138,7 @@ const FileReportPDF3 = ({ mainPin, pins }) => {
     setFieldPDF(
       form,
       "Suggested building assessed",
-      `$ ${formattedNumber(reportData?.data.building_area_in_sf)}`
+      `$ ${formattedNumber(reportData?.data.suggested_building_assessed_value, true)}`
     );
     setFieldPDF(
       form,

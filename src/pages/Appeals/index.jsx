@@ -49,18 +49,20 @@ const Appeals = () => {
     name: "Date",
     value: "-id",
   });
-  const [sortBySignature, setSortBySignature] = useState(false);
+  const [sortBySignature, setSortBySignature] = useState("none");
 
   const fetchData = useCallback(async () => {
-    console.log("sortBySignature", sortBySignature);
     const filterObject = {
       appeal_status_id: status.id,
       township_id: townshipId,
       signature_sent: sortBySignature,
     };
     Object.keys(filterObject).forEach((key) => {
-      if (!filterObject[key]) delete filterObject[key];
+      if (sortBySignature === false) return;
+      if (!filterObject[key] || filterObject[key] === "none")
+        delete filterObject[key];
     });
+
     await getAppeals(
       `search=${searchText}&sort=${sortBy.value}&limit=20&page=${page}&filters=${JSON.stringify(filterObject)}`
     );

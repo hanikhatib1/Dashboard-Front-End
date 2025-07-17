@@ -33,6 +33,7 @@ import { SelectValue } from "@radix-ui/react-select";
 import queryString from "query-string";
 import NewAppeals from "@/pages/Appeals/NewAppeals";
 import FileReportPDF3 from "@/components/FileReportPDF3";
+import CombinedPDFReportModel from "@/components/CombinedPDFReportModel";
 
 const mails = {
   name: "Miles",
@@ -455,6 +456,10 @@ const Comparison = () => {
                     )}
                     {/* <FileReportPDF mainPin={id} pins={propertiesListArray} /> */}
                     <FileReportPDF3 mainPin={id} pins={selectedProperties} />
+                    <CombinedPDFReportModel
+                      mainPin={id}
+                      pins={selectedProperties}
+                    />
                   </div>
                 </div>
                 <p

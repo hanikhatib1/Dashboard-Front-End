@@ -1,3 +1,5 @@
+import { formatePin } from "@/utiles/formatePin";
+import { formattedNumber } from "@/utiles/formattedNumber";
 import {
   Document,
   Page,
@@ -6,7 +8,7 @@ import {
   StyleSheet,
   Image,
 } from "@react-pdf/renderer";
-import { formatePin } from "./utiles/formatePin";
+import PropTypes from "prop-types";
 
 // إعداد التنسيقات
 const styles = StyleSheet.create({
@@ -15,18 +17,15 @@ const styles = StyleSheet.create({
   bold: { fontWeight: "bold", textAlign: "center", fontSize: 16 },
 });
 
-/* import { Font } from "@react-pdf/renderer";
-
-// Register Cambria
-Font.register({
-  family: "Cambria",
-  src: "/fonts/Cambria.ttf",
-}); */
-
-const AppealPDF2 = ({ editAppealData, stateNumber }) => {
+const CookCountyAssessorpdf = ({ reportData, clientName }) => {
   const currentYear = new Date().getFullYear();
   const currentMonth = new Date().getMonth();
   const currentDay = new Date().getDate();
+  console.log("reportData", reportData);
+
+  const avg_building_av = reportData?.["avg_building_av/sf"] ?? 0;
+  const building_av = reportData.properties[0]?.["building_av/sf"] ?? 0;
+
   return (
     <Document>
       <Page size="A4" style={styles.page}>
@@ -46,27 +45,28 @@ const AppealPDF2 = ({ editAppealData, stateNumber }) => {
           </Text>
         </View>
         <View style={styles.section}>
-          <Text>Owner Name: {editAppealData.client_name}</Text>
+          <Text>Owner Name: {clientName}</Text>
           <Text style={{ marginTop: 5 }}>
-            Township: {editAppealData.property_township}
+            Township: {reportData?.properties[0]?.township}
           </Text>
           <Text style={{ marginTop: 5 }}>
-            Property PIN: {formatePin(editAppealData.pin1)}
+            Property PIN: {formatePin(reportData?.properties[0]?.pin)}
           </Text>
           <Text style={{ marginTop: 5 }}>
-            Property Address: {editAppealData.property_address},{" "}
-            {editAppealData.property_city}, {editAppealData.property_state},{" "}
-            {editAppealData.property_zipcode}
+            Property Address: {reportData?.properties[0]?.address},{" "}
+            {reportData?.properties[0]?.city},{" "}
+            {reportData?.properties[0]?.state},{" "}
+            {reportData?.properties[0]?.zip_code}
           </Text>
         </View>
         <View style={styles.section}>
           <Text style={{ marginBottom: 5 }}>Dear Assessor Kaegi,</Text>
           <Text style={{ marginTop: 5 }}>
-            Now comes the taxpayer, {editAppealData.client_name}, by and through
-            their attorney, respectfully requesting a reduction in the Assessed
-            Valuation (AV) of the property identified above. This request is
-            based on a lack of uniformity in assessment when compared to similar
-            properties within the same neighborhood and tax code.
+            Now comes the taxpayer, {clientName}, by and through their attorney,
+            respectfully requesting a reduction in the Assessed Valuation (AV)
+            of the property identified above. This request is based on a lack of
+            uniformity in assessment when compared to similar properties within
+            the same neighborhood and tax code.
           </Text>
         </View>
         <View style={styles.section}>
@@ -75,13 +75,13 @@ const AppealPDF2 = ({ editAppealData, stateNumber }) => {
           </Text>
           <Text style={{ marginTop: 5 }}>
             Upon conducting a thorough review of the surrounding area, we
-            identified {stateNumber.numberOfComparison} comparable properties
-            that are similar in size, age, location, classification, and
-            building characteristics to the subject property. These comparables
-            are all located within the same neighborhood and tax code. A review
-            of similar properties indicates that all the selected comparables
-            are assessed lower than the subject property, according to the
-            records of the Cook County Assessor’s Office.
+            identified {/* {reportData?.properties.length} */} comparable
+            properties that are similar in size, age, location, classification,
+            and building characteristics to the subject property. These
+            comparables are all located within the same neighborhood and tax
+            code. A review of similar properties indicates that all the selected
+            comparables are assessed lower than the subject property, according
+            to the records of the Cook County Assessor’s Office.
           </Text>
         </View>
         <View style={styles.section}>
@@ -91,41 +91,35 @@ const AppealPDF2 = ({ editAppealData, stateNumber }) => {
           <Text style={{ marginTop: 5 }}>
             According to our findings, the average Building AV per square foot
             (also referred to as the Equity Ratio) for the selected comparable
-            properties is ${editAppealData.land_av.toLocaleString()}, while the
-            subject property has a Building AV per square foot of $
-            {editAppealData.purchase_price.toLocaleString()}. This indicates the
-            subject property is over-assessed by ${" "}
-            {Number(
-              editAppealData.purchase_price - editAppealData.land_av
-            ).toLocaleString()}{" "}
-            in Building AV. 
+            properties is ${formattedNumber(avg_building_av)}, while the subject
+            property has a Building AV per square foot of $
+            {formattedNumber(building_av)}. This indicates the subject property
+            is over-assessed by ${" "}
+            {Number(building_av - avg_building_av).toLocaleString()} per square
+            foot
           </Text>
-
           <Text style={{ marginTop: 5, marginBottom: 5 }}>
             Requested Relief:
           </Text>
           <Text style={{ marginTop: 5 }}>
             In light of the above, we respectfully request that the market value
             and assessed valuation for the subject property, identified by PIN
-            {formatePin(editAppealData.pin1)}, be revised as follows:
+            {formatePin(reportData?.properties[0]?.pin)}, be revised as follows:
           </Text>
           <Text style={{ marginTop: 20 }}>
-            Land AV: {editAppealData.land_av.toLocaleString()}
+            Land AV: {formattedNumber(reportData.land_assessment)}
           </Text>
           <Text>
-            {" "}
-            Building AV:{editAppealData.purchase_price.toLocaleString()}{" "}
+            Building AV: {formattedNumber(reportData.building_assessment)}
           </Text>
-          <Text>Total AV: {editAppealData.total_av.toLocaleString()}</Text>
+          <Text>Total AV: {formattedNumber(reportData.total_assessment)}</Text>
           <Text style={{ marginTop: 5, marginBottom: 5 }}>
-            Respectfully submitted, 
+            Respectfully submitted,
           </Text>
           <Text style={{ marginTop: 5, marginBottom: 5 }}>
             Attorney for the Taxpayer
           </Text>
-          <Text style={{ marginTop: 5 }}>
-            Attorney Code: {stateNumber.attorneyCode}
-          </Text>
+          <Text style={{ marginTop: 5 }}>Attorney Code: 11352</Text>
         </View>
         <View style={styles.section}>
           <Text>Hani H. Khatib</Text>
@@ -146,19 +140,38 @@ const AppealPDF2 = ({ editAppealData, stateNumber }) => {
           <Text style={{ marginTop: 5 }}>
             Exhibit A: Recent photo of subject property attached below
           </Text>
-         {/*  <Image
-            src={editAppealData.image}
+          <Image
+            src={reportData.property_image}
             style={{
               width: "100%",
               height: 300,
               marginTop: 10,
               objectFit: "cover",
             }}
-          /> */}
+          />
         </View>
       </Page>
     </Document>
   );
 };
+CookCountyAssessorpdf.propTypes = {
+  reportData: PropTypes.shape({
+    properties: PropTypes.arrayOf(
+      PropTypes.shape({
+        township: PropTypes.string,
+        pin: PropTypes.string,
+        address: PropTypes.string,
+        city: PropTypes.string,
+        state: PropTypes.string,
+        zip_code: PropTypes.string,
+      })
+    ),
+    "avg_building_av/sf": PropTypes.number,
+    land_assessment: PropTypes.number,
+    building_assessment: PropTypes.number,
+    total_assessment: PropTypes.number,
+  }),
+  clientName: PropTypes.string,
+};
 
-export default AppealPDF2;
+export default CookCountyAssessorpdf;

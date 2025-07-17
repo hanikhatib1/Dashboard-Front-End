@@ -7,7 +7,7 @@ import Fill_SA_API from "./Fill_SA_API";
 import Fill_Appeal_Narrative_API from "./Fill_Appeal_Narrative_API";
 import Fill_Sales_Questions_API from "./Fill_Sales_Questions_API";
 import Fill_All_PDFs_API from "./Fill_All_PDFs_API";
-import { PDFDownloadLink } from "@react-pdf/renderer";
+import { PDFDownloadLink, PDFViewer } from "@react-pdf/renderer";
 import AppealPDF from "@/AppealPDF";
 import { Download } from "lucide-react";
 import AppealPDF2 from "@/AppealPDF2";
@@ -87,7 +87,17 @@ const Fill_EDIT_API = ({
         </PDFDownloadLink>
       )}
       {/*  dispatch(setCookCountyAssessorPDF(null)) */}
-      {data && (
+      {/* {data && (
+        <div className="border h-[400px] flex-1">
+          <PDFViewer width="100%" height="100%">
+            <AppealPDF2
+              editAppealData={data ? data.data : false}
+              stateNumber={{}}
+            />
+          </PDFViewer>
+        </div>
+      )} */}
+      {/* {data && (
         <div
           onClick={() => dispatch(setCookCountyAssessorPDF(true))}
           className={`flex gap-2 !p-1 !bg-white !text-black items-center ${data.data ? "cursor-pointer hover:border-gray-400 rounded-[8px] overflow-hidden" : ""} border border-white `}
@@ -99,7 +109,7 @@ const Fill_EDIT_API = ({
             Cook County Assessor
           </p>
         </div>
-      )}
+      )} */}
       {cookCountyAssessorPDF && <CookCountyAssessorModel data={data} />}
     </div>
   );

@@ -9,6 +9,7 @@ import {
 import PropTypes from "prop-types";
 
 const SortByData = [
+  { name: "none", value: "none" },
   { name: "Yes", value: true },
   { name: "No", value: false },
 ];
