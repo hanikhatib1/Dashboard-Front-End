@@ -137,7 +137,7 @@ const CookCountyAssessorpdf = ({ reportData, clientName }) => {
             Exhibit A: Recent photo of subject property attached below
           </Text>
           <Image
-            src={reportData.property_image}
+            src="https://firebasestorage.googleapis.com/v0/b/cook-county-4c472.firebasestorage.app/o/Property%2F18253050200000?alt=media"
             style={{
               width: "100%",
               height: 300,
