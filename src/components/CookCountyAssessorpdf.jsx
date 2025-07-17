@@ -110,10 +110,10 @@ const CookCountyAssessorpdf = ({ reportData, clientName }) => {
             Land AV: ${formattedNumber(reportData.land_assessment)}
           </Text>
           <Text>
-            Building AV: ${formattedNumber(reportData.building_assessment)}
+            Building AV: ${formattedNumber(reportData.suggested_building_assessed_value)}
           </Text>
-          <Text>Total AV: ${formattedNumber(reportData.total_assessment)}</Text>
-          <Text>Market Value: ${formattedNumber(reportData.total_assessment * 10)}</Text>
+          <Text>Total AV: ${formattedNumber(reportData.requested_total_av)}</Text>
+          <Text>Market Value: ${formattedNumber(reportData.requested_total_av * 10)}</Text>
           <Text style={{ marginTop: 5, marginBottom: 5 }}>
             Respectfully submitted,
           </Text>
