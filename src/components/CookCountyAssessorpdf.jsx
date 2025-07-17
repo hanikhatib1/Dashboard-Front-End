@@ -98,7 +98,7 @@ const CookCountyAssessorpdf = ({ reportData, clientName }) => {
             {Number(building_av - avg_building_av).toLocaleString()} per square
             foot
           </Text>
-          <Text style={{ fontWeight: "bold", color: "#405E8D" ,marginTop: 5}}>
+          <Text style={{ fontWeight: "bold", color: "#405E8D" ,marginTop: 20}}>
             Requested Relief:
           </Text>
           <Text style={{ marginTop: 5 }}>
