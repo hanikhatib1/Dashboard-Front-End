@@ -137,7 +137,7 @@ const CookCountyAssessorpdf = ({ reportData, clientName }) => {
             Exhibit A: Recent photo of subject property attached below
           </Text>
           <img
-            src="https://firebasestorage.googleapis.com/v0/b/cook-county-4c472.firebasestorage.app/o/Property%2F18253050200000?alt=media"
+            src="https://maps.googleapis.com/maps/api/streetview?size=500x300&location=7636%20STICKNEY%20AVE%20BRIDGEVIEW%2C%20IL%2060455&key=AIzaSyB9OOQTWvViYtayTHY5orSSOx_lwacOD4o"
             alt="Property"
             style={{
               width: "100%",
