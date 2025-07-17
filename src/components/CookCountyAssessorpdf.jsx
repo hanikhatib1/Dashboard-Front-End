@@ -125,7 +125,7 @@ const CookCountyAssessorpdf = ({ reportData, clientName }) => {
         <View style={styles.section}>
           <Text
             style={{
-              marginTop: 15,
+              marginTop: 30,
               marginBottom: 5,
               fontWeight: "bold",
               color: "#405E8D",
