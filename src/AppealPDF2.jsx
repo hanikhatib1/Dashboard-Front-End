@@ -101,7 +101,7 @@ const AppealPDF2 = ({ editAppealData, stateNumber }) => {
             in Building AV. 
           </Text>
 
-          <Text style={{ marginTop: 5, marginBottom: 5 }}>
+          <Text style={{ fontWeight: "bold", color: "#405E8D" }}>
             Requested Relief:
           </Text>
           <Text style={{ marginTop: 5 }}>
@@ -110,21 +110,16 @@ const AppealPDF2 = ({ editAppealData, stateNumber }) => {
             {formatePin(editAppealData.pin1)}, be revised as follows:
           </Text>
           <Text style={{ marginTop: 20 }}>
-            Land AV: {editAppealData.land_av.toLocaleString()}
+            Land AV: ${editAppealData.land_av.toLocaleString()}
           </Text>
           <Text>
             {" "}
-            Building AV:{editAppealData.purchase_price.toLocaleString()}{" "}
+            Building AV:${editAppealData.purchase_price.toLocaleString()}{" "}
           </Text>
-          <Text>Total AV: {editAppealData.total_av.toLocaleString()}</Text>
+          <Text>Total AV: ${editAppealData.total_av.toLocaleString()}</Text>
+          <Text>Market Value: ${formattedNumber(reportData.total_assessment * 10)}</Text>
           <Text style={{ marginTop: 5, marginBottom: 5 }}>
             Respectfully submitted, 
-          </Text>
-          <Text style={{ marginTop: 5, marginBottom: 5 }}>
-            Attorney for the Taxpayer
-          </Text>
-          <Text style={{ marginTop: 5 }}>
-            Attorney Code: {stateNumber.attorneyCode}
           </Text>
         </View>
         <View style={styles.section}>

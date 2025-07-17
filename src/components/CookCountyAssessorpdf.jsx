@@ -98,7 +98,7 @@ const CookCountyAssessorpdf = ({ reportData, clientName }) => {
             {Number(building_av - avg_building_av).toLocaleString()} per square
             foot
           </Text>
-          <Text style={{ marginTop: 5, marginBottom: 5 }}>
+          <Text style={{ fontWeight: "bold", color: "#405E8D" }}>
             Requested Relief:
           </Text>
           <Text style={{ marginTop: 5 }}>
@@ -107,12 +107,13 @@ const CookCountyAssessorpdf = ({ reportData, clientName }) => {
             {formatePin(reportData?.properties[0]?.pin)}, be revised as follows:
           </Text>
           <Text style={{ marginTop: 20 }}>
-            Land AV: {formattedNumber(reportData.land_assessment)}
+            Land AV: ${formattedNumber(reportData.land_assessment)}
           </Text>
           <Text>
-            Building AV: {formattedNumber(reportData.building_assessment)}
+            Building AV: ${formattedNumber(reportData.building_assessment)}
           </Text>
-          <Text>Total AV: {formattedNumber(reportData.total_assessment)}</Text>
+          <Text>Total AV: ${formattedNumber(reportData.total_assessment)}</Text>
+          <Text>Market Value: ${formattedNumber(reportData.total_assessment * 10)}</Text>
           <Text style={{ marginTop: 5, marginBottom: 5 }}>
             Respectfully submitted,
           </Text>
@@ -122,7 +123,6 @@ const CookCountyAssessorpdf = ({ reportData, clientName }) => {
           <Text style={{ marginTop: 5 }}>Attorney Code: 11352</Text>
         </View>
         <View style={styles.section}>
-          <Text>Hani H. Khatib</Text>
           <Text>Attorney for Taxpayer</Text>
           <Text>Attorney/Tax Representative Code Number: 11352</Text>
         </View>
