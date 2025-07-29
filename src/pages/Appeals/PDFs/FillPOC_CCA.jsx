@@ -12,7 +12,7 @@ const FillPOC_CCA = ({ property, client, pin2, pin3, appeal_number }) => {
   const [townShip, setTownShip] = useState("");
   const hasProperty = Boolean(property);
   const hasClient = Boolean(client);
-  const hasData = hasProperty && hasClient && appeal_number;
+  const hasData = hasProperty && hasClient;
   const [getTownshipName, { isLoading }] = useGetTownshipNameMutation({});
   const fillForm = async () => {
     // Step 1: Load the PDF form.
@@ -25,7 +25,7 @@ const FillPOC_CCA = ({ property, client, pin2, pin3, appeal_number }) => {
     const currentYear = new Date().getFullYear();
     const currentMonth = new Date().getMonth();
     const currentDay = new Date().getDate();
-    
+
     setFieldPDF(form, "Appeal Number", appeal_number);
 
     setFieldPDF(form, "Appeal Year", currentYear.toString());

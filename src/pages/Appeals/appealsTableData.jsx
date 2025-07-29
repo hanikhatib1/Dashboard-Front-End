@@ -44,9 +44,7 @@ export const appealsColumns = [
           <input
             type="checkbox"
             className="cursor-pointer"
-            disabled={
-              row.original.signature_sent || !row.original.appeal_number
-            }
+            disabled={row.original.signature_sent}
             checked={formsAppealArray.find((v) => v.id === row.original.id)}
             onChange={() => {
               const newFormsAppeal = [...formsAppealArray];

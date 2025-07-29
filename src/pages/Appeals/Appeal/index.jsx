@@ -123,7 +123,9 @@ const Appeal = () => {
                 //className="bg-[#1A73E833] text-[#2C3E50] px-4 py-2 rounded-[8px] ml-3"
                 className={`px-4 py-2 rounded-[8px] ml-3 cursor-pointer bg-[#1A73E833] ${appealData.signature_sent ? "text-[#80838E] cursor-not-allowed " : ""}`}
                 onClick={() => {
-                  if (appealData.appeal_number) {
+                  if (!appealData.signature_sent)
+                    dispatch(setFormsAppeal(appealData));
+                  /* if (appealData.appeal_number) {
                     if (!appealData.signature_sent)
                       dispatch(setFormsAppeal(appealData));
                   } else {
@@ -132,7 +134,7 @@ const Appeal = () => {
                       description: "Appeal number is Required",
                       type: "success",
                     });
-                  }
+                  } */
                 }}
                 disabled={appealData.signature_sent}
               >

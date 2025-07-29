@@ -15,7 +15,7 @@ const FillPOC_BOR = ({ property, client, pin2, pin3, appeal_number }) => {
   const [townShip, setTownShip] = useState("");
   const hasProperty = Boolean(property);
   const hasClient = Boolean(client);
-  const hasData = hasProperty && hasClient && appeal_number;
+  const hasData = hasProperty && hasClient;
   const currentYear = new Date().getFullYear();
   const currentMonth = new Date().getMonth();
   const currentDay = new Date().getDate();

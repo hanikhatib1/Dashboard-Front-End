@@ -9,7 +9,7 @@ import { formatePin } from "@/utiles/formatePin";
 const Fill_SA = ({ property, client, pin3, pin2, appeal_number }) => {
   const hasProperty = Boolean(property);
   const hasClient = Boolean(client);
-  const hasData = hasProperty && hasClient && appeal_number;
+  const hasData = hasProperty && hasClient;
   const fillForm = async () => {
     // Step 1: Load the PDF form.
     const formUrl = Representation_Agreement_2;
@@ -32,7 +32,11 @@ const Fill_SA = ({ property, client, pin3, pin2, appeal_number }) => {
       "Date_RA",
       `${currentMonth + 1}/${currentDay}/${currentYear}`
     );
-    setFieldPDF(form, "Client_RA", `${client?.first_name} ${client?.last_name}`);
+    setFieldPDF(
+      form,
+      "Client_RA",
+      `${client?.first_name} ${client?.last_name}`
+    );
     setFieldPDF(form, "Property Address_RA", `${property?.address}`);
     setFieldPDF(
       form,

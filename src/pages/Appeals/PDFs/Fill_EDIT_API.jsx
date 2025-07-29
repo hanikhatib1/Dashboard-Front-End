@@ -45,30 +45,18 @@ const Fill_EDIT_API = ({
 
   return (
     <div className="flex flex-wrap [&>div]:w-full  md:[&>div]:w-[calc(50%-16px)] gap-6">
-      <FillPOC_CCA_API
-        hasData={hasData && appeal_number}
-        data={data ? data.data : false}
-      />
-      <FillPOC_BOR_API
-        hasData={hasData && appeal_number}
-        data={data ? data.data : false}
-      />
-      <Fill_SA_API
-        hasData={hasData && appeal_number}
-        data={data ? data.data : false}
-      />
+      <FillPOC_CCA_API hasData={hasData} data={data ? data.data : false} />
+      <FillPOC_BOR_API hasData={hasData} data={data ? data.data : false} />
+      <Fill_SA_API hasData={hasData} data={data ? data.data : false} />
       <Fill_Appeal_Narrative_API
-        hasData={hasData && appeal_number}
+        hasData={hasData}
         data={data ? data.data : false}
       />
       <Fill_Sales_Questions_API
-        hasData={hasData && appeal_number}
+        hasData={hasData}
         data={data ? data.data : false}
       />
-      <Fill_All_PDFs_API
-        hasData={hasData && appeal_number}
-        data={data ? data.data : false}
-      />
+      <Fill_All_PDFs_API hasData={hasData} data={data ? data.data : false} />
       {data && (
         <PDFDownloadLink
           document={<AppealPDF editAppealData={data ? data.data : false} />}

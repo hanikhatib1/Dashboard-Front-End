@@ -18,7 +18,7 @@ const Fill_Appeal_Narrative = ({
   const [townShip, setTownShip] = useState("");
   const hasProperty = Boolean(property);
   const hasClient = Boolean(client);
-  const hasData = hasProperty && hasClient && appeal_number;
+  const hasData = hasProperty && hasClient;
   const [getTownshipName, { isLoading }] = useGetTownshipNameMutation({});
 
   const fillForm = async () => {
