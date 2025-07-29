@@ -248,51 +248,51 @@ const NewAppeals = ({
                     client={client}
                     pin2={watch("pin2")}
                     pin3={watch("pin3")}
-                    appeal_number={""}
+                    appeal_number={watch("appeal_number")}
                   />
                   <FillPOC_BOR
                     property={property}
                     client={client}
                     pin2={watch("pin2")}
                     pin3={watch("pin3")}
-                    appeal_number={""}
+                    appeal_number={watch("appeal_number")}
                   />
                   <Fill_SA
                     property={property}
                     client={client}
                     pin2={watch("pin2")}
                     pin3={watch("pin3")}
-                    appeal_number={""}
+                    appeal_number={watch("appeal_number")}
                   />
                   <Fill_Appeal_Narrative
                     property={property}
                     client={client}
                     pin2={watch("pin2")}
                     pin3={watch("pin3")}
-                    appeal_number={""}
+                    appeal_number={watch("appeal_number")}
                   />
                   <Fill_Sales_Questions
                     property={property}
                     client={client}
                     pin2={watch("pin2")}
                     pin3={watch("pin3")}
-                    appeal_number={""}
+                    appeal_number={watch("appeal_number")}
                   />
                   <Fill_All_PDFs
                     property={property}
                     client={client}
                     pin2={watch("pin2")}
                     pin3={watch("pin3")}
-                    appeal_number={""}
+                    appeal_number={watch("appeal_number")}
                   />
-                  {/* <div
+                  <div
                     className={`flex gap-2 !p-1 !bg-white !text-black items-center  border border-white `}
                   >
                     <Download color="#80838E" />
                     <p className={`text-[16px] font-medium text-[#80838E]`}>
                       Export Board of Review Appeal
                     </p>
-                  </div> */}
+                  </div>
                 </div>
               )}
             </div>
