@@ -339,18 +339,30 @@ const FileReportPDF3 = ({ mainPin, pins }) => {
 
       if (originalUrl) {
         try {
-          // Proxy the image through your backend
           const proxyUrl = `${import.meta.env.VITE_BASE_URL_BACKEND}/property/image_proxy?url=${encodeURIComponent(originalUrl)}`;
-
           const response = await fetch(proxyUrl);
+
           if (!response.ok) {
             throw new Error(`Image proxy fetch failed: ${response.status}`);
           }
 
-          const jpgImageBytes = await response.arrayBuffer();
-          const jpgImage = await pdfDoc.embedJpg(jpgImageBytes);
+          const contentType = response.headers.get("Content-Type");
+          const imageBytes = await response.arrayBuffer();
 
-          pages[0].drawImage(jpgImage, {
+          let embeddedImage;
+
+          if (contentType?.includes("image/png")) {
+            embeddedImage = await pdfDoc.embedPng(imageBytes);
+          } else if (
+            contentType?.includes("image/jpeg") ||
+            contentType?.includes("image/jpg")
+          ) {
+            embeddedImage = await pdfDoc.embedJpg(imageBytes);
+          } else {
+            throw new Error(`Unsupported image type: ${contentType}`);
+          }
+
+          pages[0].drawImage(embeddedImage, {
             x: 434,
             y: 668,
             width: 142,
@@ -371,7 +383,6 @@ const FileReportPDF3 = ({ mainPin, pins }) => {
 
       if (originalUrl) {
         try {
-          // Proxy the image through your backend
           const proxyUrl = `${import.meta.env.VITE_BASE_URL_BACKEND}/property/image_proxy?url=${encodeURIComponent(originalUrl)}`;
 
           const response = await fetch(proxyUrl);
@@ -379,10 +390,23 @@ const FileReportPDF3 = ({ mainPin, pins }) => {
             throw new Error(`Image proxy fetch failed: ${response.status}`);
           }
 
-          const jpgImageBytes = await response.arrayBuffer();
-          const jpgImage = await pdfDoc.embedJpg(jpgImageBytes);
+          const contentType = response.headers.get("Content-Type");
+          const imageBytes = await response.arrayBuffer();
 
-          secondPage.drawImage(jpgImage, {
+          let embeddedImage;
+
+          if (contentType?.includes("image/png")) {
+            embeddedImage = await pdfDoc.embedPng(imageBytes);
+          } else if (
+            contentType?.includes("image/jpeg") ||
+            contentType?.includes("image/jpg")
+          ) {
+            embeddedImage = await pdfDoc.embedJpg(imageBytes);
+          } else {
+            throw new Error(`Unsupported image type: ${contentType}`);
+          }
+
+          secondPage.drawImage(embeddedImage, {
             x: 41,
             y: 42,
             width: 221,
@@ -411,10 +435,23 @@ const FileReportPDF3 = ({ mainPin, pins }) => {
             throw new Error(`Image proxy fetch failed: ${response.status}`);
           }
 
-          const jpgImageBytes = await response.arrayBuffer();
-          const jpgImage = await pdfDoc.embedJpg(jpgImageBytes);
+          const contentType = response.headers.get("Content-Type");
+          const imageBytes = await response.arrayBuffer();
 
-          setImageXY(secondPage, jpgImage, 0);
+          let embeddedImage;
+
+          if (contentType?.includes("image/png")) {
+            embeddedImage = await pdfDoc.embedPng(imageBytes);
+          } else if (
+            contentType?.includes("image/jpeg") ||
+            contentType?.includes("image/jpg")
+          ) {
+            embeddedImage = await pdfDoc.embedJpg(imageBytes);
+          } else {
+            throw new Error(`Unsupported image type: ${contentType}`);
+          }
+
+          setImageXY(secondPage, embeddedImage, 0);
         } catch (error) {
           console.error(
             "Failed to load or embed image via proxy:",
@@ -438,10 +475,23 @@ const FileReportPDF3 = ({ mainPin, pins }) => {
             throw new Error(`Image proxy fetch failed: ${response.status}`);
           }
 
-          const jpgImageBytes = await response.arrayBuffer();
-          const jpgImage = await pdfDoc.embedJpg(jpgImageBytes);
+          const contentType = response.headers.get("Content-Type");
+          const imageBytes = await response.arrayBuffer();
 
-          setImageXY(secondPage, jpgImage, 1);
+          let embeddedImage;
+
+          if (contentType?.includes("image/png")) {
+            embeddedImage = await pdfDoc.embedPng(imageBytes);
+          } else if (
+            contentType?.includes("image/jpeg") ||
+            contentType?.includes("image/jpg")
+          ) {
+            embeddedImage = await pdfDoc.embedJpg(imageBytes);
+          } else {
+            throw new Error(`Unsupported image type: ${contentType}`);
+          }
+
+          setImageXY(secondPage, embeddedImage, 1);
         } catch (error) {
           console.error(
             "Failed to load or embed image via proxy:",
@@ -464,10 +514,23 @@ const FileReportPDF3 = ({ mainPin, pins }) => {
             throw new Error(`Image proxy fetch failed: ${response.status}`);
           }
 
-          const jpgImageBytes = await response.arrayBuffer();
-          const jpgImage = await pdfDoc.embedJpg(jpgImageBytes);
+          const contentType = response.headers.get("Content-Type");
+          const imageBytes = await response.arrayBuffer();
 
-          setImageXY(secondPage, jpgImage, 2);
+          let embeddedImage;
+
+          if (contentType?.includes("image/png")) {
+            embeddedImage = await pdfDoc.embedPng(imageBytes);
+          } else if (
+            contentType?.includes("image/jpeg") ||
+            contentType?.includes("image/jpg")
+          ) {
+            embeddedImage = await pdfDoc.embedJpg(imageBytes);
+          } else {
+            throw new Error(`Unsupported image type: ${contentType}`);
+          }
+
+          setImageXY(secondPage, embeddedImage, 2);
         } catch (error) {
           console.error(
             "Failed to load or embed image via proxy:",
@@ -491,10 +554,23 @@ const FileReportPDF3 = ({ mainPin, pins }) => {
             throw new Error(`Image proxy fetch failed: ${response.status}`);
           }
 
-          const jpgImageBytes = await response.arrayBuffer();
-          const jpgImage = await pdfDoc.embedJpg(jpgImageBytes);
+          const contentType = response.headers.get("Content-Type");
+          const imageBytes = await response.arrayBuffer();
 
-          setImageXY(secondPage, jpgImage, 3);
+          let embeddedImage;
+
+          if (contentType?.includes("image/png")) {
+            embeddedImage = await pdfDoc.embedPng(imageBytes);
+          } else if (
+            contentType?.includes("image/jpeg") ||
+            contentType?.includes("image/jpg")
+          ) {
+            embeddedImage = await pdfDoc.embedJpg(imageBytes);
+          } else {
+            throw new Error(`Unsupported image type: ${contentType}`);
+          }
+
+          setImageXY(secondPage, embeddedImage, 3);
         } catch (error) {
           console.error(
             "Failed to load or embed image via proxy:",
@@ -517,10 +593,23 @@ const FileReportPDF3 = ({ mainPin, pins }) => {
             throw new Error(`Image proxy fetch failed: ${response.status}`);
           }
 
-          const jpgImageBytes = await response.arrayBuffer();
-          const jpgImage = await pdfDoc.embedJpg(jpgImageBytes);
+          const contentType = response.headers.get("Content-Type");
+          const imageBytes = await response.arrayBuffer();
 
-          setImageXY(secondPage, jpgImage, 4);
+          let embeddedImage;
+
+          if (contentType?.includes("image/png")) {
+            embeddedImage = await pdfDoc.embedPng(imageBytes);
+          } else if (
+            contentType?.includes("image/jpeg") ||
+            contentType?.includes("image/jpg")
+          ) {
+            embeddedImage = await pdfDoc.embedJpg(imageBytes);
+          } else {
+            throw new Error(`Unsupported image type: ${contentType}`);
+          }
+
+          setImageXY(secondPage, embeddedImage, 4);
         } catch (error) {
           console.error(
             "Failed to load or embed image via proxy:",
@@ -544,10 +633,23 @@ const FileReportPDF3 = ({ mainPin, pins }) => {
             throw new Error(`Image proxy fetch failed: ${response.status}`);
           }
 
-          const jpgImageBytes = await response.arrayBuffer();
-          const jpgImage = await pdfDoc.embedJpg(jpgImageBytes);
+          const contentType = response.headers.get("Content-Type");
+          const imageBytes = await response.arrayBuffer();
 
-          setImageXY(secondPage, jpgImage, 5);
+          let embeddedImage;
+
+          if (contentType?.includes("image/png")) {
+            embeddedImage = await pdfDoc.embedPng(imageBytes);
+          } else if (
+            contentType?.includes("image/jpeg") ||
+            contentType?.includes("image/jpg")
+          ) {
+            embeddedImage = await pdfDoc.embedJpg(imageBytes);
+          } else {
+            throw new Error(`Unsupported image type: ${contentType}`);
+          }
+
+          setImageXY(secondPage, embeddedImage, 5);
         } catch (error) {
           console.error(
             "Failed to load or embed image via proxy:",
