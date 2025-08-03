@@ -101,10 +101,24 @@ const SortData = [
   },
 ];
 
+const exteriorData = [
+  /*
+  "Frame",
+"Masonry",
+"Frame/Masonry",
+"Stucco" 
+   */
+  {
+    name: "Frame",
+    key: "frame",
+  },
+];
+
 const Comparison = () => {
   const { id } = useParams();
   const [pageCount, setPageCount] = useState(1);
   const [FilterStatusKey, setFilterStatusKey] = useState("city");
+  const [exterior, setExterior] = useState(false);
   const dispatch = useDispatch();
   const [selectedProperties, setSelectedProperties] = useState([]);
   const { propertiesList, propertyDetailsData } = useSelector(
@@ -202,13 +216,14 @@ const Comparison = () => {
           ...filterSate,
           page: 1,
           limit: 50,
+          exterior: exterior,
         }),
       });
     }
     if (pageCount) {
       dispatch(setPageCountStore(pageCount));
     }
-  }, [oneProperty, filterSate]);
+  }, [oneProperty, filterSate, exterior]);
 
   useEffect(() => {
     if (oneProperty) {
@@ -252,24 +267,29 @@ const Comparison = () => {
         />
       ) : (
         <div className="p-4 flex flex-col gap-8">
-          <div className="flex gap-8 justify-between  flex-col-reverse md:flex-row">
-            <div className="flex gap-6 items-center  flex-col md:flex-row">
-              <div className="flex gap-6 self-start">
-                {tapsData.map((item) => (
-                  <button
-                    key={item.key}
-                    className={`text-heading_3  border-b-2  ${
-                      item.key === activeTab.key
-                        ? "border-primary text-primary"
-                        : "border-white text-[#054985]"
-                    }`}
-                    onClick={() => setActiveTab(item)}
-                  >
-                    {item.name}
-                  </button>
-                ))}
+          <div className="flex gap-8 justify-between flex-col ">
+            <div className="flex justify-between flex-col-reverse md:flex-row gap-4 w-full">
+              <div className="flex gap-6 items-center flex-col md:flex-row ">
+                <div className="flex gap-6 self-start">
+                  {tapsData.map((item) => (
+                    <button
+                      key={item.key}
+                      className={`text-heading_3  border-b-2  ${
+                        item.key === activeTab.key
+                          ? "border-primary text-primary"
+                          : "border-white text-[#054985]"
+                      }`}
+                      onClick={() => setActiveTab(item)}
+                    >
+                      {item.name}
+                    </button>
+                  ))}
+                </div>
               </div>
-              <div className="flex gap-4 justify-between flex-col md:flex-row w-full">
+              <SearchProperties goToComparison />
+            </div>
+            <div className="flex flex-col md:flex-row gap-4">
+              <div className="flex gap-4 justify-between flex-col md:flex-row w-max">
                 <div
                   className={` bg-primary h-[32px] rounded-[40px] w-max flex items-center gap-4 px-2 py-1  ${!filterSate.by_distance_only ? "bg-opacity-75" : ""}`}
                 >
@@ -354,8 +374,27 @@ const Comparison = () => {
                   ))}
                 </div>
               </div>
+              <div className="w-max">
+                <Select
+                  onValueChange={(e) => setExterior(e)}
+                  className=""
+                  defaultValue={exterior ? "true" : "false"}
+                >
+                  <SelectTrigger
+                    className={`!px-4 flex items-center gap-1 rounded-[8px] border  p-1 text-body bg-white text-dark`}
+                  >
+                    <span>Exterior :</span>
+                    <SelectValue placeholder={exterior ? "Yes" : "No"} />
+                  </SelectTrigger>
+                  <SelectContent className="bg-white">
+                    <SelectGroup>
+                      <SelectItem value={true}>Yes</SelectItem>
+                      <SelectItem value={false}>No</SelectItem>
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+              </div>
             </div>
-            <SearchProperties goToComparison />
           </div>
           {isOnePropertyError ? (
             <div className="text-center">Error, something went wrong</div>

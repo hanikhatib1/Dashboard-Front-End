@@ -665,14 +665,46 @@ const FileReportPDF3 = ({ mainPin, pins }) => {
       .slice(0, 7)
       .map(({ latitude, longitude }, index) => {
         if (index === 0)
-          return `markers=color:blue%%7Clabel:S%7C${latitude},${longitude}`;
+          return `markers=color:blue%7Clabel:S%7C${latitude},${longitude}`;
         else
-          return `markers=color:red%%7Clabel:${index}%7C${latitude},${longitude}`;
+          return `markers=color:red%7Clabel:${index}%7C${latitude},${longitude}`;
       })
       .join("&");
+
+    const properties = reportData?.data?.properties.slice(0, 7);
+
+    const avgLat =
+      properties.reduce((sum, p) => sum + p.latitude, 0) / properties.length;
+
+    const avgLng =
+      properties.reduce((sum, p) => sum + p.longitude, 0) / properties.length;
+
+    const center = `${avgLat},${avgLng}`;
+
     const imageSize = "600x400";
-    const center = `${reportData?.data?.properties[0].latitude},${reportData?.data?.properties[0].longitude}`;
-    const zoom = 16;
+    //const center = `${reportData?.data?.properties[0].latitude},${reportData?.data?.properties[0].longitude}`;
+    //const zoom = 14;
+
+    const lats = properties.map((p) => p.latitude);
+    const lngs = properties.map((p) => p.longitude);
+
+    const latDiff = Math.max(...lats) - Math.min(...lats);
+    const lngDiff = Math.max(...lngs) - Math.min(...lngs);
+
+    const maxDiff = Math.max(latDiff, lngDiff);
+
+    // تقدير تقريبًا للـ zoom المناسب
+    let zoom = 14;
+    if (maxDiff > 10) zoom = 5;
+    else if (maxDiff > 5) zoom = 7;
+    else if (maxDiff > 2) zoom = 9;
+    else if (maxDiff > 1) zoom = 10;
+    else if (maxDiff > 0.5) zoom = 11;
+    else if (maxDiff > 0.2) zoom = 12;
+    else if (maxDiff > 0.1) zoom = 13;
+    else if (maxDiff > 0.05) zoom = 14;
+    else zoom = 15;
+
     const maptype = "roadmap";
     const mapImage = `https://maps.googleapis.com/maps/api/staticmap?center=${center}&size=${imageSize}&maptype=${maptype}&${markers}&zoom=${zoom}&key=${import.meta.env.VITE_GOOGLE_MAPS_API_KEY}`;
 

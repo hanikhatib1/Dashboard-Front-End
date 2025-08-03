@@ -46,7 +46,7 @@ const SearchPropertiesComponent = ({
   }, [searchText, searchFor]);
 
   return (
-    <div className={`flex ${containerClassName} w-full`}>
+    <div className={`flex ${containerClassName} w-full max-w-[650px]`}>
       <div
         className={`${
           searchText !== "" ? "rounded-tl-[8px]" : "rounded-l-[8px]"
