@@ -132,28 +132,30 @@ const AppealStatus = () => {
       ) : (
         data && (
           <ul className="flex flex-col gap-3">
-            {data.data.map((status) => (
-              <li
-                key={status.id}
-                className="flex justify-between w-full border-b p-2"
-              >
-                <div className="flex gap-6 w-full">
-                  <p className="w-[40%]">{status.status}</p>
-                  <p>{status.sort}</p>
-                </div>
-                <div className="flex gap-2">
-                  <Button
-                    className="flex gap-2 items-center text-white rounded-[8px] bg-primary  px-4 py-2 cursor-pointer"
-                    onClick={() => {
-                      setEditStatus(status);
-                    }}
-                  >
-                    Edit
-                  </Button>
-                  <DeleteStatusButton status={status} refetch={refetch} />
-                </div>
-              </li>
-            ))}
+            {[...data.data]
+              ?.sort((a, b) => a.sort - b.sort)
+              .map((status) => (
+                <li
+                  key={status.id}
+                  className="flex justify-between w-full border-b p-2"
+                >
+                  <div className="flex gap-6 w-full">
+                    <p className="w-[40%]">{status.status}</p>
+                    <p>{status.sort}</p>
+                  </div>
+                  <div className="flex gap-2">
+                    <Button
+                      className="flex gap-2 items-center text-white rounded-[8px] bg-primary  px-4 py-2 cursor-pointer"
+                      onClick={() => {
+                        setEditStatus(status);
+                      }}
+                    >
+                      Edit
+                    </Button>
+                    <DeleteStatusButton status={status} refetch={refetch} />
+                  </div>
+                </li>
+              ))}
           </ul>
         )
       )}
