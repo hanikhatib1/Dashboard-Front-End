@@ -392,7 +392,7 @@ export const apiSlice = createApi({
     /* Blogs */
     getAllBlogs: builder.query({
       query: (q) => ({
-        url: `/blog/get_all_blogs?sort=-id&${q}`,
+        url: `/blog/get_all_blogs?sort=-date&${q}`,
         method: "GET",
       }),
     }),
