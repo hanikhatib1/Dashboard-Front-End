@@ -30,18 +30,19 @@ const CombinedPDFReportModel = ({ mainPin, pins }) => {
     });
   };
 
-  useEffect(() => {
+  /*   useEffect(() => {
     fetchReportData();
-  }, [pins]);
-
-  console.log("data", data);
+  }, [pins]); */
 
   return (
     <Dialog defaultOpen={open} open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild className="!flex-1">
         <Button
           className={`bg-primary rounded-[8px] text-white flex justify-center items-center gap-1 `}
-          onClick={() => setOpen(true)}
+          onClick={() => {
+            setOpen(true);
+            fetchReportData();
+          }}
         >
           <Plus color="#ffffff" />
           <p> Cook County Assessor</p>

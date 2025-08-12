@@ -16,6 +16,7 @@ const AppealStatusSelect = ({
   keyOfValue = "appeal_status_id",
   staticStatus,
   className = "sm:w-[30%]",
+  showStatusKeyword = true,
 }) => {
   const { data: allStatus, isLoading, isError } = useGetAllStatusQuery();
 
@@ -34,12 +35,13 @@ const AppealStatusSelect = ({
           const selectedStatus = allStatus.data.find((s) => s.id == value);
           setStatus(selectedStatus);
         }}
+        defaultValue={staticStatus ? staticStatus.id : status ? status.id : 0}
       >
         <SelectTrigger className="rounded-[8px] h-[48px]">
           <SelectValue
-            placeholder={`Status : ${staticStatus ? staticStatus.status : status ? status.status :"New"}`}
+            placeholder={`${showStatusKeyword ? "Status :" : ""} ${staticStatus ? staticStatus.status : status ? status.status : "New"}`}
           >
-            Status : {status.status}
+            {showStatusKeyword ? "Status :" : ""} {status.status}
           </SelectValue>
         </SelectTrigger>
         <SelectContent className="rounded-[8px] bg-white ">

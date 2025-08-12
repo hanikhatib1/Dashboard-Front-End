@@ -95,6 +95,13 @@ export const comparisonAssessmentsColumns = [
     },
   },
   {
+    header: "Score",
+    cell: ({ row }) => {
+      const rowData = row.original;
+      return <p>{rowData.score}</p>;
+    },
+  },
+  {
     header: "Taxes",
     cell: ({ row }) => {
       const rowData = row.original;

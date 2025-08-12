@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import SearchProperties from "../SearchProperties";
 import ComparisonTable from "./ComparisonTable";
 import {
@@ -12,11 +12,8 @@ import {
 } from "@/redux/apiSlice";
 import Loader from "@/components/Loader";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams, useSearchParams } from "react-router-dom";
-import {
-  clearPropertiesList,
-  setPageCountStore,
-} from "@/redux/features/Properties";
+import { useParams } from "react-router-dom";
+import { setPageCountStore } from "@/redux/features/Properties";
 import PropertySheet from "./PropertySheet.jsx";
 import PropertyCard from "./PropertyCard";
 import { formattedNumber } from "@/utiles/formattedNumber";
@@ -48,28 +45,104 @@ const FilterStatusData = [
     name: "Miles",
     key: "range_in_mile",
     defaultValue: "0.25",
-    options: [0.25, 0.5, 1],
+    defaultKey: "0.25", //0.25, 0.5, 1
+    options: [
+      {
+        key: "0.25",
+        value: "0.25",
+      },
+      {
+        key: "0.5",
+        value: "0.5",
+      },
+      {
+        key: "1",
+        value: "1",
+      },
+    ],
     type: "select",
   },
   {
     name: "Land",
     key: "land_sq_ft",
-    defaultValue: "20000",
-    options: [5000, 10000, 15000, 20000],
+    defaultValue: "200", //50, 100, 150, 200, 250
+    defaultKey: "+- 200 %",
+    options: [
+      {
+        key: "+- 50 %",
+        value: "50",
+      },
+      {
+        key: "+- 100 %",
+        value: "100",
+      },
+      {
+        key: "+- 150 %",
+        value: "150",
+      },
+      {
+        key: "+- 200 %",
+        value: "200",
+      },
+      {
+        key: "+- 250 %",
+        value: "250",
+      },
+    ],
     type: "select",
   },
   {
     name: "Building",
     key: "building_sq_ft",
-    defaultValue: "500",
-    options: [500, 1000, 1500, 2000],
+    defaultValue: "20", //5, 10, 15, 20, 25
+    defaultKey: "+- 20 %",
+    options: [
+      {
+        key: "+- 5 %",
+        value: "5",
+      },
+      {
+        key: "+- 10 %",
+        value: "10",
+      },
+      {
+        key: "+- 15 %",
+        value: "15",
+      },
+      {
+        key: "+- 20 %",
+        value: "20",
+      },
+      {
+        key: "+- 25 %",
+        value: "25",
+      },
+    ],
     type: "select",
   },
   {
     name: "Age",
     key: "age",
-    defaultValue: "10",
-    options: [10, 20, 30, 40],
+    defaultValue: "20", //10, 20, 30, 40
+    defaultKey: "+- 20 Years",
+    options: [
+      {
+        key: "+- 10 Years",
+        value: "10",
+      },
+      {
+        key: "+- 20 Years",
+        value: "20",
+      },
+      {
+        key: "+- 30 Years",
+        value: "30",
+      },
+      {
+        key: "+- 40 Years",
+        value: "40",
+      },
+    ],
     type: "select",
   },
 ];
@@ -101,19 +174,6 @@ const SortData = [
   },
 ];
 
-const exteriorData = [
-  /*
-  "Frame",
-"Masonry",
-"Frame/Masonry",
-"Stucco" 
-   */
-  {
-    name: "Frame",
-    key: "frame",
-  },
-];
-
 const Comparison = () => {
   const { id } = useParams();
   const [pageCount, setPageCount] = useState(1);
@@ -124,14 +184,14 @@ const Comparison = () => {
   const { propertiesList, propertyDetailsData } = useSelector(
     (state) => state.properties
   );
-  const propertiesListFilter = new Set(propertiesList);
+  //const propertiesListFilter = new Set(propertiesList);
   //const propertiesListArray = Array.from(propertiesListFilter);
 
   const [filterSate, setFilterSate] = useState({
     range_in_mile: "0.25",
-    land_sq_ft: "20000",
-    building_sq_ft: "500",
-    age: "10",
+    land_sq_ft: "200",
+    building_sq_ft: "20",
+    age: "20",
     sort_by: "small_building_ratio_first",
     by_distance_only: false,
   });
@@ -151,6 +211,7 @@ const Comparison = () => {
       data: oneProperty,
       isLoading: onePropertyLoading,
       isError: isOnePropertyError,
+      isSuccess: isOnePropertySuccess,
     },
   ] = useGetOnePropertyMutation();
 
@@ -191,16 +252,26 @@ const Comparison = () => {
     component: <AssessmentsComponent />,
   });
 
-  const getListOfPropertiesHandler = async () => {
+  const getListOfPropertiesHandler = async (defaultPins) => {
     await getListOfProperties({
-      pins: selectedProperties,
+      pins: defaultPins ? defaultPins : selectedProperties,
       comparable_property_pin: oneProperty.data.pin,
     });
   };
 
   useEffect(() => {
     getListOfPropertiesHandler();
-  }, [selectedProperties.length]);
+  }, [selectedProperties?.length]);
+
+  useEffect(() => {
+    if (oneProperty?.data?.compatrbles?.length > 0) {
+      console.log(
+        "oneProperty?.data.compatrbles::::",
+        oneProperty?.data.compatrbles
+      );
+      getListOfPropertiesHandler(oneProperty?.data.compatrbles);
+    }
+  }, [oneProperty?.data.compatrbles]);
 
   useEffect(() => {
     getOneProperty(id);
@@ -358,14 +429,14 @@ const Comparison = () => {
                           setFilterStatusKey(item.key);
                         }}
                       >
-                        <SelectValue placeholder={item.defaultValue} />
+                        <SelectValue placeholder={item.defaultKey} />
                         <span className="text-[10px]">{item.name}</span>
                       </SelectTrigger>
                       <SelectContent className="bg-white">
                         <SelectGroup>
                           {item.options.map((option) => (
-                            <SelectItem key={option} value={option}>
-                              {option}
+                            <SelectItem key={option.value} value={option.value}>
+                              {option.key}
                             </SelectItem>
                           ))}
                         </SelectGroup>

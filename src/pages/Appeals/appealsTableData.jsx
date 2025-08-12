@@ -20,6 +20,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import Fill_Form_Client from "./PDFs/Fill_Form_Client";
 import { formatPhoneNumber } from "@/utiles/formatPhoneNumber";
+import AppealStatusSelect from "./AppealStatusSelect";
+import { useEffect, useState } from "react";
+import { useUpdateAppealMutation } from "@/redux/apiSlice";
+import { toast } from "@/components/ui/use-toast";
 
 export const appealsColumns = [
   // add check box
@@ -111,10 +115,72 @@ export const appealsColumns = [
   {
     header: "Status",
     cell: ({ row }) => {
+      const [updateAppeal, { isLoading }] = useUpdateAppealMutation();
+      const [status, setStatus] = useState(row.original.appeal_status);
+
+      const handleUpdateStatus = async (val) => {
+        const defaultValue = {
+          ccoa: "",
+          bor: "",
+          sa: "",
+          lour: "",
+          ran: null,
+          sq: null,
+          an: null,
+          deleted_ccoa: "",
+          deleted_bor: "",
+          deleted_sa: "",
+          deleted_lour: "",
+          deleted_ran: "",
+          deleted_sq: "",
+          deleted_an: "",
+          note: row.original.note ? row.original.note : "",
+          appeal_status_id: val,
+          appeal_number: row.original?.appeal_number
+            ? row.original?.appeal_number
+            : "",
+        };
+        const formData = new FormData();
+        Object.keys(defaultValue).forEach((key) => {
+          formData.append(key, defaultValue[key]);
+        });
+        const res = await updateAppeal({
+          id: row.original.id,
+          body: formData,
+        });
+        if ("data" in res) {
+          /*  alert("Status updated successfully"); */
+          toast({
+            title: "Success",
+            description: "Status updated successfully",
+            variant: "success",
+          });
+        } else {
+          toast({
+            title: "Error",
+            description: res.error.data?.message || "Failed to update status",
+            variant: "destructive",
+          });
+        }
+      };
+
+      useEffect(() => {
+        setStatus(row.original.appeal_status);
+      }, [row.original.appeal_status.status]);
+
       return (
-        <span className="text-[#4693D6]">
-          {row.original.appeal_status.status}
-        </span>
+        <div className="[&>div]:w-full">
+          {/*  <span className="text-[#4693D6]">
+            {row.original.appeal_status.status}
+          </span> */}
+          <AppealStatusSelect
+            status={status}
+            setStatus={setStatus}
+            setValue={(key, val) => handleUpdateStatus(val)}
+            keyOfValue="appeal_status_id"
+            showStatusKeyword={false}
+          />
+        </div>
       );
     },
   },

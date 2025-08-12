@@ -125,7 +125,7 @@ const Appeals = () => {
             setSortBySignature={setSortBySignature}
           />
         </div>
-        <div className="rounded-[8px] flex flex-col">
+        <div className="rounded-[8px] flex flex-col border max-h-[580px]">
           {isError ? (
             "An error has occurred"
           ) : !appeals ? (
