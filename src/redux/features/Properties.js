@@ -16,9 +16,11 @@ export const propertiesSlice = createSlice({
       state.mainProperty = action.payload;
     },
     setPropertiesList: (state, action) => {
-      const newPropertiesList = state.propertiesList;
-      newPropertiesList.push(action.payload);
-      state.propertiesList = newPropertiesList;
+      const newItems = Array.isArray(action.payload)
+        ? action.payload
+        : [action.payload];
+
+      state.propertiesList = [...state.propertiesList, ...newItems];
     },
     clearPropertiesList: (state) => {
       state.propertiesList = [];

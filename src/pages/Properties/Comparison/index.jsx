@@ -13,7 +13,10 @@ import {
 import Loader from "@/components/Loader";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { setPageCountStore } from "@/redux/features/Properties";
+import {
+  setPageCountStore,
+  setPropertiesList,
+} from "@/redux/features/Properties";
 import PropertySheet from "./PropertySheet.jsx";
 import PropertyCard from "./PropertyCard";
 import { formattedNumber } from "@/utiles/formattedNumber";
@@ -265,11 +268,9 @@ const Comparison = () => {
 
   useEffect(() => {
     if (oneProperty?.data?.compatrbles?.length > 0) {
-      console.log(
-        "oneProperty?.data.compatrbles::::",
-        oneProperty?.data.compatrbles
-      );
-      getListOfPropertiesHandler(oneProperty?.data.compatrbles);
+      //getListOfPropertiesHandler(oneProperty?.data.compatrbles);
+      //setSelectedProperties(oneProperty?.data.compatrbles)
+      dispatch(setPropertiesList(oneProperty?.data.compatrbles));
     }
   }, [oneProperty?.data.compatrbles]);
 
