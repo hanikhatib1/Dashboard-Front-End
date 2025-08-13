@@ -3,6 +3,7 @@ import { useState } from "react";
 import PropertiesTable from "./Table";
 import {
   appealDatesColumns,
+  AppealHistoryColumns,
   descriptionColumns,
   detailRecordsColumns,
   documentsColumns,
@@ -55,6 +56,13 @@ const statusData = [
     name: "Exemptions",
     key: "exemption",
     columns: exemptionsColumns,
+    hasPagination: false,
+    isArray: true,
+  },
+  {
+    name: "Appeal History",
+    key: "appeal_history",
+    columns: AppealHistoryColumns,
     hasPagination: false,
     isArray: true,
   },

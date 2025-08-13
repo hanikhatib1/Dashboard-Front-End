@@ -501,3 +501,59 @@ export const documentsColumns = [
     },
   },
 ];
+
+export const AppealHistoryColumns = [
+  /* 
+  year = Year
+docket = Appeal Number
+appeal_type = Appeal Type
+appeal_date = Appeal Date
+res_date = Result Date
+status = Status
+decision = Decision
+proposed_price =Proposed AV
+final_price = Final AV
+  */
+  {
+    accessorKey: "year",
+    header: "Year",
+  },
+  {
+    accessorKey: "docket",
+    header: "Docket",
+  },
+  {
+    accessorKey: "appeal_type",
+    header: "Appeal Type",
+  },
+  {
+    header: "Appeal Date",
+    cell: ({ row }) => {
+      const rowData = row.original;
+      return <p>{reverseDate(rowData.appeal_date)}</p>;
+    },
+  },
+  {
+    header: "Result Date",
+    cell: ({ row }) => {
+      const rowData = row.original;
+      return <p>{reverseDate(rowData.res_date)}</p>;
+    },
+  },
+  {
+    accessorKey: "status",
+    header: "Status",
+  },
+  {
+    accessorKey: "decision",
+    header: "Decision",
+  },
+  {
+    accessorKey: "proposed_price",
+    header: "Proposed AV",
+  },
+  {
+    accessorKey: "final_price",
+    header: "Final AV",
+  },
+];

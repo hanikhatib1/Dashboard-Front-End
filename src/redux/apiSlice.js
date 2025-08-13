@@ -542,6 +542,13 @@ export const apiSlice = createApi({
         method: "PATCH",
       }),
     }),
+    importAppealHistory: builder.mutation({
+      query: (body) => ({
+        url: "/appeal/import_appeal_history",
+        method: "POST",
+        body,
+      }),
+    }),
   }),
 });
 
@@ -626,4 +633,5 @@ export const {
   useAddFAQMutation,
   useDeleteFAQMutation,
   useUpdateFAQMutation,
+  useImportAppealHistoryMutation,
 } = apiSlice;

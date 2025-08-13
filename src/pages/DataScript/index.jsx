@@ -3,6 +3,7 @@ import { PropertyIcon } from "../../assets/Icons";
 import { CloudUpload, Wallpaper } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 import {
+  useImportAppealHistoryMutation,
   useUploadPropertiesMutation,
   useUploadSalesDataMutation,
   useUploadTaxRateDataMutation,
@@ -25,6 +26,11 @@ const feature = [
     title: "Import Tax Rate Data ",
     icon: <PropertyIcon />,
   },
+  {
+    id: 4,
+    title: "Upload Appeal History",
+    icon: <Wallpaper color="white" />,
+  },
 ];
 
 const DataScript = () => {
@@ -37,6 +43,7 @@ const DataScript = () => {
   const [uploadPropertyData] = useUploadPropertiesMutation();
   const [uploadSalesData] = useUploadSalesDataMutation();
   const [uploadTaxRateData] = useUploadTaxRateDataMutation();
+  const [uploadAppealHistory] = useImportAppealHistoryMutation();
 
   const handleUploadFile = useCallback(async () => {
     const formData = new FormData();
@@ -53,6 +60,9 @@ const DataScript = () => {
       case 3:
         res = await uploadTaxRateData(formData);
         break;
+      case 4:
+        res = await uploadAppealHistory(formData);
+        break;
       default:
         break;
     }
@@ -64,6 +74,7 @@ const DataScript = () => {
     uploadPropertyData,
     uploadSalesData,
     uploadTaxRateData,
+    uploadAppealHistory,
   ]);
 
   useEffect(() => {
