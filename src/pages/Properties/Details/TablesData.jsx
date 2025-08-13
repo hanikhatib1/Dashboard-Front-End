@@ -14,6 +14,7 @@ import {
   steDeletePurchaseProperty,
 } from "@/redux/features/Properties";
 import { useDispatch } from "react-redux";
+import { formattedNumber } from "@/utiles/formattedNumber";
 
 const currentYear = new Date().getFullYear();
 
@@ -156,7 +157,7 @@ export const detailRecordsColumns = [
     header: "Ovacals",
     cell: ({ row }) => {
       const rowData = row.original;
-      return <p>$ {rowData.ovacls?.toLocaleString()}</p>;
+      return <p>{rowData.ovacls?.toLocaleString()}</p>;
     },
   },
   {
@@ -164,7 +165,7 @@ export const detailRecordsColumns = [
     header: "Building Square Foot",
     cell: ({ row }) => {
       const rowData = row.original;
-      return <p>$ {rowData.building_square_foot?.toLocaleString()}</p>;
+      return <p>{rowData.building_square_foot?.toLocaleString()}</p>;
     },
   },
   {
@@ -187,7 +188,7 @@ export const detailRecordsColumns = [
     header: "Land Square Foot",
     cell: ({ row }) => {
       const rowData = row.original;
-      return <p>$ {rowData.land_square_foot?.toLocaleString()}</p>;
+      return <p>{rowData.land_square_foot?.toLocaleString()}</p>;
     },
   },
 ];
@@ -551,9 +552,15 @@ final_price = Final AV
   {
     accessorKey: "proposed_price",
     header: "Proposed AV",
+    cell: ({ row }) => {
+      return <p>$ {formattedNumber(Number(row.original.proposed_price))}</p>;
+    },
   },
   {
     accessorKey: "final_price",
     header: "Final AV",
+    cell: ({ row }) => {
+      return <p>$ {formattedNumber(Number(row.original.final_price))}</p>;
+    },
   },
 ];
