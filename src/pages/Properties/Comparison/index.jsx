@@ -195,8 +195,6 @@ const Comparison = () => {
   const { propertiesList, propertyDetailsData } = useSelector(
     (state) => state.properties
   );
-  //const propertiesListFilter = new Set(propertiesList);
-  //const propertiesListArray = Array.from(propertiesListFilter);
 
   const [filterSate, setFilterSate] = useState({
     range_in_mile: "0.25",
@@ -289,12 +287,12 @@ const Comparison = () => {
   useEffect(() => {
     if (oneProperty) {
       //dispatch(clearPropertiesList());
-      setPageCount(1);
+      //setPageCount(1);
       getPropertiesComparison({
         id: oneProperty.data.id,
         query: queryString.stringify({
           ...filterSate,
-          page: 1,
+          page: pageCount,
           limit: 50,
           exterior: exterior,
         }),
@@ -322,13 +320,11 @@ const Comparison = () => {
   }, [oneProperty, pageCount]); */
 
   useEffect(() => {
-    //console.log("propertiesList", propertiesList);
     const propertiesListFilter = new Set(propertiesList);
     const propertiesListArray = Array.from(propertiesListFilter);
 
     setSelectedProperties((prev) => {
       const filter2 = Array.from(new Set([...propertiesListArray]));
-      console.log("selectedProperties", filter2);
       return filter2;
     });
   }, [propertiesList]);
