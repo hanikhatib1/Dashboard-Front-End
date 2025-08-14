@@ -175,6 +175,14 @@ const SortData = [
     name: "Small Building Size",
     key: "small_building_size",
   },
+  {
+    name: "High Score",
+    key: "hight_score",
+  },
+  {
+    name: "Low Score",
+    key: "low_score",
+  },
 ];
 
 const Comparison = () => {
@@ -195,7 +203,7 @@ const Comparison = () => {
     land_sq_ft: "200",
     building_sq_ft: "20",
     age: "20",
-    sort_by: "small_building_ratio_first",
+    sort_by: "hight_score",
     by_distance_only: false,
   });
   const [openMaps, setOpenMaps] = useState(false);
@@ -295,11 +303,10 @@ const Comparison = () => {
     if (pageCount) {
       dispatch(setPageCountStore(pageCount));
     }
-  }, [oneProperty, filterSate, exterior]);
+  }, [oneProperty, filterSate, exterior, pageCount]);
 
-  useEffect(() => {
+  /* useEffect(() => {
     if (oneProperty) {
-      //dispatch(clearPropertiesList());
       getPropertiesComparison({
         id: oneProperty.data.id,
         query: queryString.stringify({
@@ -312,7 +319,7 @@ const Comparison = () => {
     if (pageCount) {
       dispatch(setPageCountStore(pageCount));
     }
-  }, [oneProperty, pageCount]);
+  }, [oneProperty, pageCount]); */
 
   useEffect(() => {
     //console.log("propertiesList", propertiesList);
@@ -529,7 +536,7 @@ const Comparison = () => {
                         className={`!px-4 flex items-center gap-1 rounded-[8px] border  p-1 text-body bg-white text-dark`}
                       >
                         <span>Sort By :</span>
-                        <SelectValue placeholder="Small Building Ratio" />
+                        <SelectValue placeholder="High Score" />
                         {/* <span>{item.name}</span> */}
                       </SelectTrigger>
                       <SelectContent className="bg-white">
