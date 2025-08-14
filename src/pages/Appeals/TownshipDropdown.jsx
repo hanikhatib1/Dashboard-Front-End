@@ -10,10 +10,10 @@ import { useGetAllStatusQuery, useGeTownshipMutation } from "@/redux/apiSlice";
 import PropTypes from "prop-types";
 import { useEffect } from "react";
 
-const TownshipDropdown = ({ setTownshipId, className = "" }) => {
+const TownshipDropdown = ({ setTownshipId, townshipId = 0 }) => {
   const [getTownship, { data: allTownship, isLoading, isError }] =
     useGeTownshipMutation();
-
+  console.log("townshipId", townshipId);
   useEffect(() => {
     getTownship();
   }, []);
@@ -27,6 +27,8 @@ const TownshipDropdown = ({ setTownshipId, className = "" }) => {
       <Select
         className="rounded-[8px] sm:w-[calc(50%-16px)] w-full"
         onValueChange={(value) => setTownshipId(value)}
+        defaultValue={townshipId}
+        value={townshipId}
       >
         <SelectTrigger className="rounded-[8px] h-[48px] p-1">
           <SelectValue placeholder="Select Township" />
@@ -54,6 +56,12 @@ const TownshipDropdown = ({ setTownshipId, className = "" }) => {
       </Select>
     </div>
   );
+};
+
+TownshipDropdown.propTypes = {
+  setTownshipId: PropTypes.func.isRequired,
+  className: PropTypes.string,
+  townshipId: PropTypes.number,
 };
 
 export default TownshipDropdown;

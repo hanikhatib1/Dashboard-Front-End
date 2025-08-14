@@ -25,8 +25,10 @@ import DeleteInvoiceModel from "../Invoices/DeleteInvoiceModel";
 import SendFormModel from "./SendFormModel";
 import DocumentsStatusAppealModel from "./DocumentsStatusAppealModel";
 import SortBySignature from "./SortBySignature";
+import { useSearchParams } from "react-router-dom";
 
 const Appeals = () => {
+  const [searchParams] = useSearchParams();
   const [searchText, setSearchText] = useState("");
   const [getAppeals, { data: appeals, isError }] = useGetAppealsMutation();
   const dispatch = useDispatch();
@@ -42,15 +44,21 @@ const Appeals = () => {
   const { editInvoiceData, deleteInvoiceData } = useSelector(
     (state) => state.invoices
   );
-  const [status, setStatus] = useState({ status: "All", id: 0 });
-  const [page, setPage] = useState(1);
-  const [townshipId, setTownshipId] = useState(0);
-  const [sortBy, setSortBy] = useState({
-    name: "Date",
-    value: "-id",
+  const [status, setStatus] = useState({
+    status: searchParams.get("status") || "All",
+    id: Number(searchParams.get("statusId")) || 0,
   });
-  const [sortBySignature, setSortBySignature] = useState("none");
-
+  const [page, setPage] = useState(Number(searchParams.get("page")) || 1);
+  const [townshipId, setTownshipId] = useState(
+    Number(searchParams.get("townshipId")) || 0
+  );
+  const [sortBy, setSortBy] = useState({
+    name: searchParams.get("sortName") || "Date",
+    value: searchParams.get("sortValue") || "-id",
+  });
+  const [sortBySignature, setSortBySignature] = useState(
+    searchParams.get("sortBySignature") || "none"
+  );
   const fetchData = useCallback(async () => {
     const filterObject = {
       appeal_status_id: status.id,
@@ -81,6 +89,53 @@ const Appeals = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchText, status, page, townshipId, sortBy, sortBySignature]);
 
+  useEffect(() => {
+    const params = new URLSearchParams();
+    params.set("status", status.status);
+    params.set("statusId", status.id);
+    params.set("page", page);
+    params.set("townshipId", townshipId);
+    params.set("sortName", sortBy.name);
+    params.set("sortValue", sortBy.value);
+    params.set("sortBySignature", sortBySignature);
+    const newUrl = `/appeals/?${params.toString()}`;
+
+    if (window.location.search !== `?${params.toString()}`) {
+      window.history.pushState({}, "", newUrl);
+    }
+  }, [status, page, townshipId, sortBy, sortBySignature]);
+
+  useEffect(() => {
+    const handlePopState = () => {
+      const searchParams = new URLSearchParams(window.location.search);
+
+      setStatus({
+        status: searchParams.get("status") || "All",
+        id: Number(searchParams.get("statusId") || 0),
+      });
+
+      setPage(Number(searchParams.get("page") || 1));
+      setTownshipId(Number(searchParams.get("townshipId") || 0));
+
+      setSortBy({
+        name: searchParams.get("sortName") || "Date",
+        value: searchParams.get("sortValue") || "-id",
+      });
+
+      setSortBySignature(searchParams.get("sortBySignature") || "none");
+      setSearchText(searchParams.get("search") || "");
+    };
+
+    // شغّل عند أول تحميل
+    handlePopState();
+
+    window.addEventListener("popstate", handlePopState);
+
+    return () => {
+      window.removeEventListener("popstate", handlePopState);
+    };
+  }, [searchParams]);
+
   return (
     <div className="flex flex-col gap-8">
       <div className="flex flex-col gap-6 bg-white rounded-[8px] m-4 p-4 shadow-custom">
@@ -96,7 +151,7 @@ const Appeals = () => {
                 placeholder="Search"
                 value={searchText}
                 onChange={(e) => setSearchText(e.target.value)}
-                className="border-none pl-[30px] text-[#CCCDD2] bg-[#FCFCFC] outline-none focus:outline-offset-0 focus:outline-none absolute top-0 left-0 w-full h-full"
+                className="border-none pl-[30px] text-black bg-[#FCFCFC] outline-none focus:outline-offset-0 focus:outline-none absolute top-0 left-0 w-full h-full"
               />
             </div>
           </div>
@@ -118,7 +173,10 @@ const Appeals = () => {
             staticStatus={{ status: "All", id: 0 }}
             className="sm:w-[20%]"
           />
-          <TownshipDropdown setTownshipId={setTownshipId} />
+          <TownshipDropdown
+            setTownshipId={setTownshipId}
+            townshipId={townshipId}
+          />
           <SortBy setSortBy={setSortBy} sortBy={sortBy} />
           <SortBySignature
             sortBySignature={sortBySignature}
