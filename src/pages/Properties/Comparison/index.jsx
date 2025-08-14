@@ -201,7 +201,7 @@ const Comparison = () => {
     land_sq_ft: "200",
     building_sq_ft: "20",
     age: "20",
-    sort_by: "hight_score",
+    sort_by: "small_building_ratio_first",
     by_distance_only: false,
   });
   const [openMaps, setOpenMaps] = useState(false);
@@ -527,12 +527,13 @@ const Comparison = () => {
                         setFilterSate({ ...filterSate, sort_by: e })
                       }
                       className=""
+                      defaultValue={filterSate.sort_by}
                     >
                       <SelectTrigger
                         className={`!px-4 flex items-center gap-1 rounded-[8px] border  p-1 text-body bg-white text-dark`}
                       >
                         <span>Sort By :</span>
-                        <SelectValue placeholder="High Score" />
+                        <SelectValue placeholder="Small Building Ratio" />
                         {/* <span>{item.name}</span> */}
                       </SelectTrigger>
                       <SelectContent className="bg-white">
