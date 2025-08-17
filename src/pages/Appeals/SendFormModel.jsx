@@ -30,7 +30,7 @@ const whichPDF = [
   {
     id: 3,
     key: "bor",
-    name: "Attorney Authorization Form",
+    name: "BOR Authorization Form",
     pages: [2],
   },
   {
