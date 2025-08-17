@@ -55,15 +55,17 @@ const AppealStatusSelect = ({
               </SelectItem>
             )}
             {allStatus &&
-              allStatus.data.map((item) => (
-                <SelectItem
-                  key={item.id}
-                  value={item.id}
-                  className="text-body mx-2 hover:bg-gray-100 cursor-pointer"
-                >
-                  {item.status}
-                </SelectItem>
-              ))}
+              [...allStatus.data]
+                ?.sort((a, b) => a.sort - b.sort)
+                .map((item) => (
+                  <SelectItem
+                    key={item.id}
+                    value={item.id}
+                    className="text-body mx-2 hover:bg-gray-100 cursor-pointer"
+                  >
+                    {item.status}
+                  </SelectItem>
+                ))}
           </SelectGroup>
         </SelectContent>
       </Select>
