@@ -91,9 +91,11 @@ function App() {
             />
             <Route path={dataScript.actions} element={<DataScriptActions />} />
 
-            <Route path={appeals.index} element={<Appeals />} />
+            <Route
+              path={appeals.index}
+              element={<Appeals appealType="Residential" />}
+            />
             <Route path={appeals.appeal} element={<Appeal />} />
-
 
             <Route path="*" element={<NotFound />} />
           </Routes>

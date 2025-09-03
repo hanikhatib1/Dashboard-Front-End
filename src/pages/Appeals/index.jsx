@@ -27,7 +27,7 @@ import DocumentsStatusAppealModel from "./DocumentsStatusAppealModel";
 import SortBySignature from "./SortBySignature";
 import { useSearchParams } from "react-router-dom";
 
-const Appeals = () => {
+const Appeals = ({ appealType }) => {
   const [searchParams] = useSearchParams();
   const [searchText, setSearchText] = useState("");
   const [getAppeals, { data: appeals, isError }] = useGetAppealsMutation();
@@ -64,6 +64,7 @@ const Appeals = () => {
       appeal_status_id: status.id,
       township_id: townshipId,
       signature_sent: sortBySignature,
+      appeal_type: appealType,
     };
     Object.keys(filterObject).forEach((key) => {
       if (!filterObject[key] || filterObject[key] === "none")
@@ -77,11 +78,12 @@ const Appeals = () => {
   }, [
     status.id,
     townshipId,
+    sortBySignature,
+    appealType,
     getAppeals,
     searchText,
-    sortBy,
+    sortBy.value,
     page,
-    sortBySignature,
   ]);
 
   useEffect(() => {

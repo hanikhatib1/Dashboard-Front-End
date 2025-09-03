@@ -26,29 +26,44 @@ const Taps = ({ expand, setShowSideBarMenu }) => {
         }
         return (
           <div key={index} className={`${expand ? "px-4" : "px-2"} relative`}>
-            <NavLink
-              to={tap.url}
-              onClick={() => setShowSideBarMenu(false)}
-              className={({ isActive }) => {
-                if (isActive) setACtiveTap(index);
-                return isActive
-                  ? `flex relative items-center gap-2 py-2 ${
-                      expand ? "px-1" : "justify-center"
-                    }    text-[#00061DCC] rounded-[8px] bg-primary text-white`
-                  : `flex relative items-center gap-2 py-2 ${
-                      expand ? "px-1" : "justify-center"
-                    }  text-[#00061DCC] rounded-[8px]  hover:bg-primary hover:text-white`;
-              }}
-            >
-              {tap.Icon}
-              {expand && <p className="text-body ">{tap.name}</p>}
-            </NavLink>
-            {expand && (
-              <span
-                className={`${
-                  activeTap === index ? "bg-primary" : ""
-                } absolute top-0 left-0 w-[6px]  rounded-[10px] rounded-tl-none rounded-bl-none h-full `}
-              ></span>
+            {tap.url === null ? (
+              <>
+                <p
+                  className={`flex relative items-center gap-2 py-2 text-[#00061DCC] rounded-[8px] text-opacity-65 whitespace-nowrap ${
+                    expand ? "px-1" : "justify-center"
+                  }`}
+                >
+                  <i>{tap.Icon}</i>
+                  {expand && <span className="flex-1">{tap.name}</span>}
+                </p>
+              </>
+            ) : (
+              <>
+                <NavLink
+                  to={tap.url}
+                  onClick={() => setShowSideBarMenu(false)}
+                  className={({ isActive }) => {
+                    if (isActive) setACtiveTap(index);
+                    return isActive
+                      ? `flex relative items-center gap-2 py-2 ${
+                          expand ? "px-1" : "justify-center"
+                        }    text-[#00061DCC] rounded-[8px] bg-primary text-white`
+                      : `flex relative items-center gap-2 py-2 ${
+                          expand ? "px-1" : "justify-center"
+                        }  text-[#00061DCC] rounded-[8px]  hover:bg-primary hover:text-white`;
+                  }}
+                >
+                  {tap.Icon}
+                  {expand && <p className="text-body ">{tap.name}</p>}
+                </NavLink>
+                {expand && (
+                  <span
+                    className={`${
+                      activeTap === index ? "bg-primary" : ""
+                    } absolute top-0 left-0 w-[6px]  rounded-[10px] rounded-tl-none rounded-bl-none h-full `}
+                  ></span>
+                )}
+              </>
             )}
           </div>
         );

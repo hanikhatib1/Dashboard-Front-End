@@ -19,6 +19,7 @@ import {
   Upload,
   Users,
   FileQuestionMark,
+  LampDesk,
 } from "lucide-react";
 
 export const TapsData = [
@@ -43,9 +44,14 @@ export const TapsData = [
     url: "/properties",
   },
   {
-    name: "Appeals",
+    name: "Residential Appeals",
     Icon: <AppealsIcon />,
     url: "/appeals",
+  },
+  {
+    name: "Commercial Appeals (soon)",
+    Icon: <LampDesk />,
+    url: null,
   },
   /* {
     name: "Exemptions",

@@ -106,13 +106,6 @@ export const appealsColumns = [
     },
   },
   {
-    accessorKey: "appeal_type",
-    header: "Appeal Type",
-    cell: ({ row }) => {
-      return <span className="text-[#4693D6]">{row.original.appeal_type}</span>;
-    },
-  },
-  {
     header: "Status",
     cell: ({ row }) => {
       const [updateAppeal, { isLoading }] = useUpdateAppealMutation();

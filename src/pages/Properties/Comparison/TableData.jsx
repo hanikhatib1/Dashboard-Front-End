@@ -102,12 +102,12 @@ export const comparisonAssessmentsColumns = [
     },
   },
   {
-    header: "Taxes",
+    header: "OVACLS",
     cell: ({ row }) => {
       const rowData = row.original;
       return (
-        <p className="capitalize">
-          $ {rowData.taxes && rowData.taxes.toLocaleString()}
+        <p className="capitalize max-w-[230px]">
+          {rowData.ovacls}
         </p>
       );
     },
