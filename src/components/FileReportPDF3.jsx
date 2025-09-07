@@ -738,8 +738,8 @@ const FileReportPDF3 = ({ mainPin, pins }) => {
       ) : (
         <>
           <Download color="#fff" size={20} />
-          <p className="!text-[14px] font-medium hidden md:block">
-            Export Report
+          <p className="!text-[14px] font-medium hidden md:block whitespace-nowrap">
+            Export Comparables
           </p>
         </>
       )}

@@ -8,6 +8,7 @@ import {
 import {
   addAppealToInvoice,
   setAppealInvoiceDetails,
+  setCanceledAppeal,
   setDeleteAppealData,
   setDocumentsStatusAppealModel,
   setEditAppealData,
@@ -24,6 +25,7 @@ import AppealStatusSelect from "./AppealStatusSelect";
 import { useEffect, useState } from "react";
 import { useUpdateAppealMutation } from "@/redux/apiSlice";
 import { toast } from "@/components/ui/use-toast";
+import Loader from "@/components/Loader";
 
 export const appealsColumns = [
   // add check box
@@ -110,6 +112,7 @@ export const appealsColumns = [
     cell: ({ row }) => {
       const [updateAppeal, { isLoading }] = useUpdateAppealMutation();
       const [status, setStatus] = useState(row.original.appeal_status);
+      const dispatch = useDispatch();
 
       const handleUpdateStatus = async (val) => {
         const defaultValue = {
@@ -137,23 +140,33 @@ export const appealsColumns = [
         Object.keys(defaultValue).forEach((key) => {
           formData.append(key, defaultValue[key]);
         });
-        const res = await updateAppeal({
-          id: row.original.id,
-          body: formData,
-        });
-        if ("data" in res) {
-          /*  alert("Status updated successfully"); */
-          toast({
-            title: "Success",
-            description: "Status updated successfully",
-            variant: "success",
-          });
+        console.log("defaultValue:::", defaultValue);
+        if (val === 7) {
+          dispatch(
+            setCanceledAppeal({
+              id: row.original.id,
+              body: defaultValue,
+            })
+          );
         } else {
-          toast({
-            title: "Error",
-            description: res.error.data?.message || "Failed to update status",
-            variant: "destructive",
+          const res = await updateAppeal({
+            id: row.original.id,
+            body: formData,
           });
+          if ("data" in res) {
+            /*  alert("Status updated successfully"); */
+            toast({
+              title: "Success",
+              description: "Status updated successfully",
+              variant: "success",
+            });
+          } else {
+            toast({
+              title: "Error",
+              description: res.error.data?.detail || "Failed to update status",
+              variant: "destructive",
+            });
+          }
         }
       };
 
@@ -166,13 +179,17 @@ export const appealsColumns = [
           {/*  <span className="text-[#4693D6]">
             {row.original.appeal_status.status}
           </span> */}
-          <AppealStatusSelect
-            status={status}
-            setStatus={setStatus}
-            setValue={(key, val) => handleUpdateStatus(val)}
-            keyOfValue="appeal_status_id"
-            showStatusKeyword={false}
-          />
+          {isLoading ? (
+            <Loader />
+          ) : (
+            <AppealStatusSelect
+              status={status}
+              setStatus={setStatus}
+              setValue={(key, val) => handleUpdateStatus(val)}
+              keyOfValue="appeal_status_id"
+              showStatusKeyword={false}
+            />
+          )}
         </div>
       );
     },

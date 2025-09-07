@@ -26,6 +26,7 @@ import SendFormModel from "./SendFormModel";
 import DocumentsStatusAppealModel from "./DocumentsStatusAppealModel";
 import SortBySignature from "./SortBySignature";
 import { useSearchParams } from "react-router-dom";
+import CanceledAppealModal from "./CanceledAppealModal";
 
 const Appeals = ({ appealType }) => {
   const [searchParams] = useSearchParams();
@@ -40,6 +41,7 @@ const Appeals = ({ appealType }) => {
     formsAppeal,
     documentsStatusAppealModel,
     formsAppealArray,
+    canceledAppeal,
   } = useSelector((state) => state.appeals);
   const { editInvoiceData, deleteInvoiceData } = useSelector(
     (state) => state.invoices
@@ -128,7 +130,6 @@ const Appeals = ({ appealType }) => {
       setSearchText(searchParams.get("search") || "");
     };
 
-    // شغّل عند أول تحميل
     handlePopState();
 
     window.addEventListener("popstate", handlePopState);
@@ -140,7 +141,7 @@ const Appeals = ({ appealType }) => {
 
   return (
     <div className="flex flex-col gap-8">
-      <div className="flex flex-col gap-6 bg-white rounded-[8px] m-4 p-4 shadow-custom">
+      <div className="flex flex-col gap-6 bg-white rounded-[8px] m-4 p-4 shadow-custom border h-[calc(100vh-100px)]">
         <div className="flex gap-3 justify-between items-center">
           <div className="flex gap-4 w-full md:flex-1 max-w-[400px]">
             <div className="rounded-[8px] border overflow-hidden relative h-[40px] w-full md:min-w-[400px] text-[#A1A1AA]">
@@ -185,7 +186,7 @@ const Appeals = ({ appealType }) => {
             setSortBySignature={setSortBySignature}
           />
         </div>
-        <div className="rounded-[8px] flex flex-col border max-h-[580px]">
+        <div className="rounded-[8px] flex flex-col border overflow-y-auto  flex-1">
           {isError ? (
             "An error has occurred"
           ) : !appeals ? (
@@ -220,6 +221,7 @@ const Appeals = ({ appealType }) => {
       {deleteInvoiceData && <DeleteInvoiceModel />}
       {formsAppeal && <SendFormModel />}
       {documentsStatusAppealModel && <DocumentsStatusAppealModel />}
+      {canceledAppeal && <CanceledAppealModal />}
     </div>
   );
 };

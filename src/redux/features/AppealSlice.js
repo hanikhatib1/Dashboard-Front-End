@@ -12,6 +12,7 @@ export const appealSlice = createSlice({
     formsAppealArray: [],
     documentsStatusAppealModel: null,
     cookCountyAssessorPDF: null,
+    canceledAppeal: null,
   },
   reducers: {
     setAppeals: (state, action) => {
@@ -41,6 +42,9 @@ export const appealSlice = createSlice({
     setCookCountyAssessorPDF: (state, action) => {
       state.cookCountyAssessorPDF = action.payload;
     },
+    setCanceledAppeal: (state, action) => {
+      state.canceledAppeal = action.payload;
+    },
   },
 });
 
@@ -54,6 +58,7 @@ export const {
   addAppealToInvoice,
   setAppealInvoiceDetails,
   setCookCountyAssessorPDF,
+  setCanceledAppeal,
 } = appealSlice.actions;
 
 export default appealSlice.reducer;
