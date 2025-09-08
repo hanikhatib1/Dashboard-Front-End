@@ -115,14 +115,14 @@ const CanceledAppealModal = () => {
             className="bg-red-500 hover:bg-red-600 rounded-[8px]  text-white"
             onClick={() => handleCancelAppeal()}
           >
-            {isLoading ? <Loader /> : <span>Cancel</span>}
+            {isLoading ? <Loader /> : <span>Cancel Appeal</span>}
           </Button>
           <Button
             type="submit"
             className="bg-primary rounded-[8px]  text-white"
             onClick={() => dispatch(setCanceledAppeal(null))}
           >
-            Cancel
+            Close
           </Button>
         </DialogFooter>
       </DialogContent>
