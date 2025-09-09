@@ -13,6 +13,7 @@ import {
 import { Button } from "../components/ui/button";
 import { useEffect, useState } from "react";
 import CookCountyAssessorpdf from "./CookCountyAssessorpdf";
+import AppealPDF4 from "@/AppealPDF4";
 
 const CombinedPDFReportModel = ({ mainPin, pins }) => {
   const [getReportData, { isLoading, data }] = useGetReportDataMutation();
@@ -30,10 +31,6 @@ const CombinedPDFReportModel = ({ mainPin, pins }) => {
     });
   };
 
-  /*   useEffect(() => {
-    fetchReportData();
-  }, [pins]); */
-
   return (
     <Dialog defaultOpen={open} open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild className="!flex-1">
@@ -45,13 +42,13 @@ const CombinedPDFReportModel = ({ mainPin, pins }) => {
           }}
         >
           <Plus color="#ffffff" />
-          <p>Assessor Appeal Narrative</p>
+          <p>Appeal Narrative</p>
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[800px] max-w-[calc(100%-32px)] max-h-[calc(100vh-20%)]  bg-white !rounded-[8px] overflow-y-auto scroll-right">
         <DialogHeader>
           <DialogTitle className="text-heading_1">
-            Cook County Assessor
+            Appeal Narrative{" "}
           </DialogTitle>
         </DialogHeader>
         <div className="flex flex-col gap-2 flex-1">
@@ -64,27 +61,50 @@ const CombinedPDFReportModel = ({ mainPin, pins }) => {
           />
         </div>
         {data && pins.length !== 0 && (
-          <PDFDownloadLink
-            document={
-              <CookCountyAssessorpdf
-                reportData={data.data}
-                clientName={clientName}
-              />
-            }
-            fileName="CookCounty_Appeal.pdf"
-            className="w-full"
-          >
-            <div
-              className={`flex gap-2 !p-1 !bg-white !text-black items-center ${data.data ? "cursor-pointer hover:border-gray-400 rounded-[8px] overflow-hidden" : ""} border border-white `}
+          <div className="flex flex-col gap-4 mt-4">
+            <PDFDownloadLink
+              document={
+                <CookCountyAssessorpdf
+                  reportData={data.data}
+                  clientName={clientName}
+                />
+              }
+              fileName="CookCounty_Appeal.pdf"
+              className="w-full"
             >
-              <Download color="#80838E" />{" "}
-              <p
-                className={`text-[16px] font-medium ${data.data ? "" : "text-[#80838E]"}`}
+              <div
+                className={`flex gap-2 !p-1 !bg-white !text-black items-center ${data.data ? "cursor-pointer hover:border-gray-400 rounded-[8px] overflow-hidden" : ""} border border-white `}
               >
-                Cook County Assessor
-              </p>
-            </div>
-          </PDFDownloadLink>
+                <Download color="#80838E" />{" "}
+                <p
+                  className={`text-[16px] font-medium ${data.data ? "" : "text-[#80838E]"}`}
+                >
+                  Cook County Assessor
+                </p>
+              </div>
+            </PDFDownloadLink>
+            {data.data && (
+              <PDFDownloadLink
+                document={
+                  <AppealPDF4 reportData={data.data} clientName={clientName} />
+                }
+                fileName="CookCounty_Appeal.pdf"
+                className="w-full"
+              >
+                <div
+                  className={`flex gap-2 !p-1 !bg-white !text-black items-center ${data.data ? "cursor-pointer hover:border-gray-400 rounded-[8px] overflow-hidden" : ""} border border-white `}
+                >
+                  <Download color="#80838E" />{" "}
+                  <p
+                    className={`text-[16px] font-medium ${data.data ? "" : "text-[#80838E]"}`}
+                  >
+                    Board Of Review
+                  </p>
+                </div>
+              </PDFDownloadLink>
+            )}
+            {/* */}
+          </div>
         )}
       </DialogContent>
     </Dialog>
