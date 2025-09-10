@@ -578,7 +578,7 @@ const Comparison = () => {
                   </div>
                 </div>
                 <p
-                  className={`flex md:hidden gap-2 self-center md:border-l-[3px] pl-2 border-primary capitalize `}
+                  className={`flex md:hidden gap-2 self-center md:border-l-[3px] pl-2 border-primary `}
                 >
                   <span className="leading-[45px]">Total Saving</span>
                   <span className="text-[30px] leading-[45px] font-bold">

@@ -724,7 +724,7 @@ const FileReportPDF3 = ({ mainPin, pins }) => {
     const url = URL.createObjectURL(blob);
     const link = document.createElement("a");
     link.href = url;
-    link.download = `Report.pdf`;
+    link.download = `Comparables`;
     link.click();
   };
 

@@ -69,7 +69,7 @@ const CombinedPDFReportModel = ({ mainPin, pins }) => {
                   clientName={clientName}
                 />
               }
-              fileName="CookCounty_Appeal.pdf"
+              fileName={`${clientName} Cook County Assessor`}
               className="w-full"
             >
               <div
@@ -88,7 +88,7 @@ const CombinedPDFReportModel = ({ mainPin, pins }) => {
                 document={
                   <AppealPDF4 reportData={data.data} clientName={clientName} />
                 }
-                fileName="CookCounty_Appeal.pdf"
+                fileName={`${clientName} appeal narrative`}
                 className="w-full"
               >
                 <div

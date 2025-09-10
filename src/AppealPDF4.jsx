@@ -11,19 +11,28 @@ import { formatePin } from "./utiles/formatePin";
 import { formattedNumber } from "./utiles/formattedNumber";
 
 const styles = StyleSheet.create({
-  page: { padding: 40, fontSize: 12, lineHeight: 1.6 },
+  page: {
+    padding: 40,
+    fontSize: 12,
+    lineHeight: 1.6,
+    fontFamily: "Times-Roman",
+  },
   section: { marginBottom: 12 },
   title: {
     fontSize: 14,
     textAlign: "center",
     fontWeight: "bold",
-    marginBottom: 12,
     textTransform: "uppercase",
   },
-  subtitle: { fontSize: 12, textAlign: "center", marginBottom: 20 },
+  subtitle: {
+    fontSize: 12,
+    textAlign: "center",
+    marginBottom: 2,
+    fontWeight: "bold",
+  },
   bold: { fontWeight: "bold" },
   paragraph: { marginBottom: 10, textAlign: "justify" },
-  line: { marginBottom: 4 },
+  line: { marginBottom: 0 },
   signatureImg: { width: 120, height: 30, marginTop: 10, marginBottom: 10 },
   table: {
     display: "flex",
@@ -73,10 +82,9 @@ const styles = StyleSheet.create({
 });
 
 const AppealPDF4 = ({ reportData, clientName = "" }) => {
-  const currentYear = new Date().getFullYear();
-  const currentMonth = new Date().getMonth();
-  const currentDay = new Date().getDate();
-  const currentDate = `${currentMonth + 1}/${currentDay}/${currentYear}`;
+  const currentDate = new Date();
+  const options = { year: "numeric", month: "long", day: "numeric" };
+  const formattedDate = currentDate.toLocaleDateString("en-US", options);
 
   const rowKeys = [
     "pin",
@@ -168,7 +176,7 @@ const AppealPDF4 = ({ reportData, clientName = "" }) => {
   const mapImage = `https://maps.googleapis.com/maps/api/staticmap?center=${center}&size=${imageSize}&maptype=${maptype}&${markers}&zoom=${zoom}&key=${import.meta.env.VITE_GOOGLE_MAPS_API_KEY}`;
 
   return (
-    <Document>
+    <Document title={`${clientName} appeal narrative`} subject="ssss">
       <Page size="A4" style={styles.page}>
         <View style={styles.section}>
           <Text style={styles.title}>COOK COUNTY BOARD OF REVIEW</Text>
@@ -178,17 +186,36 @@ const AppealPDF4 = ({ reportData, clientName = "" }) => {
         </View>
 
         <View style={styles.section}>
-          <Text style={styles.line}>Date: {currentDate}</Text>
-          <Text style={styles.line}>RE: Owner Name: {clientName}</Text>
+          <Text style={styles.line}>Date: {formattedDate}</Text>
+          <Text style={{ ...styles.line, marginBottom: "6px" }}>
+            RE: Owner Name: {clientName}
+          </Text>
+
           <Text style={styles.line}>
             Township: {reportData.properties[0].township}
           </Text>
-          <Text style={styles.line}>
+          <Text style={{ ...styles.line, marginBottom: "6px" }}>
             Property PIN: {formatePin(reportData?.subject_pin)}
           </Text>
-          <Text style={styles.line}>
-            Address: {reportData.property_full_address}
-          </Text>
+          <View style={{ display: "flex", flexDirection: "row", gap: 5 }}>
+            <Text style={styles.line}>Address:</Text>
+            <View
+            /* style={{
+                display: "flex",
+                flexDirection: "column",
+                maxWidth: "10px",
+              }} */
+            >
+              <Text style={styles.line}>
+                {reportData.properties[0].address}
+              </Text>
+              <Text style={styles.line}>
+                {reportData.properties[0].city},{" "}
+                {reportData.properties[0].state}{" "}
+                {reportData.properties[0].zip_code}
+              </Text>
+            </View>
+          </View>
         </View>
 
         {/* التحية والافتتاح */}
@@ -211,32 +238,40 @@ const AppealPDF4 = ({ reportData, clientName = "" }) => {
           <Text style={styles.bold}>Basis of Appeal</Text>
           <Text style={styles.paragraph}>
             The Illinois Constitution, Article IX, Section 4(a), and applicable
-            statutes, including 35 ILCS 200/16-55, require that properties be
-            assessed uniformly. Our analysis of comparable residential
-            properties demonstrates that the subject property is assessed at a
-            disproportionately higher per-square-foot value than similarly
-            situated homes of like class, size, and age.
+            statutes, including{" "}
+            <Text style={{ color: "blue", textDecoration: "underline" }}>
+              35 ILCS 200/16-55,
+            </Text>{" "}
+            require that properties be assessed uniformly. Our analysis of
+            comparable residential properties demonstrates that the subject
+            property is assessed at a disproportionately higher per-square-foot
+            value than similarly situated homes of like class, size, and age.
           </Text>
         </View>
 
         {/* Supporting Evidence */}
         <View style={styles.section}>
           <Text style={styles.bold}>Supporting Evidence (per CCBOR Rules)</Text>
-          <Text>
+          <Text style={{ marginBottom: 6 }}>
             In compliance with the Boards rules, the following are submitted:
           </Text>
           <Text>
-            • Exhibit A: Recent color photograph of the subject property (taken
-            within the past twelve months).
+            • <Text style={{ fontWeight: "bold" }}>Exhibit A:</Text> Recent
+            color photograph of the subject property (taken within the past
+            twelve months).
           </Text>
-          <Text>• Exhibit B: Comparable Properties Matrix Report</Text>
           <Text>
-            • Exhibit C: Comparable photos and map identifying comparable
-            properties located in the same neighborhood and tax code.
+            • <Text style={{ fontWeight: "bold" }}>Exhibit B:</Text> Comparable
+            Properties Matrix Report
+          </Text>
+          <Text>
+            • <Text style={{ fontWeight: "bold" }}>Exhibit C:</Text> Comparable
+            photos and map identifying comparable properties located in the same
+            neighborhood and tax code.
           </Text>
         </View>
 
-        <View style={styles.section}>
+        <View style={{ ...styles.section, marginTop: 20 }}>
           <Text style={styles.bold}>Equity Ratio Analysis</Text>
           <Text>
             • Subject Property Building AV per Sq. Ft. : $
@@ -273,7 +308,10 @@ const AppealPDF4 = ({ reportData, clientName = "" }) => {
             uniform. The Illinois Supreme Court has consistently held that
             assessments must reflect uniformity in relation to comparable
             properties (Kankakee County Board of Review v. Property Tax Appeal
-            Board, 131 Ill. 2d 1 (1989)). Additionally, 35 ILCS 200/16-55
+            Board, 131 Ill. 2d 1 (1989)). Additionally,{" "}
+            <Text style={{ color: "blue", textDecoration: "underline" }}>
+              35 ILCS 200/16-55
+            </Text>{" "}
             provides taxpayers the right to appeal assessments that are not
             uniform with comparable properties.
           </Text>
@@ -281,6 +319,10 @@ const AppealPDF4 = ({ reportData, clientName = "" }) => {
 
         <View style={styles.section}>
           <Text style={styles.bold}>Requested Reduction</Text>
+          <Text style={{ ...styles.paragraph, marginBottom: 10 }}>
+            We respectfully request that the Assessed Valuation of the subject
+            property be reduced as follows:
+          </Text>
           <Text style={styles.line}>
             • Land AV: ${formattedNumber(reportData.land_assessment)}
           </Text>
@@ -291,7 +333,7 @@ const AppealPDF4 = ({ reportData, clientName = "" }) => {
               true
             )}
           </Text>
-          <Text style={styles.line}>
+          <Text style={{ ...styles.line, marginBottom: 12 }}>
             • AV: ${formattedNumber(reportData.requested_total_av, true)}
           </Text>
           <Text style={styles.paragraph}>
@@ -317,11 +359,13 @@ const AppealPDF4 = ({ reportData, clientName = "" }) => {
               ...styles.exhibitTitle,
               textAlign: "center",
               marginTop: "40px",
+              fontWeight: "bold",
+              marginBottom: 0,
             }}
           >
             EXHIBIT A
           </Text>
-          <Text style={{ textAlign: "center" }}>
+          <Text style={{ textAlign: "center", fontWeight: "bold" }}>
             Recent Photo of Subject Property
           </Text>
         </View>
@@ -337,11 +381,13 @@ const AppealPDF4 = ({ reportData, clientName = "" }) => {
               style={{
                 ...styles.exhibitTitle,
                 textAlign: "center",
+                fontWeight: "bold",
+                marginBottom: 0,
               }}
             >
               EXHIBIT B
             </Text>
-            <Text style={styles.tableHeader}>
+            <Text style={{ ...styles.tableHeader, fontWeight: "bold" }}>
               Comparable Property Analysis/Evidence Sheet
             </Text>
           </View>
@@ -697,6 +743,8 @@ const AppealPDF4 = ({ reportData, clientName = "" }) => {
             style={{
               ...styles.exhibitTitle,
               textAlign: "center",
+              fontWeight: "bold",
+              marginBottom: 0,
             }}
           >
             EXHIBIT C
