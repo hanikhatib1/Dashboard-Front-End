@@ -380,7 +380,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         >
           {({ loading }) => (loading ? "Loading PDF..." : "Download PDF")}
         </PDFDownloadLink> */}
-        {/* <div className="border h-[100vh] w-full">
+       {/*  <div className="border h-[100vh] w-full">
           <PDFViewer width="100%" height="100%">
             <AppealPDF4 reportData={sampleData.data} />
           </PDFViewer>

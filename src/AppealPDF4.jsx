@@ -5,6 +5,7 @@ import {
   View,
   StyleSheet,
   Image,
+  Line,
 } from "@react-pdf/renderer";
 import signature from "@/assets/images/sign.jpg";
 import { formatePin } from "./utiles/formatePin";
@@ -23,16 +24,18 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontWeight: "bold",
     textTransform: "uppercase",
+    lineHeight: 1,
   },
   subtitle: {
     fontSize: 12,
     textAlign: "center",
     marginBottom: 2,
     fontWeight: "bold",
+    lineHeight: 1,
   },
   bold: { fontWeight: "bold" },
-  paragraph: { marginBottom: 10, textAlign: "justify" },
-  line: { marginBottom: 0 },
+  paragraph: { marginVertical: 10, textAlign: "justify", lineHeight: 1 },
+  line: { marginBottom: 0, lineHeight: 1 },
   signatureImg: { width: 120, height: 30, marginTop: 10, marginBottom: 10 },
   table: {
     display: "flex",
@@ -42,6 +45,7 @@ const styles = StyleSheet.create({
     borderRightWidth: 0,
     borderBottomWidth: 0,
     marginTop: 20,
+    lineHeight: 1,
   },
   tableRow: {
     flexDirection: "row",
@@ -56,6 +60,7 @@ const styles = StyleSheet.create({
     padding: 5,
     textAlign: "center",
     fontWeight: "bold",
+    lineHeight: 1,
   },
   tableCol: {
     width: "20%",
@@ -65,23 +70,25 @@ const styles = StyleSheet.create({
     borderTopWidth: 0,
     padding: 5,
     textAlign: "center",
+    lineHeight: 1,
   },
   tableHeader: {
     fontSize: 12,
     textAlign: "center",
     marginBottom: 10,
     fontWeight: "bold",
+    lineHeight: 1,
   },
   tableImage: {
-    width: "70%",
+    width: "100%",
     height: 125,
-    marginBottom: 10,
-    marginLeft: "auto",
-    marginRight: "auto",
+    /*  marginBottom: 10, */
+    /* marginLeft: "auto",
+    marginRight: "auto", */
   },
 });
 
-const AppealPDF4 = ({ reportData, clientName = "" }) => {
+const AppealPDF4 = ({ reportData, clientName = "client name" }) => {
   const currentDate = new Date();
   const options = { year: "numeric", month: "long", day: "numeric" };
   const formattedDate = currentDate.toLocaleDateString("en-US", options);
@@ -105,8 +112,10 @@ const AppealPDF4 = ({ reportData, clientName = "" }) => {
   ];
 
   const getValue = (item, key) => {
-    if (key === "building_sq_ft") return item["building_sq_ft"] || "-";
-    if (key === "ac") return item["ac"] || "-";
+    if (key === "building_sq_ft")
+      return Number(item["building_sq_ft"]).toLocaleString() || "-";
+    if (key === "ac")
+      return item["ac"] ? String(item["ac"]).toLocaleLowerCase() : "-";
     if (key === "address")
       return item["address"]?.address || item["address"] || "-";
     if (key === "building_av/sf.")
@@ -114,6 +123,16 @@ const AppealPDF4 = ({ reportData, clientName = "" }) => {
     if (key === "pin") return formatePin(item["pin"] ? item["pin"] : "") || "-";
     if (key === "exterior_construction")
       return item["exterior_construction"] || "-";
+    if (key === "land_assessment")
+      return item["land_assessment"]
+        ? `${Number(item["land_assessment"]).toLocaleString()}`
+        : "-";
+    if (key === "city")
+      return item["city"] ? String(item["city"]).toLocaleLowerCase() : "-";
+    if (key === "basement")
+      return item["basement"]
+        ? String(item["basement"]).toLocaleLowerCase()
+        : "-";
 
     return item[key] || "-";
   };
@@ -175,6 +194,246 @@ const AppealPDF4 = ({ reportData, clientName = "" }) => {
   const maptype = "roadmap";
   const mapImage = `https://maps.googleapis.com/maps/api/staticmap?center=${center}&size=${imageSize}&maptype=${maptype}&${markers}&zoom=${zoom}&key=${import.meta.env.VITE_GOOGLE_MAPS_API_KEY}`;
 
+  const comparable = reportData?.properties.slice(1, 7);
+
+  /* if (reportData?.data?.properties[1]) {
+    const jpgUrl = reportData?.data?.properties[1].property_image;
+
+    if (jpgUrl) {
+      try {
+        const proxyUrl = `${import.meta.env.VITE_BASE_URL_BACKEND}/property/image_proxy?url=${encodeURIComponent(jpgUrl)}`;
+
+        const response = await fetch(proxyUrl);
+        if (!response.ok) {
+          throw new Error(`Image proxy fetch failed: ${response.status}`);
+        }
+
+        const contentType = response.headers.get("Content-Type");
+        const imageBytes = await response.arrayBuffer();
+
+        let embeddedImage;
+
+        if (contentType?.includes("image/png")) {
+          embeddedImage = await pdfDoc.embedPng(imageBytes);
+        } else if (
+          contentType?.includes("image/jpeg") ||
+          contentType?.includes("image/jpg")
+        ) {
+          embeddedImage = await pdfDoc.embedJpg(imageBytes);
+        } else {
+          throw new Error(`Unsupported image type: ${contentType}`);
+        }
+
+        setImageXY(secondPage, embeddedImage, 0);
+      } catch (error) {
+        console.error(
+          "Failed to load or embed image via proxy:",
+          error.message
+        );
+      }
+    } else {
+      console.warn("Image URL is empty or undefined");
+    }
+  }
+
+  if (reportData?.data?.properties[2]) {
+    const jpgUrl = reportData?.data?.properties[2].property_image;
+
+    if (jpgUrl) {
+      try {
+        const proxyUrl = `${import.meta.env.VITE_BASE_URL_BACKEND}/property/image_proxy?url=${encodeURIComponent(jpgUrl)}`;
+
+        const response = await fetch(proxyUrl);
+        if (!response.ok) {
+          throw new Error(`Image proxy fetch failed: ${response.status}`);
+        }
+
+        const contentType = response.headers.get("Content-Type");
+        const imageBytes = await response.arrayBuffer();
+
+        let embeddedImage;
+
+        if (contentType?.includes("image/png")) {
+          embeddedImage = await pdfDoc.embedPng(imageBytes);
+        } else if (
+          contentType?.includes("image/jpeg") ||
+          contentType?.includes("image/jpg")
+        ) {
+          embeddedImage = await pdfDoc.embedJpg(imageBytes);
+        } else {
+          throw new Error(`Unsupported image type: ${contentType}`);
+        }
+
+        setImageXY(secondPage, embeddedImage, 1);
+      } catch (error) {
+        console.error(
+          "Failed to load or embed image via proxy:",
+          error.message
+        );
+      }
+    } else {
+      console.warn("Image URL is empty or undefined");
+    }
+  }
+
+  if (reportData?.data?.properties[3]) {
+    const jpgUrl = reportData?.data?.properties[3].property_image;
+    if (jpgUrl) {
+      try {
+        const proxyUrl = `${import.meta.env.VITE_BASE_URL_BACKEND}/property/image_proxy?url=${encodeURIComponent(jpgUrl)}`;
+
+        const response = await fetch(proxyUrl);
+        if (!response.ok) {
+          throw new Error(`Image proxy fetch failed: ${response.status}`);
+        }
+
+        const contentType = response.headers.get("Content-Type");
+        const imageBytes = await response.arrayBuffer();
+
+        let embeddedImage;
+
+        if (contentType?.includes("image/png")) {
+          embeddedImage = await pdfDoc.embedPng(imageBytes);
+        } else if (
+          contentType?.includes("image/jpeg") ||
+          contentType?.includes("image/jpg")
+        ) {
+          embeddedImage = await pdfDoc.embedJpg(imageBytes);
+        } else {
+          throw new Error(`Unsupported image type: ${contentType}`);
+        }
+
+        setImageXY(secondPage, embeddedImage, 2);
+      } catch (error) {
+        console.error(
+          "Failed to load or embed image via proxy:",
+          error.message
+        );
+      }
+    } else {
+      console.warn("Image URL is empty or undefined");
+    }
+  }
+
+  if (reportData?.data?.properties[4]) {
+    const jpgUrl = reportData?.data?.properties[4].property_image;
+
+    if (jpgUrl) {
+      try {
+        const proxyUrl = `${import.meta.env.VITE_BASE_URL_BACKEND}/property/image_proxy?url=${encodeURIComponent(jpgUrl)}`;
+
+        const response = await fetch(proxyUrl);
+        if (!response.ok) {
+          throw new Error(`Image proxy fetch failed: ${response.status}`);
+        }
+
+        const contentType = response.headers.get("Content-Type");
+        const imageBytes = await response.arrayBuffer();
+
+        let embeddedImage;
+
+        if (contentType?.includes("image/png")) {
+          embeddedImage = await pdfDoc.embedPng(imageBytes);
+        } else if (
+          contentType?.includes("image/jpeg") ||
+          contentType?.includes("image/jpg")
+        ) {
+          embeddedImage = await pdfDoc.embedJpg(imageBytes);
+        } else {
+          throw new Error(`Unsupported image type: ${contentType}`);
+        }
+
+        setImageXY(secondPage, embeddedImage, 3);
+      } catch (error) {
+        console.error(
+          "Failed to load or embed image via proxy:",
+          error.message
+        );
+      }
+    } else {
+      console.warn("Image URL is empty or undefined");
+    }
+  }
+
+  if (reportData?.data?.properties[5]) {
+    const jpgUrl = reportData?.data?.properties[5].property_image;
+    if (jpgUrl) {
+      try {
+        const proxyUrl = `${import.meta.env.VITE_BASE_URL_BACKEND}/property/image_proxy?url=${encodeURIComponent(jpgUrl)}`;
+
+        const response = await fetch(proxyUrl);
+        if (!response.ok) {
+          throw new Error(`Image proxy fetch failed: ${response.status}`);
+        }
+
+        const contentType = response.headers.get("Content-Type");
+        const imageBytes = await response.arrayBuffer();
+
+        let embeddedImage;
+
+        if (contentType?.includes("image/png")) {
+          embeddedImage = await pdfDoc.embedPng(imageBytes);
+        } else if (
+          contentType?.includes("image/jpeg") ||
+          contentType?.includes("image/jpg")
+        ) {
+          embeddedImage = await pdfDoc.embedJpg(imageBytes);
+        } else {
+          throw new Error(`Unsupported image type: ${contentType}`);
+        }
+
+        setImageXY(secondPage, embeddedImage, 4);
+      } catch (error) {
+        console.error(
+          "Failed to load or embed image via proxy:",
+          error.message
+        );
+      }
+    } else {
+      console.warn("Image URL is empty or undefined");
+    }
+  }
+
+  if (reportData?.data?.properties[6]) {
+    const jpgUrl = reportData?.data?.properties[6].property_image;
+
+    if (jpgUrl) {
+      try {
+        const proxyUrl = `${import.meta.env.VITE_BASE_URL_BACKEND}/property/image_proxy?url=${encodeURIComponent(jpgUrl)}`;
+
+        const response = await fetch(proxyUrl);
+        if (!response.ok) {
+          throw new Error(`Image proxy fetch failed: ${response.status}`);
+        }
+
+        const contentType = response.headers.get("Content-Type");
+        const imageBytes = await response.arrayBuffer();
+
+        let embeddedImage;
+
+        if (contentType?.includes("image/png")) {
+          embeddedImage = await pdfDoc.embedPng(imageBytes);
+        } else if (
+          contentType?.includes("image/jpeg") ||
+          contentType?.includes("image/jpg")
+        ) {
+          embeddedImage = await pdfDoc.embedJpg(imageBytes);
+        } else {
+          throw new Error(`Unsupported image type: ${contentType}`);
+        }
+
+        setImageXY(secondPage, embeddedImage, 5);
+      } catch (error) {
+        console.error(
+          "Failed to load or embed image via proxy:",
+          error.message
+        );
+      }
+    } else {
+      console.warn("Image URL is empty or undefined");
+    }
+  } */
+
   return (
     <Document title={`${clientName} appeal narrative`} subject="ssss">
       <Page size="A4" style={styles.page}>
@@ -197,20 +456,14 @@ const AppealPDF4 = ({ reportData, clientName = "" }) => {
           <Text style={{ ...styles.line, marginBottom: "6px" }}>
             Property PIN: {formatePin(reportData?.subject_pin)}
           </Text>
-          <View style={{ display: "flex", flexDirection: "row", gap: 5 }}>
+          <View style={{ display: "flex", flexDirection: "row", gap: 2 }}>
             <Text style={styles.line}>Address:</Text>
-            <View
-            /* style={{
-                display: "flex",
-                flexDirection: "column",
-                maxWidth: "10px",
-              }} */
-            >
-              <Text style={styles.line}>
-                {reportData.properties[0].address}
+            <View>
+              <Text style={{ ...styles.line, textTransform: "capitalize" }}>
+                {String(reportData.properties[0].address).toLocaleLowerCase()}
               </Text>
-              <Text style={styles.line}>
-                {reportData.properties[0].city},{" "}
+              <Text style={{ ...styles.line, textTransform: "capitalize" }}>
+                {String(reportData.properties[0].city).toLocaleLowerCase()},{" "}
                 {reportData.properties[0].state}{" "}
                 {reportData.properties[0].zip_code}
               </Text>
@@ -220,23 +473,23 @@ const AppealPDF4 = ({ reportData, clientName = "" }) => {
 
         {/* التحية والافتتاح */}
         <View style={styles.section}>
-          <Text>
+          <Text style={styles.line}>
             To the Honorable Members of the Cook County Board of Review:
           </Text>
-          <Text style={styles.paragraph}>
+          <Text style={{ ...styles.paragraph, marginBottom: 0 }}>
             Now comes the Taxpayer, {clientName}, by and through their attorney,
             Hani Khatib, and respectfully requests the Cook County Board of
             Review reduce the Assessed Valuation (AV) of the subject residential
             property on the grounds of lack of uniformity with comparable
-            properties in the same location (township and neighborhood) and
-            property class code.
+            properties in the same location (township and
           </Text>
+          <Text>neighborhood) and property class code.</Text>
         </View>
 
         {/* Basis of Appeal */}
         <View style={styles.section}>
           <Text style={styles.bold}>Basis of Appeal</Text>
-          <Text style={styles.paragraph}>
+          <Text style={{ ...styles.paragraph, marginBottom: 0 }}>
             The Illinois Constitution, Article IX, Section 4(a), and applicable
             statutes, including{" "}
             <Text style={{ color: "blue", textDecoration: "underline" }}>
@@ -245,8 +498,9 @@ const AppealPDF4 = ({ reportData, clientName = "" }) => {
             require that properties be assessed uniformly. Our analysis of
             comparable residential properties demonstrates that the subject
             property is assessed at a disproportionately higher per-square-foot
-            value than similarly situated homes of like class, size, and age.
+            value than similarly
           </Text>
+          <Text>situated homes of like class, size, and age.</Text>
         </View>
 
         {/* Supporting Evidence */}
@@ -262,27 +516,42 @@ const AppealPDF4 = ({ reportData, clientName = "" }) => {
           </Text>
           <Text>
             • <Text style={{ fontWeight: "bold" }}>Exhibit B:</Text> Comparable
-            Properties Matrix Report
+            Property Analysis/Evidence Sheet
           </Text>
-          <Text>
-            • <Text style={{ fontWeight: "bold" }}>Exhibit C:</Text> Comparable
-            photos and map identifying comparable properties located in the same
-            neighborhood and tax code.
-          </Text>
+          <View>
+            <View style={{ display: "flex", flexDirection: "row" }}>
+              <Text
+                style={{
+                  ...styles.line,
+                  height: "100%",
+                }}
+              >
+                •{" "}
+              </Text>
+              <Text style={{ fontWeight: "bold" }}>Exhibit C: </Text>
+              <View style={{ display: "flex", flexDirection: "column" }}>
+                <Text style={styles.line}>
+                  Comparable photos and map identifying comparable properties
+                  located in the same
+                </Text>
+                <Text>neighborhood and tax code.</Text>
+              </View>
+            </View>{" "}
+          </View>
         </View>
 
         <View style={{ ...styles.section, marginTop: 20 }}>
           <Text style={styles.bold}>Equity Ratio Analysis</Text>
-          <Text>
-            • Subject Property Building AV per Sq. Ft. : $
+          <Text style={styles.line}>
+            • Subject Property Building AV per Sq. Ft.: $
             {reportData.properties[0]["building_av/sf"]}
           </Text>
-          <Text>
+          <Text style={styles.line}>
             • Average Building AV per Sq. Ft. of Comparables: $
             {reportData["avg_building_av/sf"]}
           </Text>
-          <Text>
-            • Over-Assessment Difference AV per Sq. Ft. : $
+          <Text style={styles.line}>
+            • Over-Assessment Difference AV per Sq. Ft.: $
             {Number(
               reportData.properties[0]["building_av/sf"] -
                 reportData["avg_building_av/sf"]
@@ -293,7 +562,7 @@ const AppealPDF4 = ({ reportData, clientName = "" }) => {
           <Text style={styles.paragraph}>
             This disparity demonstrates that the subject property is being
             over-assessed by approximately
-            {`$${Number(
+            {` $${Number(
               reportData.total_assessment - reportData.requested_total
             ).toLocaleString()}`}{" "}
             compared to neighborhood standards.
@@ -303,18 +572,40 @@ const AppealPDF4 = ({ reportData, clientName = "" }) => {
       <Page size="A4" style={styles.page}>
         <View style={styles.section}>
           <Text style={styles.bold}>Legal Authority</Text>
-          <Text style={styles.paragraph}>
-            Under Illinois law, property assessments must be equitable and
-            uniform. The Illinois Supreme Court has consistently held that
-            assessments must reflect uniformity in relation to comparable
-            properties (Kankakee County Board of Review v. Property Tax Appeal
-            Board, 131 Ill. 2d 1 (1989)). Additionally,{" "}
-            <Text style={{ color: "blue", textDecoration: "underline" }}>
-              35 ILCS 200/16-55
-            </Text>{" "}
-            provides taxpayers the right to appeal assessments that are not
-            uniform with comparable properties.
-          </Text>
+          <View
+            style={{
+              ...styles.paragraph,
+              display: "flex",
+              flexDirection: "column",
+            }}
+          >
+            <Text>
+              Under Illinois law, property assessments must be equitable and
+              uniform. The Illinois Supreme Court has
+            </Text>
+            <Text>
+              consistently held that assessments must reflect uniformity in
+              relation to comparable properties
+            </Text>
+            <Text>
+              (Kankakee County Board of Review v. Property Tax Appeal Board, 131
+              Ill. 2d 1 (1989)). Additionally,{" "}
+            </Text>
+            {/* {" "} */}
+            <Text>
+              <Text
+                style={{
+                  color: "blue",
+                  textDecoration: "underline",
+                  lineHeight: 1,
+                }}
+              >
+                35 ILCS 200/16-55
+              </Text>{" "}
+              provides taxpayers the right to appeal assessments that are not
+              uniform with comparable properties.
+            </Text>
+          </View>
         </View>
 
         <View style={styles.section}>
@@ -323,6 +614,45 @@ const AppealPDF4 = ({ reportData, clientName = "" }) => {
             We respectfully request that the Assessed Valuation of the subject
             property be reduced as follows:
           </Text>
+          {/* <View
+            style={{
+              ...styles.line,
+              display: "flex",
+              flexDirection: "row",
+              width: "100%",
+            }}
+          >
+            <Text style={{ width: "15%" }}>• Land AV: </Text>
+            <Text>${formattedNumber(reportData.land_assessment)}</Text>
+          </View>
+          <View
+            style={{
+              ...styles.line,
+              display: "flex",
+              flexDirection: "row",
+              width: "100%",
+            }}
+          >
+            <Text style={{ width: "15%" }}>• Building AV: </Text>
+            <Text>
+              $
+              {formattedNumber(
+                reportData.suggested_building_assessed_value,
+                true
+              )}
+            </Text>
+          </View>
+          <View
+            style={{
+              ...styles.line,
+              display: "flex",
+              flexDirection: "row",
+              width: "100%",
+            }}
+          >
+            <Text style={{ width: "15%" }}>• AV:</Text>
+            <Text>${formattedNumber(reportData.requested_total_av, true)}</Text>
+          </View> */}
           <Text style={styles.line}>
             • Land AV: ${formattedNumber(reportData.land_assessment)}
           </Text>
@@ -344,13 +674,13 @@ const AppealPDF4 = ({ reportData, clientName = "" }) => {
         </View>
 
         <View style={styles.signature}>
-          <Text>Respectfully submitted,</Text>
+          <Text style={styles.line}> Respectfully submitted,</Text>
           <Image src={signature} style={styles.signatureImg} />
-          <Text>______________________</Text>
-          <Text>Hani Khatib</Text>
-          <Text>Khatib Law, LLC</Text>
-          <Text>Attorney for Taxpayer {clientName}</Text>
-          <Text>Board of Review No. 11352</Text>
+          <Text style={styles.line}>______________________</Text>
+          <Text style={styles.line}>Hani Khatib</Text>
+          <Text style={styles.line}>Khatib Law, LLC</Text>
+          <Text style={styles.line}>Attorney for Taxpayer {clientName}</Text>
+          <Text style={styles.line}>Board of Review No. 11352</Text>
         </View>
 
         <View style={styles.section}>
@@ -361,16 +691,24 @@ const AppealPDF4 = ({ reportData, clientName = "" }) => {
               marginTop: "40px",
               fontWeight: "bold",
               marginBottom: 0,
+              lineHeight: 1,
             }}
           >
             EXHIBIT A
           </Text>
-          <Text style={{ textAlign: "center", fontWeight: "bold" }}>
+          <Text
+            style={{ textAlign: "center", fontWeight: "bold", lineHeight: 1 }}
+          >
             Recent Photo of Subject Property
           </Text>
         </View>
         <Image
-          style={styles.tableImage}
+          style={{
+            marginHorizontal: "auto",
+            width: "70%",
+            height: 160,
+            objectFit: "contain",
+          }}
           src={`${import.meta.env.VITE_BASE_URL_BACKEND}/property/image_proxy?url=${encodeURIComponent(reportData?.properties[0].property_image)}`}
         />
       </Page>
@@ -391,10 +729,8 @@ const AppealPDF4 = ({ reportData, clientName = "" }) => {
               Comparable Property Analysis/Evidence Sheet
             </Text>
           </View>
-          {/* {reportData?.properties?.length > 0 && (
-          )} */}
+
           <View style={styles.table}>
-            {/* صف العناوين */}
             <View style={styles.tableRow}>
               <Text style={styles.tableColHeader}></Text>
               <Text style={styles.tableColHeader}>SUBJECT</Text>
@@ -406,25 +742,34 @@ const AppealPDF4 = ({ reportData, clientName = "" }) => {
               ))}
             </View>
 
-            {/* استخدام map() لإنشاء صفوف البيانات */}
             {rowKeys.map((key, index) => (
               <View style={styles.tableRow} key={key}>
                 <Text
                   style={{
                     ...styles.tableColHeader,
-                    textTransform: "capitalize",
+                    textTransform: key !== "pin" && "capitalize",
+                    fontSize: key === "exterior_construction" ? 10 : 12,
+                    paddingHorizontal: 0,
                   }}
                 >
-                  {key?.replace("_", " ")}
+                  {key === "pin"
+                    ? "PIN"
+                    : key === "building_av/sf."
+                      ? "Bldg AV Per Sq Ft"
+                      : key?.replace("_", " ")}
                 </Text>
                 <Text
                   style={{
                     ...styles.tableCol,
                     color: key === "building_av/sf." ? "red" : "black",
-                    fontSize: key === "pin" ? 10 : 12,
+                    fontSize: key === "pin" ? 10 : key === "address" ? 9 : 12,
+                    paddingHorizontal: 0,
+                    textTransform: "capitalize",
                   }}
                 >
-                  {getValue(subjectData, key)}
+                  {key === "address"
+                    ? String(getValue(subjectData, key)).toLocaleLowerCase()
+                    : getValue(subjectData, key)}
                 </Text>
 
                 {comparableData1.map((comp, compIndex) => (
@@ -432,11 +777,14 @@ const AppealPDF4 = ({ reportData, clientName = "" }) => {
                     style={{
                       ...styles.tableCol,
                       color: key === "building_av/sf." ? "blue" : "black",
-                      fontSize: key === "pin" ? 10 : 12,
+                      fontSize: key === "pin" ? 10 : key === "address" ? 9 : 12,
+                      paddingHorizontal: 0,
                     }}
                     key={`comp-data-${index}-${compIndex}`}
                   >
-                    {getValue(comp, key)}
+                    {key === "address"
+                      ? String(getValue(comp, key)).toLocaleLowerCase()
+                      : getValue(comp, key)}
                   </Text>
                 ))}
               </View>
@@ -578,26 +926,33 @@ const AppealPDF4 = ({ reportData, clientName = "" }) => {
             ))}
           </View>
 
-          {/* استخدام map() لإنشاء صفوف البيانات */}
           {rowKeys.map((key, index) => (
             <View style={styles.tableRow} key={key}>
               <Text
                 style={{
                   ...styles.tableColHeader,
-                  textTransform: "capitalize",
+                  textTransform: key !== "pin" && "capitalize",
+                  fontSize: key === "exterior_construction" ? 10 : 12,
+                  paddingHorizontal: 0,
                 }}
               >
-                {key?.replace("_", " ")}
-                {/* toLocaleLowerCase() */}
+                {key === "pin"
+                  ? "PIN"
+                  : key === "building_av/sf."
+                    ? "Bldg AV Per Sq Ft"
+                    : key?.replace("_", " ")}
               </Text>
               <Text
                 style={{
                   ...styles.tableCol,
                   color: key === "building_av/sf." ? "red" : "black",
-                  fontSize: key === "pin" ? 10 : 12,
+                  fontSize: key === "pin" ? 10 : key === "address" ? 9 : 12,
+                  paddingHorizontal: 0,
                 }}
               >
-                {getValue(subjectData, key)}
+                {key === "address"
+                  ? String(getValue(subjectData, key)).toLocaleLowerCase()
+                  : getValue(subjectData, key)}
               </Text>
 
               {comparableData2.map((comp, compIndex) => (
@@ -605,11 +960,15 @@ const AppealPDF4 = ({ reportData, clientName = "" }) => {
                   style={{
                     ...styles.tableCol,
                     color: key === "building_av/sf." ? "blue" : "black",
-                    fontSize: key === "pin" ? 10 : 12,
+                    fontSize: key === "pin" ? 10 : key === "address" ? 9 : 12,
+                    paddingHorizontal: 0,
+                    textTransform: "capitalize",
                   }}
                   key={`comp-data-${index}-${compIndex}`}
                 >
-                  {getValue(comp, key)}
+                  {key === "address"
+                    ? String(getValue(comp, key)).toLocaleLowerCase()
+                    : getValue(comp, key)}
                 </Text>
               ))}
             </View>
@@ -751,13 +1110,102 @@ const AppealPDF4 = ({ reportData, clientName = "" }) => {
           </Text>
           <Text style={styles.tableHeader}>Comparable Photos and Map </Text>
         </View>
-        <Image
+        <View
           style={{
-            ...styles.tableImage,
-            height: 200,
+            /* make grid with 2 columns */
+            display: "flex",
+            flexDirection: "row",
+            gridTemplateColumns: "repeat(2, 1fr)",
+            gap: 20,
           }}
-          src={mapImage}
-        />
+        >
+          <View
+            style={{
+              flex: 1,
+            }}
+          >
+            <Image
+              style={{
+                height: 200,
+              }}
+              src={mapImage}
+            />
+          </View>
+          <View
+            /* make grid with 2 columns */
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              flexWrap: "wrap",
+              gridTemplateColumns: "repeat(2, 1fr)",
+              flex: 1,
+              gap: 10,
+            }}
+          >
+            {comparable.map((property, index) => (
+              <View key={index} style={{ width: "47%" }}>
+                <Text>COMPARABLE {index + 1}</Text>
+                <Image
+                  style={{
+                    width: "100%",
+                    height: 100,
+                  }}
+                  src={property.property_image}
+                />
+              </View>
+            ))}
+            {/* <View style={{ width: "47%" }}>
+              <Text>COMPARABLE 1</Text>
+              <Image
+                style={{
+                  width: "100%",
+                  height: 120,
+                }}
+                src={mapImage}
+              />
+            </View>
+            <View style={{ width: "47%" }}>
+              <Text>COMPARABLE 1</Text>
+              <Image
+                style={{
+                  width: "100%",
+                  height: 120,
+                }}
+                src={mapImage}
+              />
+            </View>
+            <View style={{ width: "47%" }}>
+              <Text>COMPARABLE 1</Text>
+              <Image
+                style={{
+                  width: "100%",
+                  height: 120,
+                }}
+                src={mapImage}
+              />
+            </View>
+            <View style={{ width: "47%" }}>
+              <Text>COMPARABLE 1</Text>
+              <Image
+                style={{
+                  width: "100%",
+                  height: 120,
+                }}
+                src={mapImage}
+              />
+            </View>
+            <View style={{ width: "47%" }}>
+              <Text>COMPARABLE 1</Text>
+              <Image
+                style={{
+                  width: "100%",
+                  height: 120,
+                }}
+                src={mapImage}
+              />
+            </View> */}
+          </View>
+        </View>
       </Page>
     </Document>
   );
