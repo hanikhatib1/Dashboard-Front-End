@@ -15,6 +15,7 @@ import Loader from "@/components/Loader";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
+import RenameLinks from "../Blogs/RenameLinks";
 
 const AddNewFAQ = ({ refetch }) => {
   const [open, setOpen] = useState(false);
@@ -106,6 +107,10 @@ const AddNewFAQ = ({ refetch }) => {
                 {...register("meta_description", { required: true })}
               />
             </div>
+            <RenameLinks
+              rename_links={[]}
+              setRenameLinks={(e) => console.log("e", e)}
+            />
           </div>
           <DialogFooter className="!justify-start gap-2">
             <Button

@@ -14,6 +14,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useUpdateFAQMutation } from "@/redux/apiSlice";
 import { useToast } from "@/components/ui/use-toast";
 import Loader from "@/components/Loader";
+import RenameLinks from "../Blogs/RenameLinks";
 
 const EditFAQModel = ({ refetch, faq, setSelectedEditFAQ }) => {
   const [editFAQ, { isLoading }] = useUpdateFAQMutation();
@@ -103,6 +104,10 @@ const EditFAQModel = ({ refetch, faq, setSelectedEditFAQ }) => {
                 {...register("meta_description", { required: true })}
               />
             </div>
+            <RenameLinks
+              rename_links={[]}
+              setRenameLinks={(e) => console.log("e", e)}
+            />
           </div>
           <DialogFooter className="!justify-start gap-2">
             <Button

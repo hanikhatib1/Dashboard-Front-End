@@ -744,20 +744,43 @@ const AppealPDF4 = ({ reportData, clientName = "client name" }) => {
 
             {rowKeys.map((key, index) => (
               <View style={styles.tableRow} key={key}>
-                <Text
-                  style={{
-                    ...styles.tableColHeader,
-                    textTransform: key !== "pin" && "capitalize",
-                    fontSize: key === "exterior_construction" ? 10 : 12,
-                    paddingHorizontal: 0,
-                  }}
-                >
-                  {key === "pin"
-                    ? "PIN"
-                    : key === "building_av/sf."
-                      ? "Bldg AV Per Sq Ft"
-                      : key?.replace("_", " ")}
-                </Text>
+                {key === "building_av/sf." ? (
+                  <View style={{ ...styles.tableColHeader }}>
+                    <Text
+                      style={{
+                        textTransform: "capitalize",
+                        fontSize: 12,
+                        paddingHorizontal: 0,
+                      }}
+                    >
+                      Bldg AV
+                    </Text>
+                    <Text
+                      style={{
+                        textTransform: "capitalize",
+                        fontSize: 12,
+                        paddingHorizontal: 0,
+                      }}
+                    >
+                      Per Sq Ft
+                    </Text>
+                  </View>
+                ) : (
+                  <Text
+                    style={{
+                      ...styles.tableColHeader,
+                      textTransform: key !== "pin" && "capitalize",
+                      fontSize: key === "exterior_construction" ? 10 : 12,
+                      paddingHorizontal: 0,
+                    }}
+                  >
+                    {key === "pin"
+                      ? "PIN"
+                      : key === "building_av/sf."
+                        ? "Bldg AV Per Sq Ft"
+                        : key?.replace("_", " ")}
+                  </Text>
+                )}
                 <Text
                   style={{
                     ...styles.tableCol,
@@ -928,20 +951,43 @@ const AppealPDF4 = ({ reportData, clientName = "client name" }) => {
 
           {rowKeys.map((key, index) => (
             <View style={styles.tableRow} key={key}>
-              <Text
-                style={{
-                  ...styles.tableColHeader,
-                  textTransform: key !== "pin" && "capitalize",
-                  fontSize: key === "exterior_construction" ? 10 : 12,
-                  paddingHorizontal: 0,
-                }}
-              >
-                {key === "pin"
-                  ? "PIN"
-                  : key === "building_av/sf."
-                    ? "Bldg AV Per Sq Ft"
-                    : key?.replace("_", " ")}
-              </Text>
+              {key === "building_av/sf." ? (
+                <View style={{ ...styles.tableColHeader }}>
+                  <Text
+                    style={{
+                      textTransform: "capitalize",
+                      fontSize: 12,
+                      paddingHorizontal: 0,
+                    }}
+                  >
+                    Bldg AV
+                  </Text>
+                  <Text
+                    style={{
+                      textTransform: "capitalize",
+                      fontSize: 12,
+                      paddingHorizontal: 0,
+                    }}
+                  >
+                    Per Sq Ft
+                  </Text>
+                </View>
+              ) : (
+                <Text
+                  style={{
+                    ...styles.tableColHeader,
+                    textTransform: key !== "pin" && "capitalize",
+                    fontSize: key === "exterior_construction" ? 10 : 12,
+                    paddingHorizontal: 0,
+                  }}
+                >
+                  {key === "pin"
+                    ? "PIN"
+                    : key === "building_av/sf."
+                      ? "Bldg AV Per Sq Ft"
+                      : key?.replace("_", " ")}
+                </Text>
+              )}
               <Text
                 style={{
                   ...styles.tableCol,

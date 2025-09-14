@@ -7,6 +7,7 @@ import { useAddBlogMutation } from "@/redux/apiSlice";
 import { Plus } from "lucide-react";
 import React from "react";
 import { useForm } from "react-hook-form";
+import RenameLinks from "./RenameLinks";
 
 const AddBlogModel = ({ refetch }) => {
   const [open, setOpen] = React.useState(false);
@@ -154,6 +155,10 @@ const AddBlogModel = ({ refetch }) => {
                 {...register("description", { required: true })}
               />
             </div>
+            <RenameLinks
+              rename_links={[]}
+              setRenameLinks={(e) => console.log("e", e)}
+            />
             <div className="flex gap-4">
               <Button
                 className="bg-primary text-white rounded-[8px]"

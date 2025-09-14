@@ -7,6 +7,7 @@ import { useEditBlogMutation } from "@/redux/apiSlice";
 import PropTypes from "prop-types";
 import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
+import RenameLinks from "./RenameLinks";
 
 const EditModel = ({ editBlogData, setEditBlog, refetch }) => {
   const [image, setImage] = React.useState(null);
@@ -168,6 +169,10 @@ const EditModel = ({ editBlogData, setEditBlog, refetch }) => {
                 {...register("meta_description", { required: true })}
               />
             </div>
+            <RenameLinks
+              rename_links={[]}
+              setRenameLinks={(e) => console.log("e", e)}
+            />
             <div className="flex gap-4">
               <Button
                 className="bg-primary text-white rounded-[8px]"
