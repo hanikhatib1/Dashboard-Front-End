@@ -19,12 +19,14 @@ const EditModel = ({ editBlogData, setEditBlog, refetch }) => {
     setValue,
     formState: { isValid },
     handleSubmit,
+    watch,
   } = useForm({
     defaultValues: {
       title: editBlogData.title,
       description: editBlogData.description,
       short_description: editBlogData.short_description,
       meta_description: editBlogData.meta_description,
+      rename_links: editBlogData.rename_links,
     },
   });
 
@@ -36,11 +38,12 @@ const EditModel = ({ editBlogData, setEditBlog, refetch }) => {
   };
 
   const onSubmit = async (data) => {
+    delete data.rename_links;
     const formData = new FormData();
     Object.keys(data).forEach((key) => {
       formData.append(key, data[key]);
     });
-
+    formData.append("rename_links", JSON.stringify(watch("rename_links")));
     const res = await editBlog({ body: formData, id: editBlogData.id });
     if ("data" in res) {
       reset();
@@ -170,8 +173,8 @@ const EditModel = ({ editBlogData, setEditBlog, refetch }) => {
               />
             </div>
             <RenameLinks
-              rename_links={[]}
-              setRenameLinks={(e) => console.log("e", e)}
+              rename_links={watch("rename_links")}
+              setRenameLinks={(e) => setValue("rename_links", e)}
             />
             <div className="flex gap-4">
               <Button

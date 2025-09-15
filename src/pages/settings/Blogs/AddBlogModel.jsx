@@ -14,12 +14,14 @@ const AddBlogModel = ({ refetch }) => {
   const [image, setImage] = React.useState(null);
   const [addBlog, { isLoading, reset }] = useAddBlogMutation();
   const { toast } = useToast();
+  const [renameLinks, setRenameLinks] = React.useState([]);
 
   const {
     register,
     setValue,
     formState: { isValid },
     handleSubmit,
+    watch,
   } = useForm({
     defaultValues: {
       title: "",
@@ -27,6 +29,7 @@ const AddBlogModel = ({ refetch }) => {
       short_description: "",
       image: null,
       meta_description: "",
+      rename_links: null,
     },
   });
 
@@ -42,7 +45,7 @@ const AddBlogModel = ({ refetch }) => {
     Object.keys(data).forEach((key) => {
       formData.append(key, data[key]);
     });
-
+    formData.append("rename_links", JSON.stringify(renameLinks));
     const res = await addBlog(formData);
     if ("data" in res) {
       reset();
@@ -157,7 +160,11 @@ const AddBlogModel = ({ refetch }) => {
             </div>
             <RenameLinks
               rename_links={[]}
-              setRenameLinks={(e) => console.log("e", e)}
+              setRenameLinks={(e) => {
+                console.log("e", e);
+                setRenameLinks(e);
+                setValue("rename_links", e);
+              }}
             />
             <div className="flex gap-4">
               <Button

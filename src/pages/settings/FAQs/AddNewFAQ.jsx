@@ -22,15 +22,17 @@ const AddNewFAQ = ({ refetch }) => {
   const [addFAQ, { isLoading }] = useAddFAQMutation();
   const { toast } = useToast();
 
-  const { handleSubmit, register } = useForm({
+  const { handleSubmit, register, watch, setValue } = useForm({
     defaultValues: {
       question: "",
       answer: "",
       meta_description: "",
+      rename_links: null,
     },
   });
 
   const onSubmit = async (data) => {
+    console.log(data);
     const res = await addFAQ(data);
     if ("data" in res) {
       toast({
@@ -108,8 +110,8 @@ const AddNewFAQ = ({ refetch }) => {
               />
             </div>
             <RenameLinks
-              rename_links={[]}
-              setRenameLinks={(e) => console.log("e", e)}
+              rename_links={watch("rename_links")}
+              setRenameLinks={(e) => setValue("rename_links", e)}
             />
           </div>
           <DialogFooter className="!justify-start gap-2">

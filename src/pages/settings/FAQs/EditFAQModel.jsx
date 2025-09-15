@@ -20,11 +20,12 @@ const EditFAQModel = ({ refetch, faq, setSelectedEditFAQ }) => {
   const [editFAQ, { isLoading }] = useUpdateFAQMutation();
   const { toast } = useToast();
 
-  const { handleSubmit, register } = useForm({
+  const { handleSubmit, register, watch, setValue } = useForm({
     defaultValues: {
       question: faq.question || "",
       answer: faq.answer || "",
       meta_description: faq.meta_description || "",
+      rename_links: faq.rename_links || null,
     },
   });
 
@@ -105,8 +106,8 @@ const EditFAQModel = ({ refetch, faq, setSelectedEditFAQ }) => {
               />
             </div>
             <RenameLinks
-              rename_links={[]}
-              setRenameLinks={(e) => console.log("e", e)}
+              rename_links={watch("rename_links")}
+              setRenameLinks={(e) => setValue("rename_links", e)}
             />
           </div>
           <DialogFooter className="!justify-start gap-2">
