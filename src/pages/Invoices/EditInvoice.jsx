@@ -46,34 +46,38 @@ const EditInvoice = ({ fetchData }) => {
   const dispatch = useDispatch();
 
   const fillForm = async (taxSaving, invoiceNumber) => {
-      const formUrl = InvoicePDF;
-      const formPdfBytes = await fetch(formUrl).then((res) => res.arrayBuffer());
-      const pdfDoc = await PDFDocument.load(formPdfBytes);
-      const form = pdfDoc.getForm();
-      const currentYear = new Date().getFullYear();
-      const currentMonth = new Date().getMonth();
-      const currentDay = new Date().getDate();
-  
-      setFieldPDF(
-        form,
-        "property_address1",
-        `${appeal.address}`
-      );
-      setFieldPDF(
-        form,
-        "mailing_address1",
-        `${appeal.client_address}`
-      );
-      setFieldPDF(form, "invoice_date", `${currentMonth + 1}/${currentDay}/${currentYear}`);
-      setFieldPDF(form, "due_date", `${currentMonth + 1}/${currentDay}/${currentYear}`);
-      setFieldPDF(form, "tax_savings", `$${formattedNumber(Number(taxSaving))}`);
-      setFieldPDF(form, "amount_due", `$${formattedNumber(Number(taxSaving) * 0.25)}`);
-      setFieldPDF(form, "invoice_number", `${invoiceNumber}`);
-  
-      const pdfBytes = await pdfDoc.save();
-  
-      return pdfBytes;
-      /* const pdfBytes = await pdfDoc.save();
+    const formUrl = InvoicePDF;
+    const formPdfBytes = await fetch(formUrl).then((res) => res.arrayBuffer());
+    const pdfDoc = await PDFDocument.load(formPdfBytes);
+    const form = pdfDoc.getForm();
+    const currentYear = new Date().getFullYear();
+    const currentMonth = new Date().getMonth();
+    const currentDay = new Date().getDate();
+
+    setFieldPDF(form, "property_address1", `${appeal.address}`);
+    setFieldPDF(form, "mailing_address1", `${appeal.client_address}`);
+    setFieldPDF(
+      form,
+      "invoice_date",
+      `${currentMonth + 1}/${currentDay}/${currentYear}`
+    );
+    setFieldPDF(
+      form,
+      "due_date",
+      `${currentMonth + 1}/${currentDay}/${currentYear}`
+    );
+    setFieldPDF(form, "tax_savings", `$${formattedNumber(Number(taxSaving))}`);
+    setFieldPDF(
+      form,
+      "amount_due",
+      `$${formattedNumber(Number(taxSaving) * 0.25)}`
+    );
+    setFieldPDF(form, "invoice_number", `${invoiceNumber}`);
+
+    const pdfBytes = await pdfDoc.save();
+
+    return pdfBytes;
+    /* const pdfBytes = await pdfDoc.save();
 
     const blob = new Blob([pdfBytes], { type: "application/pdf" });
 
@@ -94,7 +98,7 @@ const EditInvoice = ({ fetchData }) => {
     defaultValues: {
       payment_methode: editInvoiceData.payment_methode,
       actual_saving: editInvoiceData.actual_saving,
-      appeal_id: editInvoiceData.appeal.id,
+      appeal_id: editInvoiceData?.appeal?.id || 0,
       document: null,
     },
     resolver: yupResolver(schema),
@@ -109,10 +113,16 @@ const EditInvoice = ({ fetchData }) => {
         .join("");
     }
     data.actual_saving = Number(data.actual_saving);
-    const invoivePDF = await fillForm(data.actual_saving, editInvoiceData.invoice_number);
+    const invoivePDF = await fillForm(
+      data.actual_saving,
+      editInvoiceData.invoice_number
+    );
 
     const formData = new FormData();
-    formData.append("document", new Blob([invoivePDF], { type: "application/pdf" }));
+    formData.append(
+      "document",
+      new Blob([invoivePDF], { type: "application/pdf" })
+    );
     formData.append("actual_saving", data.actual_saving);
     formData.append("appeal_id", data.appeal_id);
     formData.append("payment_methode", data.payment_methode);
@@ -160,6 +170,12 @@ const EditInvoice = ({ fetchData }) => {
     }
   }, [errors, toast]);
 
+  useEffect(() => {
+    if (appeal) {
+      setValue("appeal_id", appeal.id);
+    }
+  }, [appeal, setValue]);
+
   return (
     <Dialog
       defaultOpen={editInvoiceData}
@@ -190,7 +206,9 @@ const EditInvoice = ({ fetchData }) => {
                     </SelectTrigger>
                     <SelectContent className="bg-white">
                       <SelectGroup>
-                        <SelectItem value="Online Payment">Online Payment</SelectItem>
+                        <SelectItem value="Online Payment">
+                          Online Payment
+                        </SelectItem>
                         <SelectItem value="Paid Now">Paid Now</SelectItem>
                       </SelectGroup>
                     </SelectContent>

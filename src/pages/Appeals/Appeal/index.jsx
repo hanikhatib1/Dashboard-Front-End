@@ -27,6 +27,7 @@ import Files from "./Files";
 import DocumentsStatusAppealModel from "../DocumentsStatusAppealModel";
 import PropertyImageSlider from "@/pages/Properties/PropertyImageSlider";
 import { useToast } from "@/components/ui/use-toast";
+import { formatePin } from "@/utiles/formatePin";
 
 const tableData = [
   {
@@ -54,6 +55,144 @@ const tableData = [
     title: "Date",
     key: "created_at",
   },
+];
+
+const appealKeys = [
+  [
+    {
+      id: 1,
+      title: "Client Name",
+      key: "client_name",
+      display: (data) => `${data.client_first_name} ${data.client_last_name}`,
+    },
+  ],
+  [
+    // client phone and client email
+    {
+      id: 2,
+      title: "Client Phone",
+      key: "client_phone",
+      display: (data) => data.client_phone,
+    },
+    {
+      id: 3,
+      title: "Client Email",
+      key: "client_email",
+      display: (data) => data.client_email,
+    },
+  ],
+  [
+    // address and township
+    {
+      id: 4,
+      title: "Address",
+      key: "address",
+      display: (data) => String(data.address).toLocaleLowerCase(),
+    },
+    {
+      id: 5,
+      title: "Township",
+      key: "township.name",
+      display: (data) => data.township.name,
+    },
+  ],
+  [
+    // pin1 and pin2 and pin3
+    {
+      id: 6,
+      title: "PIN 1",
+      key: "pin1",
+      display: (data) => formatePin(data.pin1),
+    },
+    {
+      id: 7,
+      title: "PIN 2",
+      key: "pin2",
+      display: (data) => (data.pin2 ? formatePin(data.pin2) : "N/A"),
+    },
+    {
+      id: 8,
+      title: "PIN 3",
+      key: "pin3",
+      display: (data) => (data.pin3 ? formatePin(data.pin3) : "N/A"),
+    },
+  ],
+  [
+    // appeal number and appeal type and status
+    {
+      id: 9,
+      title: "Appeal Number",
+      key: "appeal_number",
+      display: (data) => (data.appeal_number ? data.appeal_number : "N/A"),
+    },
+    {
+      id: 10,
+      title: "Appeal Type",
+      key: "appeal_type",
+      display: (data) => data.appeal_type,
+    },
+    {
+      id: 11,
+      title: "Status",
+      key: "appeal_status.status",
+      display: (data) => data.appeal_status.status,
+    },
+  ],
+  [
+    // appeal date and last action
+    {
+      id: 12,
+      title: "Appeal Date",
+      key: "created_at",
+      display: (data) => reverseDate(data.created_at),
+    },
+    {
+      id: 13,
+      title: "Last Action",
+      key: "last_action",
+      display: (data) => (data.last_action ? data.last_action : "N/A"),
+    },
+  ],
+  /* [
+    // owner name
+    {
+      id: 14,
+      title: "Owner Name",
+      key: "client_name",
+      display: (data) => `${data.owner_first_name} ${data.owner_last_name}`,
+    },
+  ], */
+  [
+    // note
+    {
+      id: 15,
+      title: "Note",
+      key: "note",
+      display: (data) => (data.note ? data.note : "N/A"),
+    },
+  ],
+  [
+    // entity name and entity relation ship and entity type
+    {
+      id: 16,
+      title: "Entity Name",
+      key: "entity_name",
+      display: (data) => (data.entity_name ? data.entity_name : "N/A"),
+    },
+    {
+      id: 17,
+      title: "Entity Relationship",
+      key: "entity_relationship",
+      display: (data) =>
+        data.entity_relationship ? data.entity_relationship : "N/A",
+    },
+    {
+      id: 18,
+      title: "Entity Type",
+      key: "entity_type",
+      display: (data) => (data.entity_type ? data.entity_type : "N/A"),
+    },
+  ],
 ];
 
 const Appeal = () => {
@@ -120,21 +259,10 @@ const Appeal = () => {
                 Delete
               </button>
               <button
-                //className="bg-[#1A73E833] text-[#2C3E50] px-4 py-2 rounded-[8px] ml-3"
                 className={`px-4 py-2 rounded-[8px] ml-3 cursor-pointer bg-[#1A73E833] ${appealData.signature_sent ? "text-[#80838E] cursor-not-allowed " : ""}`}
                 onClick={() => {
                   if (!appealData.signature_sent)
                     dispatch(setFormsAppeal(appealData));
-                  /* if (appealData.appeal_number) {
-                    if (!appealData.signature_sent)
-                      dispatch(setFormsAppeal(appealData));
-                  } else {
-                    toast({
-                      title: "Appeal number!",
-                      description: "Appeal number is Required",
-                      type: "success",
-                    });
-                  } */
                 }}
                 disabled={appealData.signature_sent}
               >
@@ -158,8 +286,8 @@ const Appeal = () => {
             </div>
           </div>
           <div className="border rounded-[10px] border-[#1A73E833] p-4 flex flex-col  gap-10 h-max">
-            <div className="flex flex-col md:flex-row justify-between">
-              <div className="flex flex-col gap-4">
+            <div className="flex flex-col md:flex-row justify-between gap-8">
+              {/*  <div className="flex flex-col gap-4">
                 <div className="flex gap-4">
                   <p>Appeal Number :</p>
                   <p className="text-[#80838E]">
@@ -193,17 +321,74 @@ const Appeal = () => {
                     {appealData.signature_sent ? "Yes" : "No"}
                   </p>
                 </div>
+              </div> */}
+              <div className="gap-4 w-full grid grid-cols-2">
+                <Files appealData={appealData} />
               </div>
-              <div className="border mt-5 w-full md:w-[40%] h-[200px] md:h-auto relative rounded-[16px] overflow-hidden">
+              <div className="border mt-5 w-full md:w-[40%] max-w-[400px] !h-[240px] md:h-auto relative rounded-[16px] overflow-hidden">
                 <PropertyImageSlider
                   defaultImages={appealData.default_image}
                   pin={appealData.pin}
                 />
               </div>
             </div>
-            <div className="flex flex-wrap gap-8">
+            {/* <div className="flex flex-wrap gap-8">
               <Files appealData={appealData} />
+            </div> */}
+            <div className="flex flex-col gap-2">
+              {appealKeys.map((row, rowIndex) => (
+                <div
+                  key={rowIndex}
+                  className="flex justify-between  border-b border-[#D5EBF9] py-2 last:border-b-0"
+                >
+                  {row.map((item) => (
+                    <div key={item.id} className="flex gap-2 items-center">
+                      <p className="text-[#2C3E50] text-[20px]">
+                        {item.title} :
+                      </p>
+                      <p className="text-[#80838E] text-[16px]">
+                        {item.display(appealData)}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              ))}
             </div>
+            {/* <div className="flex flex-col gap-4">
+              <div className="flex gap-4">
+                <p>Appeal Number :</p>
+                <p className="text-[#80838E]">
+                  {`${appealData?.appeal_number ? appealData?.appeal_number : "N/A"} `}
+                </p>
+              </div>
+              <div className="flex gap-4">
+                <p>Name :</p>
+                <p className="text-[#80838E]">
+                  {`${appealData.client_first_name} ${appealData.client_last_name}`}
+                </p>
+              </div>
+              {tableData.map((item) => (
+                <div key={item.id} className="flex gap-4">
+                  <p>{item.title} :</p>
+                  <p className="text-[#80838E]">
+                    {item.key.split(".").reduce((o, i) => o[i], appealData)}
+                  </p>
+                </div>
+              ))}
+              <div className="flex gap-4">
+                <p>Assessor Appeal Date :</p>
+                <p className="text-[#80838E]">
+                  {`${reverseDate(appealData.reassessment_notice_date)} -
+              ${reverseDate(appealData.last_file_date)}`}
+                </p>
+              </div>
+              <div className="flex gap-4">
+                <p>Signature Sent :</p>
+                <p className="text-[#80838E]">
+                  {appealData.signature_sent ? "Yes" : "No"}
+                </p>
+              </div>
+            </div> */}
           </div>
         </div>
         <div className="border rounded-[8px]">

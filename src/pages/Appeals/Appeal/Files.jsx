@@ -13,7 +13,12 @@ const documents = [
     key: "ccoa",
     title: "POA CCA",
     download: (props) => (
-      <FillPOC_CCA_API hasData={props} data={props ? props : false} iconOnly />
+      <FillPOC_CCA_API
+        hasData={props}
+        data={props ? props : false}
+        iconOnly
+        downloadIconColor="#1A73E8"
+      />
     ),
     upload: (props) => <div></div>,
     view: (appealData) => (
@@ -122,7 +127,7 @@ const Files = ({ appealData }) => {
           appealData[file.key] && (
             <div
               key={file.key}
-              className="w-full md:w-[calc(50%-16px)] flex justify-between items-center"
+              className="w-full flex justify-between items-center border h-[75px] rounded-[12px] shadow-sm px-4"
             >
               <p className="text-[16px] text-black text-opacity-50 font-[400]">
                 {file.title}
