@@ -153,15 +153,15 @@ const appealKeys = [
       display: (data) => (data.last_action ? data.last_action : "N/A"),
     },
   ],
-  /* [
+  [
     // owner name
     {
       id: 14,
       title: "Owner Name",
-      key: "client_name",
+      key: "owner_first_name",
       display: (data) => `${data.owner_first_name} ${data.owner_last_name}`,
     },
-  ], */
+  ],
   [
     // note
     {
@@ -287,41 +287,6 @@ const Appeal = () => {
           </div>
           <div className="border rounded-[10px] border-[#1A73E833] p-4 flex flex-col  gap-10 h-max">
             <div className="flex flex-col md:flex-row justify-between gap-8">
-              {/*  <div className="flex flex-col gap-4">
-                <div className="flex gap-4">
-                  <p>Appeal Number :</p>
-                  <p className="text-[#80838E]">
-                    {`${appealData?.appeal_number ? appealData?.appeal_number : "N/A"} `}
-                  </p>
-                </div>
-                <div className="flex gap-4">
-                  <p>Name :</p>
-                  <p className="text-[#80838E]">
-                    {`${appealData.client_first_name} ${appealData.client_last_name}`}
-                  </p>
-                </div>
-                {tableData.map((item) => (
-                  <div key={item.id} className="flex gap-4">
-                    <p>{item.title} :</p>
-                    <p className="text-[#80838E]">
-                      {item.key.split(".").reduce((o, i) => o[i], appealData)}
-                    </p>
-                  </div>
-                ))}
-                <div className="flex gap-4">
-                  <p>Assessor Appeal Date :</p>
-                  <p className="text-[#80838E]">
-                    {`${reverseDate(appealData.reassessment_notice_date)} -
-              ${reverseDate(appealData.last_file_date)}`}
-                  </p>
-                </div>
-                <div className="flex gap-4">
-                  <p>Signature Sent :</p>
-                  <p className="text-[#80838E]">
-                    {appealData.signature_sent ? "Yes" : "No"}
-                  </p>
-                </div>
-              </div> */}
               <div className="gap-4 w-full grid grid-cols-2">
                 <Files appealData={appealData} />
               </div>
@@ -332,63 +297,46 @@ const Appeal = () => {
                 />
               </div>
             </div>
-            {/* <div className="flex flex-wrap gap-8">
-              <Files appealData={appealData} />
-            </div> */}
+
             <div className="flex flex-col gap-2">
-              {appealKeys.map((row, rowIndex) => (
-                <div
-                  key={rowIndex}
-                  className="flex justify-between  border-b border-[#D5EBF9] py-2 last:border-b-0"
-                >
-                  {row.map((item) => (
-                    <div key={item.id} className="flex gap-2 items-center">
-                      <p className="text-[#2C3E50] text-[20px]">
-                        {item.title} :
-                      </p>
-                      <p className="text-[#80838E] text-[16px]">
-                        {item.display(appealData)}
-                      </p>
+              {appealKeys.map((row, rowIndex) =>
+                row[0].key === "owner_first_name" ? (
+                  appealData.appeal_type === "Commercial" && (
+                    <div
+                      key={rowIndex}
+                      className="flex flex-col md:flex-row gap-2 md:gap-0 justify-between  border-b border-[#D5EBF9] py-2 last:border-b-0"
+                    >
+                      {row.map((item) => (
+                        <div key={item.id} className="flex gap-2 items-center">
+                          <p className="text-[#2C3E50] text-[20px]">
+                            {item.title} :
+                          </p>
+                          <p className="text-[#80838E] text-[16px]">
+                            {item.display(appealData)}
+                          </p>
+                        </div>
+                      ))}
                     </div>
-                  ))}
-                </div>
-              ))}
+                  )
+                ) : (
+                  <div
+                    key={rowIndex}
+                    className="flex flex-col md:flex-row gap-2 md:gap-0 justify-between  border-b border-[#D5EBF9] py-2 last:border-b-0"
+                  >
+                    {row.map((item) => (
+                      <div key={item.id} className="flex gap-2 items-center">
+                        <p className="text-[#2C3E50] text-[20px]">
+                          {item.title} :
+                        </p>
+                        <p className="text-[#80838E] text-[16px]">
+                          {item.display(appealData)}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                )
+              )}
             </div>
-            {/* <div className="flex flex-col gap-4">
-              <div className="flex gap-4">
-                <p>Appeal Number :</p>
-                <p className="text-[#80838E]">
-                  {`${appealData?.appeal_number ? appealData?.appeal_number : "N/A"} `}
-                </p>
-              </div>
-              <div className="flex gap-4">
-                <p>Name :</p>
-                <p className="text-[#80838E]">
-                  {`${appealData.client_first_name} ${appealData.client_last_name}`}
-                </p>
-              </div>
-              {tableData.map((item) => (
-                <div key={item.id} className="flex gap-4">
-                  <p>{item.title} :</p>
-                  <p className="text-[#80838E]">
-                    {item.key.split(".").reduce((o, i) => o[i], appealData)}
-                  </p>
-                </div>
-              ))}
-              <div className="flex gap-4">
-                <p>Assessor Appeal Date :</p>
-                <p className="text-[#80838E]">
-                  {`${reverseDate(appealData.reassessment_notice_date)} -
-              ${reverseDate(appealData.last_file_date)}`}
-                </p>
-              </div>
-              <div className="flex gap-4">
-                <p>Signature Sent :</p>
-                <p className="text-[#80838E]">
-                  {appealData.signature_sent ? "Yes" : "No"}
-                </p>
-              </div>
-            </div> */}
           </div>
         </div>
         <div className="border rounded-[8px]">

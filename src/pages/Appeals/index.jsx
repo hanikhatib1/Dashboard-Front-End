@@ -33,6 +33,7 @@ const Appeals = ({ appealType }) => {
   const [searchText, setSearchText] = useState("");
   const [getAppeals, { data: appeals, isError }] = useGetAppealsMutation();
   const dispatch = useDispatch();
+  const pathName = window.location.pathname;
   const {
     editAppealData,
     deleteAppealData,
@@ -91,7 +92,15 @@ const Appeals = ({ appealType }) => {
   useEffect(() => {
     fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchText, status, page, townshipId, sortBy, sortBySignature]);
+  }, [
+    searchText,
+    status,
+    page,
+    townshipId,
+    sortBy,
+    sortBySignature,
+    appealType,
+  ]);
 
   useEffect(() => {
     const params = new URLSearchParams();
@@ -102,7 +111,10 @@ const Appeals = ({ appealType }) => {
     params.set("sortName", sortBy.name);
     params.set("sortValue", sortBy.value);
     params.set("sortBySignature", sortBySignature);
-    const newUrl = `/appeals/?${params.toString()}`;
+    const newUrl =
+      appealType === "commercialAppeals"
+        ? `${pathName}/?${params.toString()}`
+        : `${pathName}/?${params.toString()}`;
 
     if (window.location.search !== `?${params.toString()}`) {
       window.history.pushState({}, "", newUrl);

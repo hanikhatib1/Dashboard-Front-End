@@ -48,7 +48,8 @@ export const dataScript = {
 };
 
 export const appeals = {
-  index: "/appeals",
+  index: "/residential_appeals",
+  commercialAppeals: "/commercial_appeals",
   appeal: "/appeals/:id",
 };
 

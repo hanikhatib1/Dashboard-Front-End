@@ -95,6 +95,10 @@ function App() {
               path={appeals.index}
               element={<Appeals appealType="Residential" />}
             />
+            <Route
+              path={appeals.commercialAppeals}
+              element={<Appeals appealType="Commercial" />}
+            />
             <Route path={appeals.appeal} element={<Appeal />} />
 
             <Route path="*" element={<NotFound />} />

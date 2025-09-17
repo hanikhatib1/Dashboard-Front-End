@@ -46,12 +46,12 @@ export const TapsData = [
   {
     name: "Residential Appeals",
     Icon: <AppealsIcon />,
-    url: "/appeals",
+    url: "/residential_appeals",
   },
   {
-    name: "Commercial Appeals (soon)",
+    name: "Commercial Appeals",
     Icon: <LampDesk />,
-    url: null,
+    url: "/commercial_appeals",
   },
   /* {
     name: "Exemptions",

@@ -75,7 +75,7 @@ const Header = ({ expand, setExpand, setShowSideBarMenu, showSideBarMenu }) => {
           </button>
         </div>
         <p className="capitalize text-heading_1 text-[#00061D]  md:block hidden">
-          {currentPage}
+          {currentPage.replace("_", " ")}
         </p>
       </div>
       <div className="flex gap-4 items-center">
