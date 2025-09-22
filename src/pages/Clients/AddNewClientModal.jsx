@@ -89,6 +89,13 @@ const AddNewClientModal = ({ buttonClassName, refetch }) => {
 
   const onSubmit = async (data) => {
     const obj = data;
+
+    if (!hasEntity) {
+      delete obj.entity_name;
+      delete obj.relation_ship;
+      delete obj.entity_type;
+    }
+
     Object.keys(obj).forEach(
       (key) => obj[key] === "" || (obj[key] === null && delete obj[key])
     );

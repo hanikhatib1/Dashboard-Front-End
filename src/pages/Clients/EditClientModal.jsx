@@ -69,6 +69,9 @@ const EditClientModal = ({ onClose, setClient, refetch }) => {
     defaultValues: {
       ...editClientData,
       image: editClientData?.image ? "" : "oooo",
+      annual_income: editClientData?.annual_income
+        ? editClientData?.annual_income
+        : 0,
     },
   });
   const onSubmit = async (data) => {
@@ -111,7 +114,7 @@ const EditClientModal = ({ onClose, setClient, refetch }) => {
       });
       if (setClient) setClient(res.data.data);
       if (onClose) onClose();
-      if(refetch) refetch();
+      if (refetch) refetch();
       dispatch(setEditClientData(null));
     } else {
       toast({
