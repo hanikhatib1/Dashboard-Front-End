@@ -56,3 +56,7 @@ export const appeals = {
 export const invoices = {
   index: "/invoices",
 };
+
+export const profile = {
+  index: "/profile",
+};

@@ -9,6 +9,7 @@ import {
   employees,
   homepage,
   invoices,
+  profile,
   properties,
   settings,
   township,
@@ -43,6 +44,7 @@ import ContactUs from "./pages/settings/ContactUs";
 import Reports from "./pages/settings/Reports";
 import Appeal from "./pages/Appeals/Appeal";
 import FAQs from "./pages/settings/FAQs";
+import Profile from "./pages/profile";
 
 function App() {
   const { isSuccess, data, isError } = useGetUserQuery({});
@@ -100,6 +102,8 @@ function App() {
               element={<Appeals appealType="Commercial" />}
             />
             <Route path={appeals.appeal} element={<Appeal />} />
+
+            <Route path={profile.index} element={<Profile />} />
 
             <Route path="*" element={<NotFound />} />
           </Routes>

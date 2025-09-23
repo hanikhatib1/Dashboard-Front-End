@@ -1,7 +1,6 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Avatar, AvatarImage } from "../../components/ui/avatar";
 import {
-  Backpack,
   ChevronLeft,
   ChevronRight,
   ChevronsLeft,
@@ -79,14 +78,16 @@ const Header = ({ expand, setExpand, setShowSideBarMenu, showSideBarMenu }) => {
         </p>
       </div>
       <div className="flex gap-4 items-center">
-        <Avatar className="border flex justify-center items-center">
-          {user.image ? (
-            <AvatarImage src={user.image} alt={user.first_name} />
-          ) : (
-            <UserRound className="w-3/4 h-3/4" />
-          )}
-        </Avatar>
-        <p className="text-body">{user.first_name + " " + user.last_name}</p>
+        <Link to="/profile" className="flex gap-2 items-center">
+          <Avatar className="border flex justify-center items-center">
+            {user.image ? (
+              <AvatarImage src={user.image} alt={user.first_name} />
+            ) : (
+              <UserRound className="w-3/4 h-3/4" />
+            )}
+          </Avatar>
+          <p className="text-body">{user.first_name + " " + user.last_name}</p>
+        </Link>
         <Menu
           onClick={() => {
             setShowSideBarMenu(true);

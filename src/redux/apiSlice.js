@@ -77,6 +77,20 @@ export const apiSlice = createApi({
         };
       },
     }),
+    updateMyAccount: builder.mutation({
+      query: (body) => ({
+        url: `/admin/update_my_account`,
+        method: "PATCH",
+        body,
+      }),
+    }),
+    changeMyPassword: builder.mutation({
+      query: (body) => ({
+        url: `/admin/change_my_Password`,
+        method: "PATCH",
+        body,
+      }),
+    }),
 
     /* Permissions */
     getPermissions: builder.query({
@@ -634,4 +648,6 @@ export const {
   useDeleteFAQMutation,
   useUpdateFAQMutation,
   useImportAppealHistoryMutation,
+  useUpdateMyAccountMutation,
+  useChangeMyPasswordMutation,
 } = apiSlice;
