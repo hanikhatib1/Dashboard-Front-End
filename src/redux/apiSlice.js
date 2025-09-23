@@ -436,6 +436,9 @@ export const apiSlice = createApi({
         method: "DELETE",
       }),
     }),
+    getOneBlog: builder.query({
+      query: (id) => `/blog/get_one_blog/${id}`,
+    }),
 
     /* Workers */
     getWorkers: builder.mutation({
@@ -556,6 +559,9 @@ export const apiSlice = createApi({
         method: "PATCH",
       }),
     }),
+    getOneFAQ: builder.query({
+      query: (id) => `/faq/get_one_faq/${id}`,
+    }),
     importAppealHistory: builder.mutation({
       query: (body) => ({
         url: "/appeal/import_appeal_history",
@@ -650,4 +656,6 @@ export const {
   useImportAppealHistoryMutation,
   useUpdateMyAccountMutation,
   useChangeMyPasswordMutation,
+  useGetOneBlogQuery,
+  useGetOneFAQQuery,
 } = apiSlice;

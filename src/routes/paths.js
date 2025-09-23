@@ -35,10 +35,12 @@ export const settings = {
   permission: "/settings/permissions/:id",
   appealStatus: "/settings/appeal-status",
   blogs: "/settings/blogs",
+  blog: "/settings/blogs/:id",
   workers: "/settings/workers",
   contactUs: "/settings/contact-us",
   reports: "/settings/reports",
   faqs: "/settings/faqs",
+  faq: "/settings/faqs/:id",
 };
 
 export const dataScript = {

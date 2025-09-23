@@ -12,13 +12,16 @@ import { Link } from "react-router-dom";
 const Blog = ({ blogData, setEditBlog, setDeleteBlog }) => {
   return (
     <div className="flex flex-col gap-6 h-[350px] w-[250px] relative border rounded-[8px] overflow-hidden">
-      <div className="relative w-[250px] h-[200px] rounded-[8px] overflow-hidden border border-[#eee]">
+      <Link
+        to={`/settings/blogs/${blogData.id}`}
+        className="relative w-[250px] h-[200px] rounded-[8px] overflow-hidden border border-[#eee]"
+      >
         <img
           src={blogData.image}
           alt={blogData.title}
           className="absolute w-full h-full object-cover rounded-lg top-0 left-0"
         />
-      </div>
+      </Link>
       <div className="flex flex-col gap-1 relative px-2">
         <p className="text-[#333333] text-[18px] leading-[150%] font-bold truncate w-[calc(100%-40px)]">
           {blogData.title}

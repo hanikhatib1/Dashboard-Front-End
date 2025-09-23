@@ -107,6 +107,7 @@ const AccountPassword = () => {
             <div key={index} className="flex flex-col gap-1">
               <div className="flex flex-col gap-2">
                 <label className="text-body text-[#80838E]">{item.title}</label>
+             
                 <input
                   type={item.type}
                   placeholder={item.placeholder}

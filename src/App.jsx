@@ -45,6 +45,8 @@ import Reports from "./pages/settings/Reports";
 import Appeal from "./pages/Appeals/Appeal";
 import FAQs from "./pages/settings/FAQs";
 import Profile from "./pages/profile";
+import BlogPage from "./pages/settings/Blogs/BlogPage";
+import FAQPage from "./pages/settings/FAQs/FAQPage";
 
 function App() {
   const { isSuccess, data, isError } = useGetUserQuery({});
@@ -80,10 +82,13 @@ function App() {
             <Route path={settings.permission} element={<Permission />} />
             <Route path={settings.appealStatus} element={<AppealStatus />} />
             <Route path={settings.blogs} element={<Blogs />} />
+            <Route path={settings.blog} element={<BlogPage />} />
+          
             <Route path={settings.workers} element={<Workers />} />
             <Route path={settings.contactUs} element={<ContactUs />} />
             <Route path={settings.reports} element={<Reports />} />
             <Route path={settings.faqs} element={<FAQs />} />
+            <Route path={settings.faq} element={<FAQPage />} />
 
             <Route path={invoices.index} element={<Invoices />} />
 
