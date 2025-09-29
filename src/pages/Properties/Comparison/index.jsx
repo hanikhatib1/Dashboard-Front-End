@@ -558,6 +558,18 @@ const Comparison = () => {
                           : ""}
                       </span>
                     </p>
+                    <p
+                      className={`hidden gap-2 md:flex border-l-[3px] pl-2 border-primary w-max`}
+                    >
+                      <span className="leading-[45px] whitespace-nowrap">
+                        Average Building Assessment{" "}
+                      </span>
+                      <span className="text-[30px] leading-[45px] font-bold">
+                        {listOfProperties
+                          ? `$${formattedNumber(listOfProperties.building_avg_ass)}`
+                          : ""}
+                      </span>
+                    </p>
                   </div>
                   <div className="flex gap-2">
                     {oneProperty && (

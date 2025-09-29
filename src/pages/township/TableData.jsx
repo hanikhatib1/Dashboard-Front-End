@@ -4,7 +4,10 @@ import {
   InactiveEmployee,
 } from "@/assets/Icons";
 import { useDispatch } from "react-redux";
-import { setEditTownshipData, setMigrateTownshipData } from "@/redux/features/Township";
+import {
+  setEditTownshipData,
+  setMigrateTownshipData,
+} from "@/redux/features/Township";
 import { reverseDate } from "@/utiles/revserDate";
 import { MoreHorizontal, Pencil } from "lucide-react";
 import {
@@ -202,6 +205,18 @@ export const columns = [
           {rowData.after_bor_appeal_end
             ? reverseDate(rowData.after_bor_appeal_end)
             : ""}
+        </p>
+      );
+    },
+  },
+  {
+    accessorKey: "cycle",
+    header: "Re-Assessment After",
+    cell: ({ row }) => {
+      const rowData = row.original;
+      return (
+        <p className="text-center">
+          {rowData.cycle} {rowData.cycle > 1 ? "Years" : "Year"}
         </p>
       );
     },

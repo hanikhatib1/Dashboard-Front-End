@@ -100,7 +100,7 @@ const DataScript = () => {
               setFiles(null);
               setActiveUpload(item.id);
             }}
-            className={`flex justify-start items-center gap-2 p-4 rounded-lg !bg-inherit !text-primary ${activeUpload === item.id ? "[&_li]:!bg-[#53ABF9] !text-[#53ABF9]" : ""} hover:!text-[#53ABF9] [&_li]:hover:!bg-[#53ABF9]`}
+            className={`flex justify-start items-center gap-2 p-4 rounded-lg !bg-inherit !text-primary ${activeUpload === item.id ? "[&_li]:!bg-green-500 !text-[#53ABF9]" : ""} hover:!text-[#53ABF9] [&_li]:hover:!bg-green-500`}
           >
             <li className="bg-primary w-[50px] h-[50px] rounded-full flex justify-center items-center">
               {item.icon}

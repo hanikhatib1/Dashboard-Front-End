@@ -248,6 +248,22 @@ export const appealsColumns = [
     },
   },
   {
+    header: "Signature Status",
+    cell: ({ row }) => {
+      const dispatch = useDispatch();
+
+      return (
+        <button
+          disabled={!row.original.signature_sent}
+          className={`px-4 py-2 rounded-[8px] ml-3 cursor-pointer bg-[#1A73E833] ${!row.original.signature_sent ? "text-[#80838E] !cursor-not-allowed" : ""}`}
+          onClick={() => dispatch(setDocumentsStatusAppealModel(row.original))}
+        >
+          Signature Status
+        </button>
+      );
+    },
+  },
+  {
     id: "actions",
     enableHiding: false,
     cell: ({ row }) => {
