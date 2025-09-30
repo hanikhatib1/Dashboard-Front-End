@@ -15,6 +15,7 @@ import {
 } from "@/redux/features/Properties";
 import { useDispatch } from "react-redux";
 import { formattedNumber } from "@/utiles/formattedNumber";
+import DownloadPDFFromLink from "@/components/DownloadPDFFromLink";
 
 const currentYear = new Date().getFullYear();
 
@@ -566,36 +567,6 @@ final_price = Final AV
 ];
 
 export const propertyTaxBillHistoryColumns = [
-  /* 
-  [
-  {
-    id: "tax_year",
-    title: "Tax Year",
-    value: (value) => value,
-  },
-  { id: "total_billed", title: "Total Billed", value: (value) => value },
-  {
-    id: "total_paid",
-    title: "Total Paid",
-    value: (value) => value,
-  },
-  {
-    id: "inst1_due",
-    title: "1st Installment Due",
-    value: (value) => value,
-  },
-  {
-    id: "inst2_due",
-    title: "2nd Installment Due",
-    value: (value) => value,
-  },
-  {
-    id: "pdf_url",
-    title: "PDF URL",
-    value: (value) => value,
-  },
-]
-  */
   {
     accessorKey: "tax_year",
     header: "Tax Year",
@@ -634,13 +605,14 @@ export const propertyTaxBillHistoryColumns = [
       const rowData = row.original;
       const hasLink = rowData.pdf_url;
       return hasLink ? (
-        <Link
+        /*  <Link
           to={rowData.pdf_url}
           target="_blank"
           className="capitalize underline"
         >
           Show PDF
-        </Link>
+        </Link> */
+        <DownloadPDFFromLink urlPDF={rowData.pdf_url} />
       ) : (
         "N/A"
       );
