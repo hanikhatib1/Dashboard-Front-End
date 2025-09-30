@@ -175,6 +175,12 @@ export const apiSlice = createApi({
         method: "GET",
       }),
     }),
+    getOneProperty2: builder.query({
+      query: (query) => ({
+        url: `/property/get_one_property/${query}`,
+        method: "GET",
+      }),
+    }),
     editPropertyImage: builder.mutation({
       query: ({ body, pin }) => ({
         url: `/property/update_property_image/${pin}`,
@@ -569,6 +575,13 @@ export const apiSlice = createApi({
         body,
       }),
     }),
+    getPropertyListHistory: builder.mutation({
+      query: (pin) => ({
+        url: `property/list_history?pin=${pin}`,
+        method: "GET",
+        keepUnusedDataFor: 86400,
+      }),
+    }),
   }),
 });
 
@@ -591,6 +604,7 @@ export const {
   useEditTownshipMutation,
   useSearchPropertiesMutation,
   useGetOnePropertyMutation,
+  useGetOneProperty2Query,
   useGetPropertiesComparisonMutation,
   useGetListOfPropertiesMutation,
   useGetOnePermissionMutation,
@@ -658,4 +672,5 @@ export const {
   useChangeMyPasswordMutation,
   useGetOneBlogQuery,
   useGetOneFAQQuery,
+  useGetPropertyListHistoryMutation,
 } = apiSlice;

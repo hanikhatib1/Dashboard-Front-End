@@ -564,3 +564,86 @@ final_price = Final AV
     },
   },
 ];
+
+export const propertyTaxBillHistoryColumns = [
+  /* 
+  [
+  {
+    id: "tax_year",
+    title: "Tax Year",
+    value: (value) => value,
+  },
+  { id: "total_billed", title: "Total Billed", value: (value) => value },
+  {
+    id: "total_paid",
+    title: "Total Paid",
+    value: (value) => value,
+  },
+  {
+    id: "inst1_due",
+    title: "1st Installment Due",
+    value: (value) => value,
+  },
+  {
+    id: "inst2_due",
+    title: "2nd Installment Due",
+    value: (value) => value,
+  },
+  {
+    id: "pdf_url",
+    title: "PDF URL",
+    value: (value) => value,
+  },
+]
+  */
+  {
+    accessorKey: "tax_year",
+    header: "Tax Year",
+  },
+  {
+    header: "Total Billed",
+    cell: ({ row }) => {
+      const rowData = row.original;
+      return <p>$ {rowData.total_billed?.toLocaleString()}</p>;
+    },
+  },
+  {
+    header: "Total Paid",
+    cell: ({ row }) => {
+      const rowData = row.original;
+      return <p>$ {rowData.total_paid?.toLocaleString()}</p>;
+    },
+  },
+  {
+    header: "1st Installment Due",
+    cell: ({ row }) => {
+      const rowData = row.original;
+      return <p>$ {rowData.inst1_due?.toLocaleString()}</p>;
+    },
+  },
+  {
+    header: "2nd Installment Due",
+    cell: ({ row }) => {
+      const rowData = row.original;
+      return <p>$ {rowData.inst2_due?.toLocaleString()}</p>;
+    },
+  },
+  {
+    header: "PDF URL",
+    cell: ({ row }) => {
+      const rowData = row.original;
+      const hasLink = rowData.pdf_url;
+      return hasLink ? (
+        <Link
+          to={rowData.pdf_url}
+          target="_blank"
+          className="capitalize underline"
+        >
+          Show PDF
+        </Link>
+      ) : (
+        "N/A"
+      );
+    },
+  },
+];

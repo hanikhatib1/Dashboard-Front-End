@@ -9,6 +9,7 @@ import ReplacedImage from "@/components/ReplacedImage";
 import StreetView from "./StreetView";
 import PropertyImageSlider from "./PropertyImageSlider";
 import LatestTaxBillButton from "@/components/LatestTaxBillButton";
+import PreviousTaxBillButton from "@/components/PreviousTaxBillButton";
 
 const PropertyAnalysis = ({ property }) => {
   const data = new Date(property.data.last_update);
@@ -19,7 +20,7 @@ const PropertyAnalysis = ({ property }) => {
       <div className="h-[350px] md:h-full  flex flex-col gap-4 w-full md:!w-[580px]">
         <div className="flex justify-between items-center">
           <p className="text-heading_3">{property.data.address}</p>
-          <LatestTaxBillButton pin={property.data.pin} />
+          {/* <LatestTaxBillButton pin={property.data.pin} /> */}
         </div>
         <div className="bg-gray-200 rounded-[8px] !h-[372px] border flex-1 relative overflow-hidden">
           {/* <ReplacedImage
@@ -33,6 +34,10 @@ const PropertyAnalysis = ({ property }) => {
           />
           <StreetView address={property.data.address} />
         </div>
+      </div>
+      <div className="flex flex-col gap-4">
+        <LatestTaxBillButton pin={property.data.pin} />
+        <PreviousTaxBillButton pin={property.data.pin} />
       </div>
       <div className="h-full w-full md:w-[431px] flex flex-col">
         <div className="flex justify-between mb-4">

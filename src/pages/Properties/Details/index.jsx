@@ -8,6 +8,7 @@ import {
   detailRecordsColumns,
   documentsColumns,
   exemptionsColumns,
+  propertyTaxBillHistoryColumns,
   purchaseDetailsColumns,
   taxColumns,
 } from "./TablesData";
@@ -15,6 +16,8 @@ import { Link } from "react-router-dom";
 import EditPropertySale from "./EditPropertySale";
 import { useSelector } from "react-redux";
 import DeletePropertySale from "./DeletePropertySale";
+import { useGetPropertyListHistoryMutation } from "@/redux/apiSlice";
+import Loader from "@/components/Loader";
 
 const statusData = [
   {
@@ -74,6 +77,13 @@ const statusData = [
     isArray: true,
   },
   {
+    name: "20-Year Property Tax Bill History",
+    key: "property-tax-bill-history",
+    columns: propertyTaxBillHistoryColumns,
+    hasPagination: false,
+    isArray: true,
+  },
+  {
     name: "Comparison",
     key: "Comparison",
     columns: [],
@@ -87,13 +97,23 @@ const formateDescription = (description) =>
 
 const Details = (data) => {
   const [status, setStatus] = useState(statusData[0]);
+  const [getPropertyListHistory, { isLoading, isError, data: historyData }] =
+    useGetPropertyListHistoryMutation();
   const { editPurchaseProperty, deletePurchaseProperty } = useSelector(
     (state) => state.properties
   );
 
+  const handleFetchPropertyListHistory = async () => {
+    try {
+      const result = await getPropertyListHistory(data.data.pin).unwrap();
+      console.log("Property List History:", result);
+    } catch (error) {
+      console.error("Failed to fetch property list history:", error);
+    }
+  };
+
   return (
     <div className="border rounded-[8px] bg-white border-gray-200 flex flex-col gap-2">
-      {" "}
       <div className="flex gap-4 px-4 py-2 overflow-scroll">
         {statusData.map((item) =>
           item.key === "Comparison" ? (
@@ -112,25 +132,45 @@ const Details = (data) => {
                   ? "border-primary text-primary  "
                   : "border-white"
               } border-b-[3px]`}
-              onClick={() => setStatus(item)}
+              onClick={() => {
+                setStatus(item);
+                if (item.key === "property-tax-bill-history") {
+                  handleFetchPropertyListHistory();
+                }
+              }}
             >
               <span>{item.name}</span>
             </Button>
           )
         )}
       </div>
-      <PropertiesTable
-        columns={status.columns}
-        data={
-          status.key === "description"
-            ? [...formateDescription(data.data[status.key])]
-            : status.isArray
-              ? [...data.data[status.key]]
-              : [{ ...data.data[status.key] }]
-        }
-        hasPagination={status.hasPagination}
-        tableKey={status.key}
-      />
+      {status.key === "property-tax-bill-history" ? (
+        isLoading ? (
+          <Loader />
+        ) : (
+          historyData && (
+            <PropertiesTable
+              columns={status.columns}
+              data={historyData}
+              hasPagination={status.hasPagination}
+              tableKey={status.key}
+            />
+          )
+        )
+      ) : (
+        <PropertiesTable
+          columns={status.columns}
+          data={
+            status.key === "description"
+              ? [...formateDescription(data.data[status.key])]
+              : status.isArray
+                ? [...data.data[status.key]]
+                : [{ ...data.data[status.key] }]
+          }
+          hasPagination={status.hasPagination}
+          tableKey={status.key}
+        />
+      )}
       {editPurchaseProperty && <EditPropertySale />}
       {deletePurchaseProperty && <DeletePropertySale />}
     </div>

@@ -1,24 +1,14 @@
-import { useEffect } from "react";
 import SearchPropertiesComponent from "../SearchProperties";
 import { useParams } from "react-router-dom";
-import { useGetOnePropertyMutation } from "@/redux/apiSlice";
+import { useGetOneProperty2Query } from "@/redux/apiSlice";
 import Loader from "@/components/Loader";
-import Details from "../Details";
 import PropertyAnalysis from "../PropertyAnalysis";
 import { formattedNumber } from "@/utiles/formattedNumber";
+import Details from "../Details";
 
 const Property = () => {
   const { id } = useParams();
-  const [getOneProperty, { data, isLoading, isError }] =
-    useGetOnePropertyMutation({ fixedCacheKey: id });
-
-  useEffect(() => {
-    async function fetchData() {
-      await getOneProperty(id);
-    }
-    fetchData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id]);
+  const { data, isLoading, isError } = useGetOneProperty2Query(id);
 
   return (
     <div className="flex flex-col gap-8">
