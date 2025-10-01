@@ -13,7 +13,7 @@ const FAQs = () => {
   const [selectedDeleteFAQ, setSelectedDeleteFAQ] = React.useState(null);
   const [selectedEditFAQ, setSelectedEditFAQ] = React.useState(null);
   const { data, isFetching, isError, refetch } = useGetAllFAQsQuery(
-    `search=${searchText}`
+    `search=${searchText}&sort=sort`
   );
 
   useEffect(() => {

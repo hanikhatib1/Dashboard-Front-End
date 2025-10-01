@@ -28,6 +28,7 @@ const AddNewFAQ = ({ refetch }) => {
       answer: "",
       meta_description: "",
       rename_links: null,
+      sort: null,
     },
   });
 
@@ -107,6 +108,17 @@ const AddNewFAQ = ({ refetch }) => {
                 type="text"
                 className="rounded-[8px] h-[48px]"
                 {...register("meta_description", { required: true })}
+              />
+            </div>
+            <div className="w-full flex flex-col gap-2 flex-2">
+              <label htmlFor="sort" className="text-body text-[#80838E]">
+                Sort
+              </label>
+              <Input
+                id="sort"
+                type="text"
+                className="rounded-[8px] h-[48px]"
+                {...register("sort", { required: true })}
               />
             </div>
             <RenameLinks

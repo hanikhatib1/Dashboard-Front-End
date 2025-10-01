@@ -11,6 +11,29 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+import PasswordStrength from "@/components/PasswordStrength";
+
+const passwordSchema = yup
+  .object({
+    new_password: yup
+      .string()
+      .required("New password is required")
+      .min(6, "Password must be at least 6 characters")
+      .matches(/[A-Z]/, "Must contain at least one uppercase letter")
+      .matches(/[a-z]/, "Must contain at least one lowercase letter")
+      .matches(/[0-9]/, "Must contain at least one number")
+      .matches(
+        /[!@#$%^&*(),.?":{}|<>]/,
+        "Must contain at least one special character"
+      ),
+    confirm_new_password: yup
+      .string()
+      .oneOf([yup.ref("new_password")], "Passwords must match")
+      .required("Please confirm your new password"),
+  })
+  .required();
 
 const ForgetPassword = () => {
   const [forgetScreen, setForgetScreen] = useState(true);
@@ -18,21 +41,25 @@ const ForgetPassword = () => {
   const [forgetPassword] = useForgetPasswordMutation();
   const [verifyOtp] = useVerifyOtpMutation();
 
-  console.log("id", id);
-
   const { toast } = useToast();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { register: registerLogin, handleSubmit: handleSubmitLogin } = useForm({
-    defaultValues: {
-      email: "",
-    },
+
+  const {
+    register: registerLogin,
+    handleSubmit: handleSubmitLogin,
+    formState: { errors: loginErrors },
+  } = useForm({
+    defaultValues: { email: "" },
   });
+
   const {
     register: registerVerification,
     handleSubmit: handleSubmitVerification,
     setValue: setValueVerification,
     getValues: getValuesVerification,
+    watch,
+    formState: { errors: verificationErrors },
   } = useForm({
     defaultValues: {
       email: "",
@@ -41,7 +68,10 @@ const ForgetPassword = () => {
       confirm_new_password: "",
       token: id,
     },
+    resolver: yupResolver(passwordSchema),
   });
+
+  const newPassword = watch("new_password");
 
   const onSubmit = async (data) => {
     if (forgetScreen) {
@@ -50,37 +80,26 @@ const ForgetPassword = () => {
       if ("data" in res) {
         toast({
           title: "Success",
-          description: "Please check your email , we sent link to reset password",
+          description:
+            "Please check your email, we sent a link to reset password",
         });
       } else {
-        toast({
-          title: "Error",
-        });
+        toast({ title: "Error" });
       }
     } else {
       delete data.email;
       delete data.verification_code;
-      if (
-        getValuesVerification("new_password") ===
-        getValuesVerification("confirm_new_password")
-      ) {
-        const res = await verifyOtp(data);
-        if ("data" in res) {
-          toast({
-            title: "Success",
-            description: "Password updated successfully",
-          });
-          navigate(auth.login);
-        } else {
-          toast({
-            title: "Error",
-            description: "Invalid verification code",
-          });
-        }
+      const res = await verifyOtp(data);
+      if ("data" in res) {
+        toast({
+          title: "Success",
+          description: "Password updated successfully",
+        });
+        navigate(auth.login);
       } else {
         toast({
           title: "Error",
-          description: "Passwords do not match",
+          description: "Invalid verification code",
         });
       }
     }
@@ -100,8 +119,8 @@ const ForgetPassword = () => {
         <LogoIcon />
         <p>Cook County Tax Appeal</p>
       </div>
-      <div className="absolute top-0 left-1/2 -translate-x-1/2  border-primary bg-white flex justify-between items-center gap-40 max-w-[1300px] w-full h-screen">
-        <div className="flex flex-col gap-4 md:w-1/2 w-full overflow-y-auto xl:p-0 p-4">
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 border-primary bg-white flex justify-between items-center gap-40 max-w-[1300px] w-full h-screen">
+        <div className="flex flex-col gap-4 md:w-1/2 w-full overflow-y-auto xl:p-0 !px-2">
           <p className="text-heading_1">
             {forgetScreen ? "Forget Password" : "Set New Password"}
           </p>
@@ -115,51 +134,55 @@ const ForgetPassword = () => {
           >
             {forgetScreen ? (
               <div className="flex flex-col gap-2">
-                <label htmlFor="" className="text-body text-[#80838E]">
-                  Email
-                </label>
+                <label className="text-body text-[#80838E]">Email</label>
                 <Input
-                  id=""
                   type="email"
                   className="rounded-[8px] h-[48px]"
-                  name="email"
                   placeholder="Enter your Email"
-                  {...registerLogin("email", { required: true })}
+                  {...registerLogin("email", { required: "Email is required" })}
                 />
+                {loginErrors.email && (
+                  <p className="text-red-500 text-sm">
+                    {loginErrors.email.message?.toString()}
+                  </p>
+                )}
               </div>
             ) : (
               <>
                 <div className="flex flex-col gap-2">
-                  <label htmlFor="" className="text-body text-[#80838E]">
+                  <label className="text-body text-[#80838E]">
                     New Password
                   </label>
                   <Input
-                    id=""
-                    type="text"
+                    type="password"
                     className="rounded-[8px] h-[48px]"
-                    name="new_password"
                     placeholder="Enter your New Password"
-                    {...registerVerification("new_password", {
-                      required: true,
-                      minLength: 6,
-                    })}
+                    {...registerVerification("new_password")}
                   />
+                  {verificationErrors.new_password && (
+                    <p className="text-red-500 text-sm">
+                      {verificationErrors.new_password.message?.toString()}
+                    </p>
+                  )}
+
+                  <PasswordStrength password={newPassword} />
                 </div>
+
                 <div className="flex flex-col gap-2">
-                  <label htmlFor="" className="text-body text-[#80838E]">
+                  <label className="text-body text-[#80838E]">
                     Confirm New Password
                   </label>
                   <Input
-                    id=""
-                    type="text"
+                    type="password"
                     className="rounded-[8px] h-[48px]"
-                    name="email"
                     placeholder="Confirm New Password"
-                    {...registerVerification("confirm_new_password", {
-                      required: true,
-                      minLength: 6,
-                    })}
+                    {...registerVerification("confirm_new_password")}
                   />
+                  {verificationErrors.confirm_new_password && (
+                    <p className="text-red-500 text-sm">
+                      {verificationErrors.confirm_new_password.message?.toString()}
+                    </p>
+                  )}
                 </div>
               </>
             )}
@@ -178,6 +201,7 @@ const ForgetPassword = () => {
             </div>
           </form>
         </div>
+
         <div className="hidden md:flex w-1/2 justify-center">
           <div className="bg-primary absolute top-0 right-0 w-1/3 h-full -z-10"></div>
           <img src="/login-image.png" className="w-3/4 h-3/4" />

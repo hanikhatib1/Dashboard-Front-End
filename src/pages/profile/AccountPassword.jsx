@@ -1,7 +1,8 @@
+import PasswordStrength from "@/components/PasswordStrength";
 import { toast } from "@/components/ui/use-toast";
 import { useChangeMyPasswordMutation } from "@/redux/apiSlice";
 import { yupResolver } from "@hookform/resolvers/yup";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 
@@ -10,8 +11,15 @@ const schema = yup
     current_password: yup.string().required("Current password is required"),
     new_password: yup
       .string()
+      .required("New password is required")
       .min(6, "Password must be at least 6 characters")
-      .required("New password is required"),
+      .matches(/[A-Z]/, "Password must contain at least one uppercase letter")
+      .matches(/[a-z]/, "Password must contain at least one lowercase letter")
+      .matches(/[0-9]/, "Password must contain at least one number")
+      .matches(
+        /[!@#$%^&*(),.?":{}|<>]/,
+        "Password must contain at least one special character"
+      ),
     confirm_new_password: yup
       .string()
       .oneOf([yup.ref("new_password"), null], "Passwords must match")
@@ -54,7 +62,7 @@ const AccountPassword = () => {
     register,
     setValue,
     watch,
-    formState: { isValid, errors },
+    formState: { errors },
   } = useForm({
     defaultValues: {
       current_password: "",
@@ -63,6 +71,8 @@ const AccountPassword = () => {
     },
     resolver: yupResolver(schema),
   });
+
+  const newPassword = watch("new_password");
 
   const onSubmit = async (data) => {
     const res = await changePassword({
@@ -85,7 +95,7 @@ const AccountPassword = () => {
       toast({
         title: "Error",
         description:
-          res.error.data.detail || "Something went wrong. Please try again.",
+          res.error?.data?.detail || "Something went wrong. Please try again.",
         variant: "destructive",
       });
     }
@@ -107,22 +117,32 @@ const AccountPassword = () => {
             <div key={index} className="flex flex-col gap-1">
               <div className="flex flex-col gap-2">
                 <label className="text-body text-[#80838E]">{item.title}</label>
-             
+
                 <input
                   type={item.type}
                   placeholder={item.placeholder}
-                  className={`${errors[item.key] ? "border-red-500 focus:border-red-500 focus-visible:outline-0 focus-visible:ring-0 focus-visible:ring-offset-0 focus:outline-0" : ""}  border rounded-[8px] h-[48px] p-4 text-body text-[#00061D] placeholder:text-[#CCCDD2]`}
+                  className={`${
+                    errors[item.key]
+                      ? "border-red-500 focus:border-red-500 focus-visible:outline-0 focus-visible:ring-0 focus-visible:ring-offset-0 focus:outline-0"
+                      : ""
+                  } border rounded-[8px] h-[48px] p-4 text-body text-[#00061D] placeholder:text-[#CCCDD2]`}
                   {...register(item.key)}
                 />
               </div>
+
               {errors[item.key] && (
                 <p className="text-red-500 text-sm">
                   {errors[item.key]?.message}
                 </p>
               )}
+
+              {item.key === "new_password" && (
+                <PasswordStrength password={newPassword} />
+              )}
             </div>
           ))}
         </div>
+
         <div className="flex justify-end">
           <button
             disabled={isLoading}

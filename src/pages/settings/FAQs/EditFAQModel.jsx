@@ -26,6 +26,7 @@ const EditFAQModel = ({ refetch, faq, setSelectedEditFAQ }) => {
       answer: faq.answer || "",
       meta_description: faq.meta_description || "",
       rename_links: faq.rename_links || null,
+      sort: faq.sort || null,
     },
   });
 
@@ -103,6 +104,17 @@ const EditFAQModel = ({ refetch, faq, setSelectedEditFAQ }) => {
                 type="text"
                 className="rounded-[8px] h-[48px]"
                 {...register("meta_description", { required: true })}
+              />
+            </div>
+            <div className="w-full flex flex-col gap-2 flex-2">
+              <label htmlFor="Sort" className="text-body text-[#80838E]">
+                Sort
+              </label>
+              <Input
+                id="Sort"
+                type="text"
+                className="rounded-[8px] h-[48px]"
+                {...register("sort", { required: true })}
               />
             </div>
             <RenameLinks
