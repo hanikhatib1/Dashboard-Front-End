@@ -49,8 +49,8 @@ const SearchPropertiesComponent = ({
     <div className={`flex ${containerClassName} w-full max-w-[650px]`}>
       <div
         className={`${
-          searchText !== "" ? "rounded-tl-[8px]" : "rounded-l-[8px]"
-        } border border-r-0 relative h-[40px] max-w-full md:max-w-[500px] min-w-max w-full text-[#A1A1AA] z-10 ${className}`}
+          searchText !== "" ? "rounded-t-[8px]" : "rounded-[8px]"
+        } border relative h-[40px] max-w-full md:max-w-[500px] min-w-max w-full text-[#A1A1AA] z-10 ${className}`}
       >
         <Search
           className="absolute top-0 left-1 w-[20px] h-full z-10"
@@ -126,7 +126,7 @@ const SearchPropertiesComponent = ({
           </>
         )}
       </div>
-      <Select
+     {/*  <Select
         onValueChange={(e) => setSearchFor(e)}
         className="focus-visible:outline-0 focus-visible:ring-0 focus-visible:ring-offset-0"
         defaultValue={searchFor}
@@ -138,7 +138,7 @@ const SearchPropertiesComponent = ({
           <SelectItem value="address">Address</SelectItem>
           <SelectItem value="pin">Pin</SelectItem>
         </SelectContent>
-      </Select>
+      </Select> */}
     </div>
   );
 };
