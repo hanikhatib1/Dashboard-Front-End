@@ -57,7 +57,7 @@ const Appeals = ({ appealType }) => {
     Number(searchParams.get("townshipId")) || 0
   );
   const [sortBy, setSortBy] = useState({
-    name: searchParams.get("sortName") || "Date",
+    name: searchParams.get("sortName") || "Last Update",
     value: searchParams.get("sortValue") || "-id",
   });
   const [sortBySignature, setSortBySignature] = useState(
@@ -214,7 +214,7 @@ const Appeals = ({ appealType }) => {
             onClick={() => {
               setStatus({ status: "All", id: 0 });
               setTownshipId(0);
-              setSortBy({ name: "Date", value: "-last_update" });
+              setSortBy({ name: "Last Update", value: "-last_update" });
               setSortBySignature("none");
               setPage(1);
               setSearchText("");

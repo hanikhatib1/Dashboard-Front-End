@@ -9,7 +9,8 @@ import {
 import PropTypes from "prop-types";
 
 const SortByData = [
-  { name: "Date", value: "-last_update" },
+  { name: "Last Update", value: "-last_update" },
+  { name: "Old Update", value: "last_update" },
   { name: "Name", value: "client_first_name" },
 ];
 
