@@ -13,6 +13,7 @@ export const appealSlice = createSlice({
     documentsStatusAppealModel: null,
     cookCountyAssessorPDF: null,
     canceledAppeal: null,
+    lastAppealIdUpdated: null,
   },
   reducers: {
     setAppeals: (state, action) => {
@@ -45,6 +46,9 @@ export const appealSlice = createSlice({
     setCanceledAppeal: (state, action) => {
       state.canceledAppeal = action.payload;
     },
+    setLastAppealIdUpdated: (state, action) => {
+      state.lastAppealIdUpdated = action.payload;
+    },
   },
 });
 
@@ -59,6 +63,7 @@ export const {
   setAppealInvoiceDetails,
   setCookCountyAssessorPDF,
   setCanceledAppeal,
+  setLastAppealIdUpdated,
 } = appealSlice.actions;
 
 export default appealSlice.reducer;

@@ -43,6 +43,7 @@ const Appeals = ({ appealType }) => {
     documentsStatusAppealModel,
     formsAppealArray,
     canceledAppeal,
+    lastAppealIdUpdated,
   } = useSelector((state) => state.appeals);
   const { editInvoiceData, deleteInvoiceData } = useSelector(
     (state) => state.invoices
@@ -100,6 +101,7 @@ const Appeals = ({ appealType }) => {
     sortBy,
     sortBySignature,
     appealType,
+    lastAppealIdUpdated,
   ]);
 
   useEffect(() => {
@@ -113,13 +115,22 @@ const Appeals = ({ appealType }) => {
     params.set("sortBySignature", sortBySignature);
     const newUrl =
       appealType === "commercialAppeals"
-        ? `${pathName}/?${params.toString()}`
-        : `${pathName}/?${params.toString()}`;
+        ? `${pathName}?${params.toString()}`
+        : `${pathName}?${params.toString()}`;
 
     if (window.location.search !== `?${params.toString()}`) {
       window.history.pushState({}, "", newUrl);
     }
-  }, [status, page, townshipId, sortBy, sortBySignature]);
+  }, [
+    status,
+    page,
+    townshipId,
+    sortBy,
+    sortBySignature,
+    appealType,
+    pathName,
+    lastAppealIdUpdated,
+  ]);
 
   useEffect(() => {
     const handlePopState = () => {
@@ -197,6 +208,20 @@ const Appeals = ({ appealType }) => {
             sortBySignature={sortBySignature}
             setSortBySignature={setSortBySignature}
           />
+          {/* make button to clear all filter  */}
+          <button
+            className="text-sm text-primary underline underline-offset-2"
+            onClick={() => {
+              setStatus({ status: "All", id: 0 });
+              setTownshipId(0);
+              setSortBy({ name: "Date", value: "-last_update" });
+              setSortBySignature("none");
+              setPage(1);
+              setSearchText("");
+            }}
+          >
+            Clear All Filter
+          </button>
         </div>
         <div className="rounded-[8px] flex flex-col border overflow-y-auto  flex-1">
           {isError ? (

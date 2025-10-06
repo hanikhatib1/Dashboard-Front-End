@@ -41,6 +41,7 @@ const Taps = ({ expand, setShowSideBarMenu }) => {
               <>
                 <NavLink
                   to={tap.url}
+                  target={tap.target || "_self"}
                   onClick={() => setShowSideBarMenu(false)}
                   className={({ isActive }) => {
                     if (isActive) setACtiveTap(index);

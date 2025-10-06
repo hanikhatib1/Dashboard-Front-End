@@ -14,6 +14,7 @@ import {
   setEditAppealData,
   setFormsAppeal,
   setFormsAppealArray,
+  setLastAppealIdUpdated,
 } from "@/redux/features/AppealSlice";
 import { reverseDate } from "@/utiles/revserDate";
 import { MoreHorizontal } from "lucide-react";
@@ -140,7 +141,6 @@ export const appealsColumns = [
         Object.keys(defaultValue).forEach((key) => {
           formData.append(key, defaultValue[key]);
         });
-        console.log("defaultValue:::", defaultValue);
         if (val === 7) {
           dispatch(
             setCanceledAppeal({
@@ -154,12 +154,14 @@ export const appealsColumns = [
             body: formData,
           });
           if ("data" in res) {
-            /*  alert("Status updated successfully"); */
             toast({
               title: "Success",
               description: "Status updated successfully",
               variant: "success",
             });
+            dispatch(
+              setLastAppealIdUpdated(`${row.original.id}-${Date.now()}`)
+            );
           } else {
             toast({
               title: "Error",
@@ -175,7 +177,7 @@ export const appealsColumns = [
       }, [row.original.appeal_status.status]);
 
       return (
-        <div className="[&>div]:w-full">
+        <div className="[&>div]:w-full flex flex-col justify-center gap-1">
           {/*  <span className="text-[#4693D6]">
             {row.original.appeal_status.status}
           </span> */}
@@ -190,6 +192,7 @@ export const appealsColumns = [
               showStatusKeyword={false}
             />
           )}
+          <span className="text-red-600">{row?.original?.cancel_reason}</span>
         </div>
       );
     },

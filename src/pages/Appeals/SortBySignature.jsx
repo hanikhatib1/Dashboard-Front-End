@@ -9,7 +9,7 @@ import {
 import PropTypes from "prop-types";
 
 const SortByData = [
-  { name: "none", value: "none" },
+  { name: "All", value: "none" },
   { name: "Yes", value: true },
   { name: "No", value: false },
 ];
@@ -20,12 +20,18 @@ const SortBySignature = ({ setSortBySignature, sortBySignature }) => {
       <Select
         className="rounded-[8px] sm:w-[calc(50%-16px)] w-full"
         onValueChange={(value) => setSortBySignature(value)}
+        value={sortBySignature}
       >
         <SelectTrigger className="rounded-[8px] h-[48px]">
           <SelectValue
             placeholder={`Sort By Signature Sent: ${sortBySignature === "none" ? sortBySignature : sortBySignature ? "Yes" : "No"}`}
           >
-            Sort By Signature Sent : {sortBySignature ? "Yes" : "No"}
+            Sort By Signature Sent :{" "}
+            {sortBySignature === "none"
+              ? "All"
+              : sortBySignature
+                ? "Yes"
+                : "No"}
           </SelectValue>
         </SelectTrigger>
         <SelectContent className="rounded-[8px] bg-white ">

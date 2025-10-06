@@ -20,6 +20,7 @@ import {
   Users,
   FileQuestionMark,
   LampDesk,
+  Link,
 } from "lucide-react";
 
 export const TapsData = [
@@ -128,6 +129,42 @@ export const TapsData = [
         name: "FAQs",
         Icon: <FileQuestionMark className="text-inherit" />,
         url: "/settings/faqs",
+      },
+    ],
+  },
+  {
+    name: "Assets",
+    Icon: <Link />,
+    children: [
+      {
+        name: "Board of Review",
+        Icon: null,
+        url: "https://appeals.cookcountyboardofreview.com/Account/LoginPage",
+        target: "_blank",
+      },
+      {
+        name: "Cook Counrty Assessor",
+        Icon: null,
+        url: "https://propertytaxfilings.cookcountyil.gov/",
+        target: "_blank",
+      },
+      {
+        name: "Cook County Data Store",
+        Icon: null,
+        url: "https://data.cookcountyassessoril.gov/",
+        target: "_blank",
+      },
+      {
+        name: "Cook County Dates",
+        Icon: null,
+        url: "https://www.cookcountyassessoril.gov/assessment-calendar-and-deadlines",
+        target: "_blank",
+      },
+      {
+        name: "Board of Review Dates",
+        Icon: null,
+        url: "https://www.cookcountyboardofreview.com/dates-and-deadlines",
+        target: "_blank",
       },
     ],
   },

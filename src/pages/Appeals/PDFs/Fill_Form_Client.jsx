@@ -15,6 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   setDocumentsStatusAppealModel,
   setFormsAppeal,
+  setLastAppealIdUpdated,
 } from "@/redux/features/AppealSlice";
 import { capitalizeName } from "@/utiles/capitalizeName";
 
@@ -318,6 +319,9 @@ const Fill_Form_Client = ({
         variant: "success",
       });
       dispatch(setDocumentsStatusAppealModel(null));
+      dispatch(
+        setLastAppealIdUpdated(`${documentsStatusAppealModel.id}-${Date.now()}`)
+      );
     }
     if ("error" in res) {
       toast({

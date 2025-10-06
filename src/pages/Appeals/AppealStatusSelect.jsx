@@ -36,6 +36,7 @@ const AppealStatusSelect = ({
           setStatus(selectedStatus);
         }}
         defaultValue={staticStatus ? staticStatus.id : status ? status.id : 0}
+        value={status.id}
       >
         <SelectTrigger className="rounded-[8px] h-[48px]">
           <SelectValue

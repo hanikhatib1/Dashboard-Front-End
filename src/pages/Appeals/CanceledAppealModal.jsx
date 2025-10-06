@@ -11,7 +11,10 @@ import {
 } from "@/components/ui/dialog";
 import { toast } from "@/components/ui/use-toast";
 import { useUpdateAppealMutation } from "@/redux/apiSlice";
-import { setCanceledAppeal } from "@/redux/features/AppealSlice";
+import {
+  setCanceledAppeal,
+  setLastAppealIdUpdated,
+} from "@/redux/features/AppealSlice";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -46,6 +49,7 @@ const CanceledAppealModal = () => {
         variant: "success",
       });
       dispatch(setCanceledAppeal(null));
+      dispatch(setLastAppealIdUpdated(`${canceledAppeal.id}-${Date.now()}`));
     } else {
       toast({
         title: "Error",

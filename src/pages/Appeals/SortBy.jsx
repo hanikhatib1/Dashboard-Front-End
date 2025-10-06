@@ -9,7 +9,7 @@ import {
 import PropTypes from "prop-types";
 
 const SortByData = [
-  { name: "Date", value: "-id" },
+  { name: "Date", value: "-last_update" },
   { name: "Name", value: "client_first_name" },
 ];
 
@@ -24,6 +24,7 @@ const SortBy = ({ setSortBy, sortBy }) => {
             value: value,
           })
         }
+        value={sortBy.value}
       >
         <SelectTrigger className="rounded-[8px] h-[48px]">
           <SelectValue placeholder={`Sort By : ${sortBy.name}`}>
