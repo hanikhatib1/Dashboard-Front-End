@@ -44,6 +44,7 @@ const TapChildren = ({
           <li key={index}>
             <NavLink
               to={child.url}
+              target={child.target || "_self"}
               onClick={() => setShowSideBarMenu(false)}
               className={({ isActive }) => {
                 if (isActive) setACtiveTap(index);
