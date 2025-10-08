@@ -5,7 +5,9 @@ import {
 } from "@/redux/apiSlice";
 import {
   addAppealToInvoice,
+  setCertificateErrorAppealData,
   setDeleteAppealData,
+  setDocumentsCertificateErrorStatusAppealModel,
   setDocumentsStatusAppealModel,
   setEditAppealData,
   setFormsAppeal,
@@ -28,6 +30,8 @@ import DocumentsStatusAppealModel from "../DocumentsStatusAppealModel";
 import PropertyImageSlider from "@/pages/Properties/PropertyImageSlider";
 import { useToast } from "@/components/ui/use-toast";
 import { formatePin } from "@/utiles/formatePin";
+import CertificateErrorModel from "./CertificateErrorModel";
+import DocumentsCertificateErrorStatus from "./DocumentsCertificateErrorStatus";
 
 const tableData = [
   {
@@ -212,6 +216,8 @@ const Appeal = () => {
     appealInvoiceDetails,
     formsAppeal,
     documentsStatusAppealModel,
+    certificateErrorAppealData,
+    documentsCertificateErrorStatusAppealModel,
   } = useSelector((state) => state.appeals);
   const { editInvoiceData, deleteInvoiceData } = useSelector(
     (state) => state.invoices
@@ -251,7 +257,7 @@ const Appeal = () => {
         <div className="flex gap-3 flex-col">
           <div className="flex flex-col md:flex-row justify-between gap-4">
             <p className="text-[#2C3E50] text-[28px]">All Details</p>
-            <div className="flex gap- flex-wrap">
+            <div className="flex gap-2 flex-wrap">
               <button
                 className="bg-[#F60000] text-white px-4 py-2 rounded-[8px]"
                 onClick={() => dispatch(setDeleteAppealData(appealData))}
@@ -259,7 +265,34 @@ const Appeal = () => {
                 Delete
               </button>
               <button
-                className={`px-4 py-2 rounded-[8px] ml-3 cursor-pointer bg-[#1A73E833] ${appealData.signature_sent ? "text-[#80838E] cursor-not-allowed " : ""}`}
+                className="bg-[#1A73E8] text-white px-4 py-2 rounded-[8px]"
+                onClick={() => dispatch(setEditAppealData(appealData))}
+              >
+                Edit
+              </button>
+              <button
+                className={`px-4 py-2 rounded-[8px]  cursor-pointer bg-[#1A73E833] ${appealData.certf_error_sent ? "text-[#80838E] cursor-not-allowed " : ""}`}
+                onClick={() => {
+                  if (!appealData.certf_error_sent)
+                    dispatch(setCertificateErrorAppealData(appealData));
+                }}
+                disabled={appealData.certf_error_sent}
+              >
+                Send Certificate Error
+              </button>
+              <button
+                className={`px-4 py-2 rounded-[8px] cursor-pointer bg-[#1A73E833] ${!appealData.certf_error_sent ? "text-[#80838E] cursor-not-allowed " : ""}`}
+                onClick={() =>
+                  appealData.certf_error_sent &&
+                  dispatch(
+                    setDocumentsCertificateErrorStatusAppealModel(appealData)
+                  )
+                }
+              >
+                Certificate Error Status
+              </button>
+              <button
+                className={`px-4 py-2 rounded-[8px] cursor-pointer bg-[#1A73E833] ${appealData.signature_sent ? "text-[#80838E] cursor-not-allowed " : ""}`}
                 onClick={() => {
                   if (!appealData.signature_sent)
                     dispatch(setFormsAppeal(appealData));
@@ -269,19 +302,13 @@ const Appeal = () => {
                 Send Forms
               </button>
               <button
-                className={`px-4 py-2 rounded-[8px] ml-3 cursor-pointer bg-[#1A73E833] ${!appealData.signature_sent ? "text-[#80838E] cursor-not-allowed " : ""}`}
+                className={`px-4 py-2 rounded-[8px] cursor-pointer bg-[#1A73E833] ${!appealData.signature_sent ? "text-[#80838E] cursor-not-allowed " : ""}`}
                 onClick={() =>
                   appealData.signature_sent &&
                   dispatch(setDocumentsStatusAppealModel(appealData))
                 }
               >
                 Signature Status
-              </button>
-              <button
-                className="bg-[#1A73E8] text-white px-4 py-2 rounded-[8px] ml-3"
-                onClick={() => dispatch(setEditAppealData(appealData))}
-              >
-                Edit
               </button>
             </div>
           </div>
@@ -368,6 +395,12 @@ const Appeal = () => {
         {editInvoiceData && <EditInvoice />}
         {deleteInvoiceData && <DeleteInvoiceModel />}
         {documentsStatusAppealModel && <DocumentsStatusAppealModel />}
+        {certificateErrorAppealData && (
+          <CertificateErrorModel refetch={fetchData} />
+        )}
+        {documentsCertificateErrorStatusAppealModel && (
+          <DocumentsCertificateErrorStatus refetch={fetchData} />
+        )}
       </div>
     );
 };

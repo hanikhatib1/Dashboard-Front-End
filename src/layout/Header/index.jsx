@@ -39,10 +39,10 @@ const Header = ({ expand, setExpand, setShowSideBarMenu, showSideBarMenu }) => {
     >
       <div className="flex gap-4 items-center">
         <div
-          className="gap-4 p-4 items-center cursor-pointer flex md:hidden"
+          className="gap-4 items-center cursor-pointer flex md:hidden"
           onClick={() => setShowSideBarMenu(true)}
         >
-          <Menu
+          {/* <Menu
             onClick={() => {
               setShowSideBarMenu(true);
               setExpand(true);
@@ -50,7 +50,7 @@ const Header = ({ expand, setExpand, setShowSideBarMenu, showSideBarMenu }) => {
             size={28}
             color="#1A73E8"
             className="cursor-pointer md:hidden block"
-          />
+          /> */}
           <img src="/assets/logo.png" alt="" className="w-[120px] h-[40px]" />
         </div>
         <div className="hidden md:flex p-4 items-center cursor-pointer gap-3">
@@ -78,7 +78,7 @@ const Header = ({ expand, setExpand, setShowSideBarMenu, showSideBarMenu }) => {
         </p>
       </div>
       <div className="flex gap-4 items-center">
-        <Link to="/profile" className="flex gap-2 items-center">
+        <Link to="/profile" className="flex gap-2 items-center whitespace-nowrap">
           <Avatar className="border flex justify-center items-center">
             {user.image ? (
               <AvatarImage src={user.image} alt={user.first_name} />

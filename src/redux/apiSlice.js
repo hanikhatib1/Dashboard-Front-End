@@ -582,6 +582,18 @@ export const apiSlice = createApi({
         keepUnusedDataFor: 86400,
       }),
     }),
+    sendCertificateErrorOfAppeal: builder.mutation({
+      query: (appealId) => ({
+        url: `/appeal/send_certificate_of_error/${appealId}`,
+        method: "GET",
+      }),
+    }),
+    openToSendCertificateError: builder.mutation({
+      query: (id) => ({
+        url: `/appeal/open_to_send_certificate_of_error_docs/${id}`,
+        method: "PATCH",
+      }),
+    }),
   }),
 });
 
@@ -673,4 +685,6 @@ export const {
   useGetOneBlogQuery,
   useGetOneFAQQuery,
   useGetPropertyListHistoryMutation,
+  useSendCertificateErrorOfAppealMutation,
+  useOpenToSendCertificateErrorMutation,
 } = apiSlice;

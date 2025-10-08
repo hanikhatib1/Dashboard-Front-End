@@ -11,9 +11,11 @@ export const appealSlice = createSlice({
     formsAppeal: null,
     formsAppealArray: [],
     documentsStatusAppealModel: null,
+    documentsCertificateErrorStatusAppealModel: null,
     cookCountyAssessorPDF: null,
     canceledAppeal: null,
     lastAppealIdUpdated: null,
+    certificateErrorAppealData: null,
   },
   reducers: {
     setAppeals: (state, action) => {
@@ -49,6 +51,12 @@ export const appealSlice = createSlice({
     setLastAppealIdUpdated: (state, action) => {
       state.lastAppealIdUpdated = action.payload;
     },
+    setCertificateErrorAppealData: (state, action) => {
+      state.certificateErrorAppealData = action.payload;
+    },
+    setDocumentsCertificateErrorStatusAppealModel: (state, action) => {
+      state.documentsCertificateErrorStatusAppealModel = action.payload;
+    },
   },
 });
 
@@ -64,6 +72,8 @@ export const {
   setCookCountyAssessorPDF,
   setCanceledAppeal,
   setLastAppealIdUpdated,
+  setCertificateErrorAppealData,
+  setDocumentsCertificateErrorStatusAppealModel,
 } = appealSlice.actions;
 
 export default appealSlice.reducer;

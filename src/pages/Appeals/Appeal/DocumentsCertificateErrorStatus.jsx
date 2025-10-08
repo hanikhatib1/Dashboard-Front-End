@@ -7,41 +7,77 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { setDocumentsStatusAppealModel } from "@/redux/features/AppealSlice";
+import { setDocumentsCertificateErrorStatusAppealModel } from "@/redux/features/AppealSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import Fill_Form_Client from "./PDFs/Fill_Form_Client";
-import { useGetAppealDocumentsStatusMutation } from "@/redux/apiSlice";
-import { useEffect } from "react";
+import {
+  useGetAppealDocumentsStatusMutation,
+  useOpenToSendCertificateErrorMutation,
+} from "@/redux/apiSlice";
+import { useEffect, useRef } from "react";
+import { toast } from "@/components/ui/use-toast";
 
-const DocumentsStatusAppealModel = () => {
-  const { documentsStatusAppealModel } = useSelector((state) => state.appeals);
+const DocumentsCertificateErrorStatus = ({ refetch }) => {
+  const ref = useRef();
+  const [useOpenToSendCertificateError, { isLoading: openToSendIsLoading }] =
+    useOpenToSendCertificateErrorMutation();
+  const { documentsCertificateErrorStatusAppealModel } = useSelector(
+    (state) => state.appeals
+  );
   const dispatch = useDispatch();
   const [getAppealsDocumentsStatus, { isLoading, isError, data }] =
     useGetAppealDocumentsStatusMutation();
 
+  const handleOpenToSendCertificateError = async () => {
+    const res = await useOpenToSendCertificateError(
+      documentsCertificateErrorStatusAppealModel.id
+    );
+    if ("error" in res) {
+      toast({
+        title: "Error",
+        description: "Something went wrong",
+        variant: "error",
+      });
+      return;
+    }
+    if ("data" in res) {
+      toast({
+        title: "Success",
+        description: "Open to send certificate error successfully",
+        variant: "success",
+      });
+      dispatch(setDocumentsCertificateErrorStatusAppealModel(null));
+      refetch();
+    }
+  };
+
   useEffect(() => {
-    if (documentsStatusAppealModel) {
-      getAppealsDocumentsStatus(documentsStatusAppealModel.signature_doc_id);
+    if (documentsCertificateErrorStatusAppealModel && !ref.current) {
+      getAppealsDocumentsStatus(
+        documentsCertificateErrorStatusAppealModel.signature_doc_id
+      );
+      ref.current = true;
     }
   }, [
-    documentsStatusAppealModel,
-    documentsStatusAppealModel.signature_doc_id,
+    documentsCertificateErrorStatusAppealModel,
+    documentsCertificateErrorStatusAppealModel.signature_doc_id,
     getAppealsDocumentsStatus,
   ]);
 
   return (
     <Dialog
-      open={documentsStatusAppealModel ?? false}
-      onOpenChange={(open) => dispatch(setDocumentsStatusAppealModel(open))}
+      open={documentsCertificateErrorStatusAppealModel ?? false}
+      onOpenChange={(open) =>
+        dispatch(setDocumentsCertificateErrorStatusAppealModel(open))
+      }
     >
       <DialogHeader>
-        <DialogTitle>Signature Status</DialogTitle>
+        <DialogTitle>Certificate Error Status</DialogTitle>
       </DialogHeader>
 
       <DialogContent className="sm:max-w-[525px] bg-white !rounded-[8px]">
         <DialogHeader>
-          <DialogTitle>Signature Status</DialogTitle>
+          <DialogTitle>Certificate Error Status</DialogTitle>
         </DialogHeader>
         <div>
           {isLoading ? (
@@ -90,25 +126,13 @@ const DocumentsStatusAppealModel = () => {
                     You can send this form to client
                   </p>
                   <div className="w-[180px]">
-                    <Fill_Form_Client
-                      pin1={documentsStatusAppealModel.pin1}
-                      pin2={documentsStatusAppealModel.pin2}
-                      pin3={documentsStatusAppealModel.pin3}
-                      client_email={documentsStatusAppealModel.client_email}
-                      appeals={[
-                        {
-                          pin1: documentsStatusAppealModel.pin1,
-                          pin2: documentsStatusAppealModel.pin2,
-                          pin3: documentsStatusAppealModel.pin3,
-                          client_email: documentsStatusAppealModel.client_email,
-                          id: documentsStatusAppealModel?.id,
-                        },
-                      ]}
-                      isOpenToSendDocument={true}
-                      text="Send Form again"
-                      appealId={documentsStatusAppealModel?.id}
-                      className="bg-white rounded-[8px]  !text-primary border border-primary hover:bg-primary hover:!text-white py-2"
-                    />
+                    <Button
+                      onClick={() => handleOpenToSendCertificateError()}
+                      disable={openToSendIsLoading}
+                      className="text-white rounded-[8px] "
+                    >
+                      {openToSendIsLoading ? "Sending..." : "Open to Send"}
+                    </Button>
                   </div>
                 </div>
               </div>
@@ -119,7 +143,9 @@ const DocumentsStatusAppealModel = () => {
           <Button
             type="submit"
             className="bg-primary rounded-[8px]  text-white"
-            onClick={() => dispatch(setDocumentsStatusAppealModel(null))}
+            onClick={() =>
+              dispatch(setDocumentsCertificateErrorStatusAppealModel(null))
+            }
           >
             Cancel
           </Button>
@@ -129,4 +155,4 @@ const DocumentsStatusAppealModel = () => {
   );
 };
 
-export default DocumentsStatusAppealModel;
+export default DocumentsCertificateErrorStatus;
