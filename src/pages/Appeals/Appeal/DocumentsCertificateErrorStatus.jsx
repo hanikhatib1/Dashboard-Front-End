@@ -54,13 +54,13 @@ const DocumentsCertificateErrorStatus = ({ refetch }) => {
   useEffect(() => {
     if (documentsCertificateErrorStatusAppealModel && !ref.current) {
       getAppealsDocumentsStatus(
-        documentsCertificateErrorStatusAppealModel.signature_doc_id
+        documentsCertificateErrorStatusAppealModel.certf_error_doc_id
       );
       ref.current = true;
     }
   }, [
     documentsCertificateErrorStatusAppealModel,
-    documentsCertificateErrorStatusAppealModel.signature_doc_id,
+    documentsCertificateErrorStatusAppealModel.certf_error_doc_id,
     getAppealsDocumentsStatus,
   ]);
 
