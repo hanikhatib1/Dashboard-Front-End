@@ -30,6 +30,7 @@ const Fill_Form_Client = ({
   appealId,
   isOpenToSendDocument = false,
   selectedPDF,
+  sendWithOutPDF = false,
 }) => {
   const currentYear = new Date().getFullYear();
   const currentMonth = new Date().getMonth();
@@ -332,15 +333,41 @@ const Fill_Form_Client = ({
     }
   };
 
+  const handleWithOutPDF = async (e) => {
+    setIsLoading(true);
+    const formData = new FormData();
+    formData.append("appeal_id", e.id);
+    formData.append("type", selectedPDF.key);
+
+    const res2 = await sendForm(formData);
+    if ("data" in res2) {
+      toast({
+        title: "Success",
+        description: "Form sent successfully",
+        variant: "success",
+      });
+      dispatch(setFormsAppeal(null));
+    }
+    if ("error" in res2) {
+      toast({
+        title: "Error",
+        description: "Error sending the form",
+        variant: "error",
+      });
+    }
+    setIsLoading(false);
+  };
+
   return (
     <div
       onClick={() => {
         if (isOpenToSendDocument) handleOpenToSendDocument();
         else {
-          console.log("appeals", appeals);
-          appeals.map((a) => {
-            fillPOC_CCA(a);
-          });
+          if (sendWithOutPDF) appeals.map(handleWithOutPDF);
+          else
+            appeals.map((a) => {
+              fillPOC_CCA(a);
+            });
         }
       }}
       disabled={isLoading || openToSendDocumentIsLoading}

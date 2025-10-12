@@ -48,7 +48,7 @@ const SendFormModel = () => {
   );
 
   const [selectedPDF, setSelectedPDF] = useState(whichPDF[0]);
-  console.log("formsAppealArray", formsAppealArray);
+
   return (
     <Dialog
       open={formsAppeal}
@@ -100,6 +100,7 @@ const SendFormModel = () => {
             }
             appealId={formsAppeal?.id}
             selectedPDF={selectedPDF}
+            sendWithOutPDF
           />
           <Button
             type="submit"
