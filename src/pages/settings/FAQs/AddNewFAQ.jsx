@@ -29,6 +29,7 @@ const AddNewFAQ = ({ refetch }) => {
       meta_description: "",
       rename_links: null,
       sort: null,
+      title: "",
     },
   });
 
@@ -72,6 +73,18 @@ const AddNewFAQ = ({ refetch }) => {
             </DialogTitle>
           </DialogHeader>
           <div className="grid gap-4 py-4">
+            <div className="w-full flex flex-col gap-2 flex-2">
+              <label htmlFor="title" className="text-body text-[#80838E]">
+                Title
+              </label>
+              <Input
+                id="title"
+                type="text"
+                className="rounded-[8px] h-[48px]"
+                placeholder="Enter Title"
+                {...register("title")}
+              />
+            </div>
             <div className="w-full flex flex-col gap-2 flex-2">
               <label htmlFor="Question" className="text-body text-[#80838E]">
                 Question

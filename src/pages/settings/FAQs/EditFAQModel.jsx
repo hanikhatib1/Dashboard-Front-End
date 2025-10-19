@@ -27,6 +27,7 @@ const EditFAQModel = ({ refetch, faq, setSelectedEditFAQ }) => {
       meta_description: faq.meta_description || "",
       rename_links: faq.rename_links || null,
       sort: faq.sort || null,
+      title: faq.title || "",
     },
   });
 
@@ -68,6 +69,18 @@ const EditFAQModel = ({ refetch, faq, setSelectedEditFAQ }) => {
             <DialogTitle className="text-heading_1">Edit Question</DialogTitle>
           </DialogHeader>
           <div className="grid gap-4 py-4">
+            <div className="w-full flex flex-col gap-2 flex-2">
+              <label htmlFor="title" className="text-body text-[#80838E]">
+                Title
+              </label>
+              <Input
+                id="title"
+                type="text"
+                className="rounded-[8px] h-[48px]"
+                placeholder="Enter Title"
+                {...register("title")}
+              />
+            </div>
             <div className="w-full flex flex-col gap-2 flex-2">
               <label htmlFor="Question" className="text-body text-[#80838E]">
                 Question
