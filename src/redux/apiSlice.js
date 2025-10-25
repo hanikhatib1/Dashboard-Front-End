@@ -412,7 +412,7 @@ export const apiSlice = createApi({
     /* Blogs */
     getAllBlogs: builder.query({
       query: (q) => ({
-        url: `/blog/get_all_blogs?sort=-date&${q}`,
+        url: `/blog/get_all_blogs?${q}`,
         method: "GET",
       }),
     }),
@@ -594,6 +594,11 @@ export const apiSlice = createApi({
         method: "PATCH",
       }),
     }),
+    getDocuSignatureUrl: builder.mutation({
+      query: (envelopeId) => ({
+        url: `/signature/docusign_doc_status_fn/${envelopeId}`,
+      }),
+    }),
   }),
 });
 
@@ -687,4 +692,5 @@ export const {
   useGetPropertyListHistoryMutation,
   useSendCertificateErrorOfAppealMutation,
   useOpenToSendCertificateErrorMutation,
+  useGetDocuSignatureUrlMutation,
 } = apiSlice;

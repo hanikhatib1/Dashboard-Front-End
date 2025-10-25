@@ -24,7 +24,10 @@ import Fill_Form_Client from "./PDFs/Fill_Form_Client";
 import { formatPhoneNumber } from "@/utiles/formatPhoneNumber";
 import AppealStatusSelect from "./AppealStatusSelect";
 import { useEffect, useState } from "react";
-import { useUpdateAppealMutation } from "@/redux/apiSlice";
+import {
+  useGetDocuSignatureUrlMutation,
+  useUpdateAppealMutation,
+} from "@/redux/apiSlice";
 import { toast } from "@/components/ui/use-toast";
 import Loader from "@/components/Loader";
 
@@ -254,14 +257,36 @@ export const appealsColumns = [
     header: "Signature Status",
     cell: ({ row }) => {
       const dispatch = useDispatch();
-
+      const [getDocURL, { isLoading }] = useGetDocuSignatureUrlMutation();
+      const handleGetDocuURL = async () => {
+        const res = await getDocURL(row.original.signature_traking.envelope_id);
+        if ("data" in res) {
+          window.open(res.data.url, "_blank");
+        } else {
+          toast({
+            title: "Error",
+            description: res.error.data?.detail || "Failed to get document URL",
+            variant: "destructive",
+          });
+        }
+      };
       return (
         <button
-          disabled={!row.original.signature_sent}
+          disabled={!row.original.signature_sent || isLoading}
           className={`px-4 py-2 rounded-[8px] ml-3 cursor-pointer bg-[#1A73E833] ${!row.original.signature_sent ? "text-[#80838E] !cursor-not-allowed" : ""}`}
-          onClick={() => dispatch(setDocumentsStatusAppealModel(row.original))}
+          onClick={() =>
+            row.original?.signature_traking?.envelope_id &&
+            row.original?.signature_sent
+              ? handleGetDocuURL()
+              : dispatch(setDocumentsStatusAppealModel(row.original))
+          }
         >
-          Signature Status
+          {row.original?.signature_traking?.envelope_id &&
+          row.original?.signature_sent
+            ? isLoading
+              ? "Loading..."
+              : "View Document"
+            : "Signature Status"}
         </button>
       );
     },

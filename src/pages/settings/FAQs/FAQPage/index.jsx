@@ -24,6 +24,11 @@ const FAQPage = () => {
         <div className="flex items-center justify-between  md:px-8 mb-8">
           <div className="flex w-full col-span-1 flex-col gap-2">
             <div className="flex justify-between">
+              <h1 className="text-[20px] md:text-[26px] font-[700] text-[#181A20] flex-1">
+                {faqData.data.title}
+              </h1>
+            </div>
+            <div className="flex justify-between">
               <h1 className="text-[20px] md:text-[24px] font-[700] text-[#181A20] flex-1">
                 {faqData.data.question}
               </h1>

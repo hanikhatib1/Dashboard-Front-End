@@ -7,22 +7,28 @@ import { useGetAllFAQsQuery } from "@/redux/apiSlice";
 import Loader from "@/components/Loader";
 import DeleteFAQModel from "./DeleteFAQModel";
 import EditFAQModel from "./EditFAQModel";
+import Pagination from "@/components/Pagination";
 
 const FAQs = () => {
+  const [page, setPage] = React.useState(1);
   const [searchText, setSearchText] = React.useState("");
   const [selectedDeleteFAQ, setSelectedDeleteFAQ] = React.useState(null);
   const [selectedEditFAQ, setSelectedEditFAQ] = React.useState(null);
-  const { data, isFetching, isError, refetch } = useGetAllFAQsQuery(
-    `search=${searchText}&sort=sort`
+  const { data, isFetching, isLoading, isError, refetch } = useGetAllFAQsQuery(
+    `search=${searchText}&sort=sort&limit=2&page=${page}`
   );
 
   useEffect(() => {
     if (searchText) {
-      refetch(`search=${searchText}`);
+      refetch(`search=${searchText}&sort=sort&limit=20&page=${page}`);
     }
-  }, [searchText, refetch]);
+    window.scrollTo(0, {
+      top: 0,
+      behavior: "smooth",
+    });
+  }, [searchText, refetch, page]);
 
-  if (isFetching) return <Loader />;
+  if (isLoading) return <Loader />;
   if (isError) return <p>Error</p>;
 
   return (
@@ -44,18 +50,29 @@ const FAQs = () => {
           <AddNewFAQ refetch={refetch} />
         </div>
       </div>
-      <div className="flex flex-col gap-6">
-        {data &&
-          data.data.map((faq) => (
-            <FAQ
-              key={faq.id}
-              faq={faq}
-              setSelectedDeleteFAQ={setSelectedDeleteFAQ}
-              setSelectedEditFAQ={setSelectedEditFAQ}
-            />
-          ))}
-        {/* Placeholder FAQs for demonstration */}
-      </div>
+      {isFetching ? (
+        <Loader />
+      ) : (
+        <div className="flex flex-col gap-6 min-h-[40vh]">
+          {data &&
+            data.data.map((faq) => (
+              <FAQ
+                key={faq.id}
+                faq={faq}
+                setSelectedDeleteFAQ={setSelectedDeleteFAQ}
+                setSelectedEditFAQ={setSelectedEditFAQ}
+              />
+            ))}
+          {/* Placeholder FAQs for demonstration */}
+        </div>
+      )}
+      {data && (
+        <Pagination
+          page={data.pagination.page}
+          setPage={setPage}
+          total_pages={data.pagination.total_pages}
+        />
+      )}
       {selectedDeleteFAQ && (
         <DeleteFAQModel
           setSelectedDeleteFAQ={setSelectedDeleteFAQ}
