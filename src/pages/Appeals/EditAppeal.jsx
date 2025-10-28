@@ -216,7 +216,7 @@ const EditAppeal = ({ fetchData }) => {
                 )}
                 {editAppealData.an && (
                   <DownloadedFileItem
-                    title="Board of Review Appeal :"
+                    title="Attestation Form:"
                     file={editAppealData.an}
                     deletedFileValue={watch("deleted_an")}
                     setValue={setValue}
@@ -287,7 +287,7 @@ const EditAppeal = ({ fetchData }) => {
                   file={anFile}
                   setFile={setAnFile}
                   //title="Import Appeal Narrative"
-                  title="Import Board of Review Appeal"
+                  title="Import Attestation Form"
                   setValue={setValue}
                   _key={"an"}
                 />

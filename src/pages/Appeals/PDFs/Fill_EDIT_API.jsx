@@ -57,7 +57,7 @@ const Fill_EDIT_API = ({
         data={data ? data.data : false}
       />
       <Fill_All_PDFs_API hasData={hasData} data={data ? data.data : false} />
-      {data && (
+      {/* {data && (
         <PDFDownloadLink
           document={<AppealPDF editAppealData={data ? data.data : false} />}
           fileName="CookCounty_Appeal.pdf"
@@ -73,31 +73,8 @@ const Fill_EDIT_API = ({
             </p>
           </div>
         </PDFDownloadLink>
-      )}
-      {/*  dispatch(setCookCountyAssessorPDF(null)) */}
-      {/* {data && (
-        <div className="border h-[400px] flex-1">
-          <PDFViewer width="100%" height="100%">
-            <AppealPDF2
-              editAppealData={data ? data.data : false}
-              stateNumber={{}}
-            />
-          </PDFViewer>
-        </div>
       )} */}
-      {/* {data && (
-        <div
-          onClick={() => dispatch(setCookCountyAssessorPDF(true))}
-          className={`flex gap-2 !p-1 !bg-white !text-black items-center ${data.data ? "cursor-pointer hover:border-gray-400 rounded-[8px] overflow-hidden" : ""} border border-white `}
-        >
-          <Download color="#80838E" />{" "}
-          <p
-            className={`text-[16px] font-medium ${data.data ? "" : "text-[#80838E]"}`}
-          >
-            Cook County Assessor
-          </p>
-        </div>
-      )} */}
+
       {cookCountyAssessorPDF && <CookCountyAssessorModel data={data} />}
     </div>
   );
