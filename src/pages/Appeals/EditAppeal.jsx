@@ -188,7 +188,7 @@ const EditAppeal = ({ fetchData }) => {
 
                 {editAppealData.ran && (
                   <DownloadedFileItem
-                    title="Residential Appeal Narrative :"
+                    title="Representation Agreement :"
                     file={editAppealData.ran}
                     deletedFileValue={watch("deleted_ran")}
                     setValue={setValue}
