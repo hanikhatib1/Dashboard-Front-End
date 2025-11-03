@@ -4,6 +4,7 @@ import { CloudUpload, Wallpaper } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 import {
   useImportAppealHistoryMutation,
+  useUploadBorAppealDocumentMutation,
   useUploadPropertiesMutation,
   useUploadSalesDataMutation,
   useUploadTaxRateDataMutation,
@@ -28,7 +29,12 @@ const feature = [
   },
   {
     id: 4,
-    title: "Upload Appeal History",
+    title: "Upload CCA Appeal History",
+    icon: <Wallpaper color="white" />,
+  },
+  {
+    id: 5,
+    title: "Upload BOR  Appeal History",
     icon: <Wallpaper color="white" />,
   },
 ];
@@ -44,6 +50,7 @@ const DataScript = () => {
   const [uploadSalesData] = useUploadSalesDataMutation();
   const [uploadTaxRateData] = useUploadTaxRateDataMutation();
   const [uploadAppealHistory] = useImportAppealHistoryMutation();
+  const [uploadBorAppealHistory] = useUploadBorAppealDocumentMutation();
 
   const handleUploadFile = useCallback(async () => {
     const formData = new FormData();
@@ -63,6 +70,9 @@ const DataScript = () => {
       case 4:
         res = await uploadAppealHistory(formData);
         break;
+      case 5:
+        res = await uploadBorAppealHistory(formData);
+        break;
       default:
         break;
     }
@@ -75,6 +85,7 @@ const DataScript = () => {
     uploadSalesData,
     uploadTaxRateData,
     uploadAppealHistory,
+    uploadBorAppealHistory,
   ]);
 
   useEffect(() => {
@@ -88,11 +99,11 @@ const DataScript = () => {
       ]);
       handleUploadFile();
     }
-  }, [files, handleUploadFile]);
+  }, [files, handleUploadFile, isError, isLoading]);
 
   return (
     <div className="p-4 flex flex-col gap-12 items-center">
-      <div className="flex flex-col md:flex-row justify-center gap-5 md:gap-20 ">
+      <div className="flex flex-col md:flex-row flex-wrap gap-3 gap-y-6">
         {feature.map((item, index) => (
           <Button
             key={index}

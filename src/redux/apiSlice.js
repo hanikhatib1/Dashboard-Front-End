@@ -599,6 +599,13 @@ export const apiSlice = createApi({
         url: `/signature/docusign_doc_status_fn/${envelopeId}`,
       }),
     }),
+    uploadBorAppealDocument: builder.mutation({
+      query: (body) => ({
+        url: "/appeal/import_bor_history",
+        method: "POST",
+        body,
+      }),
+    }),
   }),
 });
 
@@ -693,4 +700,5 @@ export const {
   useSendCertificateErrorOfAppealMutation,
   useOpenToSendCertificateErrorMutation,
   useGetDocuSignatureUrlMutation,
+  useUploadBorAppealDocumentMutation,
 } = apiSlice;
