@@ -566,6 +566,57 @@ final_price = Final AV
   },
 ];
 
+export const borHistoryColumns = [
+  {
+    accessorKey: "proposed_land_price",
+    header: "Proposed Land",
+  },
+  {
+    accessorKey: "proposed_building_price",
+    header: "Proposed Building",
+  },
+  {
+    accessorKey: "proposed_price",
+    header: "Proposed Total",
+  },
+  {
+    accessorKey: "final_land_price",
+    header: "Final Land",
+  },
+  {
+    accessorKey: "final_building_price",
+    header: "Final Building",
+  },
+  {
+    accessorKey: "final_price",
+    header: "Final Total",
+  },
+  {
+    accessorKey: "result",
+    header: "Result",
+  },
+  {
+    accessorKey: "appeal_traker",
+    header: "Appeal Tracker",
+  },
+  {
+    accessorKey: "agent_first_name",
+    header: "Agent First Name",
+  },
+  {
+    accessorKey: "agent_last_name",
+    header: "Agent Last Name",
+  },
+  {
+    accessorKey: "agent_name",
+    header: "Agent Name",
+  },
+  {
+    accessorKey: "appeal_type",
+    header: "Appeal Type",
+  },
+];
+
 export const propertyTaxBillHistoryColumns = [
   {
     accessorKey: "tax_year",

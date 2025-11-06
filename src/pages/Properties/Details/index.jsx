@@ -1,9 +1,10 @@
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import PropertiesTable from "./Table";
 import {
   appealDatesColumns,
   AppealHistoryColumns,
+  borHistoryColumns,
   descriptionColumns,
   detailRecordsColumns,
   documentsColumns,
@@ -68,6 +69,18 @@ const statusData = [
     columns: AppealHistoryColumns,
     hasPagination: false,
     isArray: true,
+    children: [
+      {
+        key: "appeal_history",
+        title: "Assessor History",
+        columns: AppealHistoryColumns,
+      },
+      {
+        key: "bor_history",
+        title: "BOR History",
+        columns: borHistoryColumns,
+      },
+    ],
   },
   {
     name: "Documents",
@@ -97,6 +110,8 @@ const formateDescription = (description) =>
 
 const Details = (data) => {
   const [status, setStatus] = useState(statusData[0]);
+  const [childStatus, setChildStatus] = useState(null);
+
   const [getPropertyListHistory, { isLoading, isError, data: historyData }] =
     useGetPropertyListHistoryMutation();
   const { editPurchaseProperty, deletePurchaseProperty } = useSelector(
@@ -111,6 +126,10 @@ const Details = (data) => {
       console.error("Failed to fetch property list history:", error);
     }
   };
+
+  useEffect(() => {
+    if (status?.children) setChildStatus(status.children[0]);
+  }, [status]);
 
   return (
     <div className="border rounded-[8px] bg-white border-gray-200 flex flex-col gap-2">
@@ -133,6 +152,7 @@ const Details = (data) => {
                   : "border-white"
               } border-b-[3px]`}
               onClick={() => {
+                setChildStatus(null);
                 setStatus(item);
                 if (item.key === "property-tax-bill-history") {
                   handleFetchPropertyListHistory();
@@ -144,6 +164,25 @@ const Details = (data) => {
           )
         )}
       </div>
+      {status?.children && (
+        <div className="flex justify-start">
+          <div className="p-3 rounded-[12px] bg-gray-100 flex gap-2 mx-4">
+            {status?.children.map((item, index) => (
+              <button
+                key={index}
+                onClick={() => setChildStatus(item)}
+                className={`px-4 py-2 rounded-[8px] ${
+                  childStatus?.key === item.key
+                    ? "bg-white text-primary font-medium"
+                    : "text-gray-600 hover:bg-white"
+                }`}
+              >
+                {item.title}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
       {status.key === "property-tax-bill-history" ? (
         isLoading ? (
           <Loader />
@@ -159,16 +198,16 @@ const Details = (data) => {
         )
       ) : (
         <PropertiesTable
-          columns={status.columns}
+          columns={childStatus ? childStatus.columns : status?.columns}
           data={
             status.key === "description"
               ? [...formateDescription(data.data[status.key])]
               : status.isArray
-                ? [...data.data[status.key]]
+                ? [...data.data[childStatus ? childStatus.key : status?.key]]
                 : [{ ...data.data[status.key] }]
           }
           hasPagination={status.hasPagination}
-          tableKey={status.key}
+          tableKey={status?.children ? status?.children.key : status?.key}
         />
       )}
       {editPurchaseProperty && <EditPropertySale />}
