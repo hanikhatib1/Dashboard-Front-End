@@ -287,7 +287,7 @@ export const taxColumns = [
   },
   {
     accessorKey: "current_value",
-    header: `Estimated Taxes ${currentYear}`,
+    header: `2024 Payable in ${currentYear}`,
     cell: ({ row }) => {
       const rowData = row.original;
       return (

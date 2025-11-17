@@ -55,6 +55,7 @@ const DataScript = () => {
   const handleUploadFile = useCallback(async () => {
     const formData = new FormData();
     formData.append("file", files);
+    setFiles(null);
     let res;
     setIsLoading(true);
     switch (activeUpload) {
@@ -78,15 +79,8 @@ const DataScript = () => {
     }
     setIsLoading(false);
     if ("error" in res) setIsError(true);
-  }, [
-    files,
-    activeUpload,
-    uploadPropertyData,
-    uploadSalesData,
-    uploadTaxRateData,
-    uploadAppealHistory,
-    uploadBorAppealHistory,
-  ]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [files, activeUpload]);
 
   useEffect(() => {
     if (files) {
@@ -120,7 +114,7 @@ const DataScript = () => {
           </Button>
         ))}
       </div>
-      <div className="flex text-center justify-center items-center flex-col gap-6 p-20 border border-dashed max-w-[750px] w-full md:w-[750px] rounded-[16px]">
+      <div className="flex text-center justify-center items-center flex-col gap-6 p-4 border border-dashed max-w-[750px] w-full md:w-[750px] rounded-[16px]">
         <CloudUpload size={80} color="#999999" />
         <div>
           <p className="text-[#00061D] text-[18px] font-semibold">
