@@ -568,6 +568,10 @@ final_price = Final AV
 
 export const borHistoryColumns = [
   {
+    accessorKey: "year",
+    header: "Year",
+  },
+  {
     accessorKey: "proposed_land_price",
     header: "Proposed Land",
   },
