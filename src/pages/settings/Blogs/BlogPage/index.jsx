@@ -50,6 +50,9 @@ const BlogPage = () => {
               description={blogData.data.description}
               renameLinks={blogData.data.rename_links || []}
             />
+           {/*  <div
+              dangerouslySetInnerHTML={{ __html: blogData.data.description }}
+            /> */}
           </div>
         </div>
       </div>

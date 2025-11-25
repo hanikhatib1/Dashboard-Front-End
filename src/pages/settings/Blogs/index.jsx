@@ -8,6 +8,7 @@ import AddBlogModel from "./AddBlogModel";
 import EditModel from "./EditModel";
 import DeleteBlogModel from "./DeleteBlogModel";
 import Pagination from "@/components/Pagination";
+import NewAddBlogBuilder from "./NewAddBlogBuilder";
 
 const Blogs = () => {
   const [page, setPage] = useState(1);
@@ -20,7 +21,9 @@ const Blogs = () => {
     isError: blogInfoError,
   } = useGetBlogsInfoQuery();
   const [editBlog, setEditBlog] = React.useState(null);
+
   const [deleteBlog, setDeleteBlog] = React.useState(null);
+  const [openAddNewBlog, setOpenAddNewBlog] = React.useState(false);
 
   useEffect(() => {
     refetch(`sort=-date&limit=20&page=${page}`);
@@ -59,41 +62,71 @@ const Blogs = () => {
         )
       )}
 
-      <div className="flex justify-end">
+      <div className="flex justify-end gap-2">
+        <button
+          onClick={() => setOpenAddNewBlog(!openAddNewBlog)}
+          className="bg-white border border-primary rounded-[12px] text-primary px-3 min-w-[200px]"
+        >
+          {openAddNewBlog ? "Close" : "Add New Blog"}
+        </button>
         <AddBlogModel refetch={refetch} />
       </div>
-      <div className="flex flex-wrap gap-6 justify-center md:justify-start min-h-[40vh]">
-        {isFetching ? (
-          <Loader />
-        ) : isError ? (
-          <div>Error</div>
+
+      {openAddNewBlog ? (
+        <NewAddBlogBuilder setOpen={setOpenAddNewBlog} />
+      ) : editBlog ? (
+        /<\/?[a-z][\s\S]*>/i.test(editBlog.description) ? (
+          <NewAddBlogBuilder
+            setOpen={(e) => {
+              setOpenAddNewBlog(false);
+              setEditBlog(null);
+            }}
+            editBlog={editBlog}
+          />
         ) : (
-          data &&
-          data.data.length > 0 &&
-          data.data.map((item) => (
-            <Blog
-              key={item.id}
-              blogData={item}
-              setEditBlog={setEditBlog}
-              setDeleteBlog={setDeleteBlog}
+          <EditModel
+            editBlogData={editBlog}
+            setEditBlog={setEditBlog}
+            refetch={refetch}
+          />
+        )
+      ) : (
+        <>
+          <div className="flex flex-wrap gap-6 justify-center md:justify-start min-h-[40vh]">
+            {isFetching ? (
+              <Loader />
+            ) : isError ? (
+              <div>Error</div>
+            ) : (
+              data &&
+              data.data.length > 0 &&
+              data.data.map((item) => (
+                <Blog
+                  key={item.id}
+                  blogData={item}
+                  setEditBlog={setEditBlog}
+                  setDeleteBlog={setDeleteBlog}
+                />
+              ))
+            )}
+          </div>
+          {data && (
+            <Pagination
+              page={data.pagination.page}
+              setPage={setPage}
+              total_pages={data.pagination.total_pages}
             />
-          ))
-        )}
-      </div>
-      {data && (
-        <Pagination
-          page={data.pagination.page}
-          setPage={setPage}
-          total_pages={data.pagination.total_pages}
-        />
+          )}
+        </>
       )}
-      {editBlog && (
+
+      {/*  {editBlog && (
         <EditModel
           editBlogData={editBlog}
           setEditBlog={setEditBlog}
           refetch={refetch}
         />
-      )}
+      )} */}
       {deleteBlog && (
         <DeleteBlogModel
           deleteBlogData={deleteBlog}

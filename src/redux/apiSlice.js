@@ -606,6 +606,20 @@ export const apiSlice = createApi({
         body,
       }),
     }),
+    addImageFile: builder.mutation({
+      query: (body) => ({
+        url: "/upload_image/add_image",
+        method: "POST",
+        body,
+      }),
+    }),
+    deleteImageFile: builder.mutation({
+      query: (body) => ({
+        url: `/upload_image/delete_image`,
+        method: "DELETE",
+        body,
+      }),
+    }),
   }),
 });
 
@@ -701,4 +715,6 @@ export const {
   useOpenToSendCertificateErrorMutation,
   useGetDocuSignatureUrlMutation,
   useUploadBorAppealDocumentMutation,
+  useAddImageFileMutation,
+  useDeleteImageFileMutation,
 } = apiSlice;

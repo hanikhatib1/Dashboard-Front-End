@@ -34,6 +34,17 @@ const BlogDescription = ({ description, renameLinks = [] }) => {
     }
   };
 
+  const isHTML = /<\/?[a-z][\s\S]*>/i.test(description);
+
+  if (isHTML) {
+    return (
+      <div
+        className="prose max-w-none prose-headings:font-semibold prose-ul:list-disc prose-ol:list-decimal prose-a:text-blue-600 prose-a:underline"
+        dangerouslySetInnerHTML={{ __html: description }}
+      />
+    );
+  }
+
   return (
     <Linkify
       componentDecorator={(href, text, key) => {

@@ -5,10 +5,10 @@ import { colors } from "./src/theme/colors";
 module.exports = {
   darkMode: ["class"],
   content: [
-    './pages/**/*.{js,jsx}',
-    './components/**/*.{js,jsx}',
-    './app/**/*.{js,jsx}',
-    './src/**/*.{js,jsx}',
+    "./pages/**/*.{js,jsx}",
+    "./components/**/*.{js,jsx}",
+    "./app/**/*.{js,jsx}",
+    "./src/**/*.{js,jsx}",
   ],
   prefix: "",
   theme: {
@@ -42,9 +42,9 @@ module.exports = {
         "accordion-up": "accordion-up 0.2s ease-out",
       },
       boxShadow: {
-        'custom': '0px 10px 60px 0px #E2ECF980',
+        custom: "0px 10px 60px 0px #E2ECF980",
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
-}
+  plugins: [require("tailwindcss-animate"), require("@tailwindcss/typography")],
+};

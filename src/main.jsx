@@ -9,6 +9,7 @@ import { Toaster } from "./components/ui/toaster.jsx";
 import { PDFDownloadLink, PDFViewer } from "@react-pdf/renderer";
 import AppealPDF from "./AppealPDF.jsx";
 import AppealPDF4 from "./AppealPDF4.jsx";
+import { Toaster as NewToaster } from "react-hot-toast";
 
 const sampleData = {
   success: true,
@@ -373,14 +374,15 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     <BrowserRouter>
       <Provider store={store}>
         <App />
-         <Toaster className="!bg-white" />
+        <Toaster className="!bg-white" />
+        <NewToaster position="top-right" reverseOrder={false} />
         {/* <PDFDownloadLink
           document={<AppealPDF data={sampleData} />}
           fileName="CookCounty_Appeal.pdf"
         >
           {({ loading }) => (loading ? "Loading PDF..." : "Download PDF")}
         </PDFDownloadLink> */}
-       {/*  <div className="border h-[100vh] w-full">
+        {/*  <div className="border h-[100vh] w-full">
           <PDFViewer width="100%" height="100%">
             <AppealPDF4 reportData={sampleData.data} />
           </PDFViewer>
