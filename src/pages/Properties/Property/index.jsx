@@ -78,7 +78,7 @@ const Property = () => {
                         {" "}
                         $ {formattedNumber(data.data.prior_year.market_value)}
                       </p> */}
-                      <CopyText text={data.data.current_year.market_value} />
+                      <CopyText text={data.data.prior_year.market_value} />
                     </div>
                     <div>
                       <p className="text-body text-[#054985]">Assessment</p>
@@ -86,7 +86,7 @@ const Property = () => {
                         {" "}
                         $ {formattedNumber(data.data.prior_year.assessment)}
                       </p> */}
-                      <CopyText text={data.data.current_year.assessment} />
+                      <CopyText text={data.data.prior_year.assessment} />
                     </div>
                     <div>
                       <p className="text-body text-[#054985]">Taxes</p>
@@ -94,7 +94,7 @@ const Property = () => {
                         {" "}
                         $ {formattedNumber(data.data.prior_year.taxes)}
                       </p> */}
-                      <CopyText text={data.data.current_year.taxes} />
+                      <CopyText text={data.data.prior_year.taxes} />
                     </div>
                   </div>
                 </div>
@@ -109,21 +109,21 @@ const Property = () => {
                       {/* <p className="text-body">
                         $ {formattedNumber(data.data.fair_value.current_year)}
                       </p> */}
-                      <CopyText text={data.data.current_year.current_year} />
+                      <CopyText text={data.data.fair_value.current_year} />
                     </div>
                     <div>
                       <p className="text-body text-[#054985]">Assessment</p>
                       {/*  <p className="text-body">
                         $ {formattedNumber(data.data.fair_value.assessment)}
                       </p> */}
-                      <CopyText text={data.data.current_year.assessment} />
+                      <CopyText text={data.data.fair_value.assessment} />
                     </div>
                     <div>
                       <p className="text-body text-[#054985]">Taxes</p>
                      {/*  <p className="text-body">
                         $ {formattedNumber(data.data.fair_value.taxes)}
                       </p> */}
-                      <CopyText text={data.data.current_year.taxes} />
+                      <CopyText text={data.data.fair_value.taxes} />
                     </div>
                   </div>
                 </div>
