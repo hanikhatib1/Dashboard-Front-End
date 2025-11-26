@@ -170,6 +170,10 @@ export const comparisonAssessmentsColumns = [
     },
   },
   {
+    accessorKey: "assessed_value_comp",
+    header: "Assessed Value",
+  },
+  {
     accessorKey: "View Details",
     header: "",
     cell: ({ row }) => {

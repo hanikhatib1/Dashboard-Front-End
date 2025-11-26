@@ -10,6 +10,7 @@ import StreetView from "./StreetView";
 import PropertyImageSlider from "./PropertyImageSlider";
 import LatestTaxBillButton from "@/components/LatestTaxBillButton";
 import PreviousTaxBillButton from "@/components/PreviousTaxBillButton";
+import { Link } from "react-router-dom";
 
 const PropertyAnalysis = ({ property }) => {
   const data = new Date(property.data.last_update);
@@ -28,10 +29,16 @@ const PropertyAnalysis = ({ property }) => {
             pickedImage={property.data.picked_image}
             pin={property.data.pin}
           /> */}
-          <PropertyImageSlider
-            defaultImages={property.data.default_image}
-            pin={property.data.pin}
-          />
+          <Link
+            to={`https://www.cookcountyassessor.com/pin/${property.pin}`}
+            target="_blank"
+            className={`w-full  relative `}
+          >
+            <PropertyImageSlider
+              defaultImages={property.data.default_image}
+              pin={property.data.pin}
+            />
+          </Link>
           <StreetView address={property.data.address} />
         </div>
       </div>

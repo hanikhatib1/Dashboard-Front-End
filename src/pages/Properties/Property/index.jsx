@@ -5,6 +5,8 @@ import Loader from "@/components/Loader";
 import PropertyAnalysis from "../PropertyAnalysis";
 import { formattedNumber } from "@/utiles/formattedNumber";
 import Details from "../Details";
+import { Check, CopyIcon } from "lucide-react";
+import CopyText from "@/components/CopyText";
 
 const Property = () => {
   const { id } = useParams();
@@ -31,23 +33,36 @@ const Property = () => {
                   <div className="flex justify-between">
                     <div>
                       <p className="text-body text-[#054985]">Current Year </p>
-                      <p className="text-body">
-                        $ {formattedNumber(data.data.current_year.market_value)}
-                      </p>
+                      {/*  <div className="flex gap-1">
+                        <p className="text-body">
+                          ${" "}
+                          {formattedNumber(data.data.current_year.market_value)}
+                        </p>
+                        <button
+                          //  onClick={() => copyToClipboard("Hello Ahmed!")}
+                          className=" rounded"
+                        >
+                          <CopyIcon />
+                          <Check />
+                        </button>
+                      </div> */}
+                      <CopyText text={data.data.current_year.market_value} />
                     </div>
                     <div>
                       <p className="text-body text-[#054985]">Assessment</p>
-                      <p className="text-body">
+                      {/* <p className="text-body">
                         {" "}
                         $ {formattedNumber(data.data.current_year.assessment)}
-                      </p>
+                      </p> */}
+                      <CopyText text={data.data.current_year.assessment} />
                     </div>
                     <div>
                       <p className="text-body text-[#054985]">Taxes</p>
-                      <p className="text-body">
+                      {/* <p className="text-body">
                         {" "}
                         $ {formattedNumber(data.data.current_year.taxes)}
-                      </p>
+                      </p> */}
+                      <CopyText text={data.data.current_year.taxes} />
                     </div>
                   </div>
                 </div>
@@ -59,24 +74,27 @@ const Property = () => {
                   <div className="flex justify-between">
                     <div>
                       <p className="text-body text-[#054985]">Current Year </p>
-                      <p className="text-body">
+                      {/* <p className="text-body">
                         {" "}
                         $ {formattedNumber(data.data.prior_year.market_value)}
-                      </p>
+                      </p> */}
+                      <CopyText text={data.data.current_year.market_value} />
                     </div>
                     <div>
                       <p className="text-body text-[#054985]">Assessment</p>
-                      <p className="text-body">
+                      {/* <p className="text-body">
                         {" "}
                         $ {formattedNumber(data.data.prior_year.assessment)}
-                      </p>
+                      </p> */}
+                      <CopyText text={data.data.current_year.assessment} />
                     </div>
                     <div>
                       <p className="text-body text-[#054985]">Taxes</p>
-                      <p className="text-body">
+                      {/*  <p className="text-body">
                         {" "}
                         $ {formattedNumber(data.data.prior_year.taxes)}
-                      </p>
+                      </p> */}
+                      <CopyText text={data.data.current_year.taxes} />
                     </div>
                   </div>
                 </div>
@@ -88,21 +106,24 @@ const Property = () => {
                   <div className="flex justify-between">
                     <div>
                       <p className="text-body text-[#054985]">Current Year </p>
-                      <p className="text-body">
+                      {/* <p className="text-body">
                         $ {formattedNumber(data.data.fair_value.current_year)}
-                      </p>
+                      </p> */}
+                      <CopyText text={data.data.current_year.current_year} />
                     </div>
                     <div>
                       <p className="text-body text-[#054985]">Assessment</p>
-                      <p className="text-body">
+                      {/*  <p className="text-body">
                         $ {formattedNumber(data.data.fair_value.assessment)}
-                      </p>
+                      </p> */}
+                      <CopyText text={data.data.current_year.assessment} />
                     </div>
                     <div>
                       <p className="text-body text-[#054985]">Taxes</p>
-                      <p className="text-body">
+                     {/*  <p className="text-body">
                         $ {formattedNumber(data.data.fair_value.taxes)}
-                      </p>
+                      </p> */}
+                      <CopyText text={data.data.current_year.taxes} />
                     </div>
                   </div>
                 </div>
