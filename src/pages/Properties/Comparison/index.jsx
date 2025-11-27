@@ -521,16 +521,16 @@ const Comparison = () => {
                 className={`flex flex-col gap-3 w-full justify-between px-2  relative`}
               >
                 <div className="flex justify-between">
-                  <div className="flex gap-6 w-max">
+                  <div className="flex gap-6 w-max flex-1">
                     <Select
                       onValueChange={(e) =>
                         setFilterSate({ ...filterSate, sort_by: e })
                       }
-                      className=""
+                      className="!w-max"
                       defaultValue={filterSate.sort_by}
                     >
                       <SelectTrigger
-                        className={`!px-4 flex items-center gap-1 rounded-[8px] border  p-1 text-body bg-white text-dark`}
+                        className={`!px-4 w-max flex items-center gap-1 rounded-[8px]  p-1 text-body bg-white text-dark`}
                       >
                         <span>Sort By :</span>
                         <SelectValue placeholder="Small Building Ratio" />
@@ -546,30 +546,11 @@ const Comparison = () => {
                         </SelectGroup>
                       </SelectContent>
                     </Select>
-                    <p
-                      className={`hidden gap-2 md:flex border-l-[3px] pl-2 border-primary w-max`}
-                    >
-                      <span className="leading-[45px] whitespace-nowrap">
-                        Total Saving{" "}
-                      </span>
-                      <span className="text-[30px] leading-[45px] font-bold">
-                        {listOfProperties
-                          ? `$${formattedNumber(listOfProperties.saves)}`
-                          : ""}
-                      </span>
-                    </p>
-                    <p
-                      className={`hidden gap-2 md:flex border-l-[3px] pl-2 border-primary w-max`}
-                    >
-                      <span className="leading-[45px] whitespace-nowrap">
-                        Average Building Assessment{" "}
-                      </span>
-                      <span className="text-[30px] leading-[45px] font-bold">
-                        {listOfProperties
-                          ? `$${formattedNumber(listOfProperties.building_avg_ass)}`
-                          : ""}
-                      </span>
-                    </p>
+
+                    {/*  {
+    accessorKey: "assessed_value_comp",
+    header: "Assessed Value",
+  }, */}
                   </div>
                   <div className="flex gap-2">
                     {oneProperty && (
@@ -588,6 +569,44 @@ const Comparison = () => {
                       pins={selectedProperties}
                     />
                   </div>
+                </div>
+                <div className="flex flex-wrap flex-1 gap-2 h-max">
+                  <p
+                    className={`hidden gap-2 md:flex border-l-[3px] pl-2 border-primary w-max`}
+                  >
+                    <span className="leading-[30px] whitespace-nowrap">
+                      Total Saving{" "}
+                    </span>
+                    <span className="text-[30px] leading-[30px] font-bold">
+                      {listOfProperties
+                        ? `$${formattedNumber(listOfProperties.saves)}`
+                        : ""}
+                    </span>
+                  </p>
+                  <p
+                    className={`hidden gap-2 md:flex border-l-[3px] pl-2 border-primary w-max`}
+                  >
+                    <span className="leading-[30px] whitespace-nowrap">
+                      Average Building Assessment{" "}
+                    </span>
+                    <span className="text-[30px] leading-[30px] font-bold">
+                      {listOfProperties
+                        ? `$${formattedNumber(listOfProperties.assessed_value_comp)}`
+                        : ""}
+                    </span>
+                  </p>
+                  <p
+                    className={`hidden gap-2 md:flex border-l-[3px] pl-2 border-primary w-max`}
+                  >
+                    <span className="leading-[30px] whitespace-nowrap">
+                      Assessed Value
+                    </span>
+                    <span className="text-[30px] leading-[30px] font-bold">
+                      {listOfProperties
+                        ? `$${formattedNumber(listOfProperties.building_avg_ass)}`
+                        : ""}
+                    </span>
+                  </p>
                 </div>
                 <p
                   className={`flex md:hidden gap-2 self-center md:border-l-[3px] pl-2 border-primary `}

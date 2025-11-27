@@ -50,11 +50,11 @@ const Property = () => {
                     </div>
                     <div>
                       <p className="text-body text-[#054985]">Assessment</p>
-                      {/* <p className="text-body">
+                      <p className="text-body">
                         {" "}
                         $ {formattedNumber(data.data.current_year.assessment)}
-                      </p> */}
-                      <CopyText text={data.data.current_year.assessment} />
+                      </p>
+                      {/* <CopyText text={data.data.current_year.assessment} /> */}
                     </div>
                     <div>
                       <p className="text-body text-[#054985]">Taxes</p>
@@ -82,11 +82,11 @@ const Property = () => {
                     </div>
                     <div>
                       <p className="text-body text-[#054985]">Assessment</p>
-                      {/* <p className="text-body">
+                      <p className="text-body">
                         {" "}
                         $ {formattedNumber(data.data.prior_year.assessment)}
-                      </p> */}
-                      <CopyText text={data.data.prior_year.assessment} />
+                      </p>
+                      {/* <CopyText text={data.data.prior_year.assessment} /> */}
                     </div>
                     <div>
                       <p className="text-body text-[#054985]">Taxes</p>
@@ -113,10 +113,10 @@ const Property = () => {
                     </div>
                     <div>
                       <p className="text-body text-[#054985]">Assessment</p>
-                      {/*  <p className="text-body">
+                       <p className="text-body">
                         $ {formattedNumber(data.data.fair_value.assessment)}
-                      </p> */}
-                      <CopyText text={data.data.fair_value.assessment} />
+                      </p>
+                      {/* <CopyText text={data.data.fair_value.assessment} /> */}
                     </div>
                     <div>
                       <p className="text-body text-[#054985]">Taxes</p>

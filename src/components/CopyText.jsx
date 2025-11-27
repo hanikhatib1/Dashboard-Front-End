@@ -6,7 +6,7 @@ const CopyText = ({ text }) => {
 
   const copy = async (text) => {
     try {
-      await navigator.clipboard.writeText(Number(text) / 10);
+      await navigator.clipboard.writeText(Math.floor(Number(text) / 10));
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch {

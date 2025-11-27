@@ -30,7 +30,7 @@ const PropertyAnalysis = ({ property }) => {
             pin={property.data.pin}
           /> */}
           <Link
-            to={`https://www.cookcountyassessor.com/pin/${property.pin}`}
+            to={`https://www.cookcountyassessor.com/pin/${property.data.pin}`}
             target="_blank"
             className={`w-full  relative `}
           >
